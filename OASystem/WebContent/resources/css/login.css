@@ -1,0 +1,53 @@
+BODY {
+	FONT-SIZE: 12px; FONT-FAMILY: Arial, Helvetica, Verdana; BACKGROUND-IMAGE: url(../images/login_bg.gif); BACKGROUND-REPEAT: repeat
+}
+.login {
+	HEIGHT: 420px; WIDTH: 400px; POSITION: absolute; MARGIN-LEFT: -200px; LEFT: 50%; MARGIN-TOP: -210px; TOP: 50%
+}
+.login_logo {
+	MARGIN-BOTTOM: 5px; TEXT-ALIGN: center
+}
+.login_boder {
+	OVERFLOW: hidden; HEIGHT: 352px; BACKGROUND-IMAGE: url(../images/login_m_bg.png); BACKGROUND-REPEAT: no-repeat
+}
+.login_padding {
+	PADDING-BOTTOM: 5px; PADDING-TOP: 5px; PADDING-LEFT: 47px; PADDING-RIGHT: 47px; FONT-SIZE: 14px;
+}
+.login_boder H2 {
+	MARGIN-BOTTOM: 11px; FONT-SIZE: 12px; TEXT-TRANSFORM: uppercase; FONT-WEIGHT: normal; COLOR: #4f5d80; MARGIN-TOP: 30px
+}
+.input_login {
+	MARGIN-BOTTOM: 10px;  
+	BORDER-TOP: #cad2db 1px solid; 
+	HEIGHT: 30px; 
+	FONT-FAMILY: Arial; 
+	BORDER-RIGHT: #cad2db 1px solid; 
+	WIDTH: 240px; 
+	BORDER-BOTTOM: #cad2db 1px solid; 
+	BORDER-LEFT: #cad2db 1px solid; 
+	LINE-HEIGHT: 36px
+}
+.input_select{
+width: 240px;
+height: 30px;
+border-style:solid;
+vertical-align:middle;
+}
+.login_boder P.forgot {
+	MARGIN-BOTTOM: 15px; FONT-SIZE: 11px; TEXT-ALIGN: right
+}
+.login_boder P.forgot A {
+	COLOR: #8c8e91
+}
+.login_boder P.forgot A:visited {
+	COLOR: #8c8e91
+}
+.login_boder P.forgot A:hover {
+	COLOR: #206fd5
+}
+.login_button {
+	FONT-SIZE: 14px; BORDER-TOP: 0px; HEIGHT: 25px; BORDER-RIGHT: 0px; WIDTH: 100px; BACKGROUND-IMAGE: url(../images/login_button.png); BACKGROUND-REPEAT: no-repeat; BORDER-BOTTOM: 0px; FLOAT: right; FONT-WEIGHT: bold; COLOR: #fff; BORDER-LEFT: 0px
+}
+.login_button:hover {
+	CURSOR: pointer
+}

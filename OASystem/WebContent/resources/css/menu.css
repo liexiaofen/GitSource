@@ -1,0 +1,100 @@
+body{
+	font-family:Microsoft YaHei,Verdana,Arial,SimSun;
+	font-size:14px;
+	overflow: hidden;
+	background-color:#f6f6f6;
+	color: #FFFFFF;
+}
+ul,li,h4{
+	padding:0;
+	border:0;
+	list-style:none;
+	font-style:normal;
+	font-weight:normal;
+	margin: 0;
+}
+.none, #none{	
+	display:none;
+}
+.block, #block{
+	display:block;
+}
+#left_menu{
+	background:#32323a;
+	position:absolute;
+	width:210PX;
+	height:98%;
+	z-index:1;	
+	top: 5px;
+	left: 5px;
+	bottom: 5px;
+}
+#left_menu ul li {
+	width:100%;
+	display: inline;
+}
+#left_menu ul li h4 {
+	cursor:pointer;
+	background:url(../images/bg1.png) no-repeat 190px 18px;
+	padding-left:10px;
+	text-decoration:none;
+	font-size:16px;
+	color:#f5f5f5;
+	display:block;
+	line-height:48px;
+	font-weight:normal;
+}
+#left_menu ul li.selected h4 { 
+	background-position:190px -45px;
+	background-color:#5386ac;
+}
+#left_menu li .list-item {
+	background-color:#9EC6C7;
+	overflow: hidden;
+}
+#left_menu ul li .list-item a{
+	width:100%;
+	text-decoration:none;
+	font-size:14px;
+	color:#FFFFFF;
+	line-height:30px;
+	display:block;
+	padding-left: 60px;
+}
+#left_menu ul li a.noline {
+	border-bottom:none;
+}
+#left_menu ul li a:hover{ 
+	color:#2A1FFF; 
+}
+#left_menu ul li a.selected:hover { 
+	color:#2A1FFF; 
+}
+#left_menu ul li.noline { 
+	border-bottom:none; 
+}
+#left_menu h4 span{
+	float: left;
+	width: 20px;
+	height: 26px;
+	margin-right: 10px;
+	padding-right: 10px;
+	background-repeat: no-repeat;
+	margin-top: 12px;
+	display: block;
+}
+.M1 span{ 
+	background:url(../images/ioc.png) 0 -6px;
+}
+.M2 span{
+	background:url(../images/ioc.png) -36px -6px;
+}
+.M3 span{background:url(../images/ioc.png) -72px -6px;}
+.M4 span{background:url(../images/ioc.png) -36px -40px;}
+.M5 span{background:url(../images/ioc.png) -72px -40px;}
+.M6 span{background:url(../images/ioc.png) -1px -40px;}
+.M7 span{background:url(../images/ioc.png) -1px -70px;}
+.M8 span{background:url(../images/ioc.png) -36px -70px;}
+.M9 span{background:url(../images/ioc.png) -72px -70px;}
+.M10 span{background:url(../images/ioc.png) -3px -105px;}
+

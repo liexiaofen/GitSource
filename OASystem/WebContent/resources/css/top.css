@@ -1,0 +1,56 @@
+body{
+	font-family:Microsoft YaHei,Verdana,Arial,SimSun;
+	color:#666;
+	font-size:14px;
+	background:#5386ac;
+	overflow: hidden;
+}
+a{
+	text-decoration:none;
+	color: #FFFFFF;
+}
+a:hover{
+	color: #0000FF;
+}
+#top{
+	height:5px;
+	background-color:#5386ac;
+	width: 100%;
+}
+#header{
+	height:55px;
+	width:100%;	
+	color: #FFFFFF;
+	background-color: #5386ac;
+}
+#header .logo{
+	position:absolute;
+	height:35px;
+	left: 12px;
+	top: 16px;
+	width: 40%;
+	text-align:left;
+	padding-left:20px;
+	font-size:16px;
+}
+#header .logo1 {
+	position:absolute;
+	width:53%;
+	height:35px;
+	left: 45%;
+	top: 16px;
+	text-align:right;
+	padding-right:20px;
+	vertical-align:middle;
+	font-size:13px;
+}
+#header .navigation{
+	text-align:right;
+	PADDING-RIGHT: 20px;
+	height:20px;
+	position:absolute;
+	width: 98%;
+	top: 52px;
+	left: 12px;
+	font-size:13px;
+}

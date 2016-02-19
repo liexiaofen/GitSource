@@ -1,0 +1,18 @@
+body{
+	overflow: hidden;
+	background-color: #5386ac;
+	font-family:Microsoft YaHei,Verdana,Arial,SimSun;
+}
+#footer{
+	height:20px;
+	line-height:20px;
+	background:#5386ac;
+	width:100%;
+	position:absolute;
+	bottom:0px;
+	left: 0px;
+	font-size:12px;
+	text-align:center;
+	color: #FFFFFF;
+	vertical-align: middle;
+}

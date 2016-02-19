@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+    "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+    
+<mapper namespace="common.message">	 
+	<select id="selectUnCheckCount" parameterType="java.util.Map" resultType="int">
+	<![CDATA[
+		SELECT 
+			count(*) 
+		FROM [dbo].[t_applyform] t 
+		inner join [dbo].[t_empinfo] t1 
+			on t.applyempid = t1.empid and t.deletefg = t1.deletefg
+		inner join [dbo].[t_empinfo] t2 
+			on t.processempid = t2.empid and t.deletefg = t2.deletefg   			
+		where t.deletefg = '0' and ( (t.status = 1 and t.managercheckid = #{empid}) or (t.status = 2 and t.personnelcheckid = #{empid}) 
+			or (t.status = 3 and t.vicepresicheckid = #{empid}) or (t.status = 4 and t.presicheckid = #{empid}))
+	]]> 
+    </select> 
+	<select id="selectUnManagerCheckCount" parameterType="java.util.Map" resultType="int">
+	<![CDATA[
+		SELECT 
+			count(*) 
+		FROM [dbo].[t_applyform] t 
+		inner join [dbo].[t_empinfo] t1 
+			on t.applyempid = t1.empid and t.deletefg = t1.deletefg
+		inner join [dbo].[t_empinfo] t2 
+			on t.processempid = t2.empid and t.deletefg = t2.deletefg   			
+		where t.deletefg = '0' and t.status in (1)
+	]]> 
+		<if test="empid!=null and empid!=''">
+			and t.managercheckid = #{empid}
+		</if>	
+    </select> 
+    <select id="selectUnPersonnelCheckCount" parameterType="java.util.Map" resultType="int">
+	<![CDATA[
+		SELECT 
+			count(*) 
+		FROM [dbo].[t_applyform] t 
+		inner join [dbo].[t_empinfo] t1 
+			on t.applyempid = t1.empid and t.deletefg = t1.deletefg
+		inner join [dbo].[t_empinfo] t2 
+			on t.processempid = t2.empid and t.deletefg = t2.deletefg  			
+		where t.deletefg = '0' and t.status in (2)
+	]]> 
+		<if test="empid!=null and empid!=''">
+			and t.personnelcheckid = #{empid}
+		</if>	
+    </select> 
+    <select id="selectUnVicepresiCheckCount" parameterType="java.util.Map" resultType="int">
+	<![CDATA[
+		SELECT 
+			count(*) 
+		FROM [dbo].[t_applyform] t 
+		inner join [dbo].[t_empinfo] t1 
+			on t.applyempid = t1.empid and t.deletefg = t1.deletefg
+		inner join [dbo].[t_empinfo] t2 
+			on t.processempid = t2.empid and t.deletefg = t2.deletefg   			
+		where t.deletefg = '0' and t.status in (3)
+	]]> 
+		<if test="empid!=null and empid!=''">
+			and t.vicepresicheckid = #{empid}
+		</if>	
+    </select> 
+    <select id="selectUnPresiCheckCount" parameterType="java.util.Map" resultType="int">
+	<![CDATA[
+		SELECT 
+			count(*) 
+		FROM [dbo].[t_applyform] t 
+		inner join [dbo].[t_empinfo] t1 
+			on t.applyempid = t1.empid and t.deletefg = t1.deletefg
+		inner join [dbo].[t_empinfo] t2 
+			on t.processempid = t2.empid and t.deletefg = t2.deletefg  			
+		where t.deletefg = '0' and t.status in (4)
+	]]> 
+		<if test="empid!=null and empid!=''">
+			and t.presicheckid = #{empid}
+		</if>	
+    </select> 
+    <select id="selectUnPersonFileCheckCount" parameterType="java.util.Map" resultType="int">
+	<![CDATA[
+		SELECT 
+			count(*) 
+		FROM [dbo].[t_applyform] t 	
+		inner join [dbo].[t_empinfo] t1 
+			on t.applyempid = t1.empid and t.deletefg = t1.deletefg
+		inner join [dbo].[t_empinfo] t2 
+			on t.processempid = t2.empid and t.deletefg = t2.deletefg  	
+		where t.deletefg = '0' and t.status in (5)
+	]]> 
+		<if test="empid!=null and empid!=''">
+			and t.personfilecheckid = #{empid}
+		</if>	
+    </select> 
+</mapper>

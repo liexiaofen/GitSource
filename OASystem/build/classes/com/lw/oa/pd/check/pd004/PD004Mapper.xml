@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+    "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+    
+<mapper namespace="pd.pd004">	
+    <!-- 查询申请管理一览信息 -->    
+	<select id="pd004001searchListByPage" resultType="applyResultCommand" parameterType="applySearchCommand">
+	<![CDATA[
+		SELECT 
+			convert(char(19), t.processtime, 120) as processtime, t.applyid, t.applyno, t.exclusivefg, t.applyempid, t1.empname as applyempname, 
+			t.processempid, t2.empname as processempname, t.applytype, dict1.busidictname as applytypedict, t.status, dict2.busidictname as statusdict, 
+			ROW_NUMBER() OVER(order by t.processtime desc, t.applyno ) as rownum 
+		FROM [dbo].[t_applyform] t 
+		inner join [dbo].[t_empinfo] t1 
+			on t.applyempid = t1.empid and t.deletefg = t1.deletefg
+		inner join [dbo].[t_empinfo] t2 
+			on t.processempid = t2.empid and t.deletefg = t2.deletefg  
+		left join [dbo].[s_busidict] dict1 
+			on t.applytype = dict1.busidictid and dict1.busidicttypeid = 'OA_PC001_ApplyType' 
+		left join [dbo].[s_busidict] dict2 
+			on t.status = dict2.busidictid and dict2.busidicttypeid = 'OA_PD001_Status' 
+		where t.deletefg = '0' and t.status in (0,4,5,6) 
+	]]> 
+		<if test="empid!=null and empid!=''">
+			and t.presicheckid = #{empid}
+		</if>
+		<if test="applyno!=null and applyno!=''">
+			and t.applyno like '%'+#{applyno}+'%'
+		</if>
+		<if test="applytype!=null and applytype!=''">
+			and t.applytype = #{applytype}
+		</if>	
+		<if test="status!=null and status!=''">
+			and t.status = #{status}
+		</if>	
+	</select>
+	<update id="pd004003Update" parameterType="applyform">
+	<![CDATA[
+        update t_applyform set
+           updator = #{updator, jdbcType=VARCHAR}
+           ,updatetime = #{updatetime, jdbcType=TIME}
+           ,exclusivefg = #{updateexclusivefg, jdbcType=VARCHAR}
+           ,orgid = #{orgid, jdbcType=VARCHAR}
+           ,processempid = #{processempid, jdbcType=VARCHAR}
+           ,processtime = #{processtime, jdbcType=TIME}          
+           ,status = #{status, jdbcType=VARCHAR}      
+    	where applyid = #{applyid, jdbcType=VARCHAR} and deletefg = '0'           
+    ]]>
+    	<if test="exclusivefg!=null and exclusivefg!=''">
+			and exclusivefg = #{exclusivefg , jdbcType=VARCHAR}
+		</if>	   
+    </update>
+</mapper>

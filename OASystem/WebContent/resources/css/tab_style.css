@@ -1,0 +1,34 @@
+.title3{
+    width:80px;
+    background:url('../images/tabbg4.gif');
+    line-height: 120%;
+    padding-top:2px;
+    cursor:hand;
+}
+.title4
+{
+    width:80px;
+    background:url('../images/tabbg3.gif');
+    color: #ffffff;
+    font-weight: normal;
+    padding-top:2px;
+    cursor:hand;
+}
+
+.title5{
+    width:78px;
+    background:url('../images/tabbg2.gif');
+    line-height: 120%;
+    padding-top:2px;
+    cursor:hand;
+}
+
+.title6
+{
+    width:78px;
+    background:url('../images/tabbg1.gif');
+    color: #000;
+    font-weight: normal;
+    padding-top:2px;
+    cursor:hand;
+}

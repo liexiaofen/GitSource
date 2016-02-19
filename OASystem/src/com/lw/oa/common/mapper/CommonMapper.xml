@@ -1,0 +1,750 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+    "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+    
+<mapper namespace="common">
+	<select id="getDBSysDate" resultType="java.util.Date">
+	<![CDATA[
+         Select CONVERT(varchar(100), GETDATE(), 21) as sysdate
+    ]]>
+    </select>
+    <select id="excuteSql" parameterType="java.util.Map" resultType="dictEntity">
+    	${sql}
+	</select> 
+	<select id="expandEmpByUserPwd" resultType="resultCommand" parameterType="java.util.Map">
+	<![CDATA[
+		SELECT 
+			t.empid, t.empname
+		FROM [dbo].[t_empinfo] t
+		where t.deletefg = '0' and t.status = '0' and t.username = #{username} and t.password = #{password}
+	]]> 
+		<if test="orgcdid!=null and orgcdid!=''">
+			and t.empid in (select empid from t_emporg where orgcdid = #{orgcdid})
+		</if>			
+	</select>	
+	<!-- 查询申请单号 -->    
+	<select id="expandApplyNo" resultType="resultCommand" parameterType="java.util.Map">
+	<![CDATA[
+		select max(V.applyno) as applyno from (
+			SELECT 
+				Substring(applyno, 4, 13) as applyno
+			FROM [dbo].[t_applyform] t where t.deletefg = '0' and t.applyno like '%'+#{sysdate}+'%' 
+		) V
+	]]> 
+	</select>  
+	<!-- 查询申请单明细信息 -->    
+	<select id="expandApplyForm" resultType="applyFormCommand" parameterType="applySearchCommand">
+	<![CDATA[
+		SELECT 
+			t.applyid, t.exclusivefg, t.sourceid, t.applyno, t.applyempid, t1.empname as applyempname, t.processempid, t2.empname as processempname, convert(char(19), t.processtime, 120) as processtime, 
+			t.managercheckid, managercheck.empname as managercheckname, t.managerorgcdid, managerorgcd.orgshortname as managerorgcdname, t.managerdepid, 
+			t.personnelcheckid, personnelcheck.empname as personnelcheckname, t.personnelorgcdid, personnelorgcd.orgshortname as personnelorgcdname, t.personneldepid, 
+			t.vicepresicheckid, vicepresicheck.empname as vicepresicheckname, t.vicepresiorgcdid, vicepresiorgcd.orgshortname as vicepresiorgcdname, t.vicepresidepid, 
+			t.presicheckid, presicheck.empname as presicheckname, t.presiorgcdid, presiorgcd.orgshortname as presiorgcdname, t.presidepid, 
+			t.personfilecheckid, personfilecheck.empname as personfilecheckname, t.personfileorgcdid, personfileorgcd.orgshortname as personfileorgcdname, t.personfiledepid, 
+			t.applytype, t.vacatereasontype, t.otherremark, t.applyreason, convert(char(10), t.applystart, 23) as applystart, convert(char(10), t.applyend, 23) as applyend, 
+			t.applystarthm, t.applyendhm, convert(char(19), t.applystarttime, 120) as applystarttime, convert(char(19), t.applyendtime, 120) as applyendtime, t.extraworkapplytype, 
+			t.evectionworkflag, convert(char(10), t.extraworkstart, 23) as extraworkstart, convert(char(10), t.extraworkend, 23) as extraworkend, t.extraworkstarthm, t.extraworkendhm, 
+			convert(char(19), t.extraworkstarttime, 120) as extraworkstarttime, convert(char(19), t.extraworkendtime, 120) as extraworkendtime, t.evectioncountry, t.evectionprovince, 
+			t.evectioncity, t.evectionaddress1, t.evectionaddress2, t.totalhours, t.evectionmoney, t.evectionallowance, t.totalmoney, t.status, t.remark,
+			t3.unlegalvctn,t3.unwealvctn,t3.unextraworkvctn
+		FROM [dbo].[t_applyform] t 
+		left join [dbo].[t_empinfo] t1 
+			on t.applyempid = t1.empid and t.deletefg = t1.deletefg
+		left join [dbo].[t_empinfo] t2 
+			on t.processempid = t2.empid and t.deletefg = t2.deletefg 
+		left join [dbo].[t_annualvctn] t3 
+			on t.applyempid = t3.empid and t.deletefg = t3.deletefg and t3.year = (select substring(CONVERT(varchar(100), GETDATE(), 21),1,4) as sysdate)
+		left join [dbo].[t_empinfo] managercheck 
+			on t.managercheckid = managercheck.empid and t.deletefg = managercheck.deletefg
+		left join [dbo].[s_organize] managerorgcd 
+			on t.managerorgcdid = managerorgcd.orgcdid and t.deletefg = managerorgcd.deletefg 
+		left join [dbo].[t_empinfo] personnelcheck 
+			on t.personnelcheckid = personnelcheck.empid and t.deletefg = personnelcheck.deletefg
+		left join [dbo].[s_organize] personnelorgcd 
+			on t.personnelorgcdid = personnelorgcd.orgcdid and t.deletefg = personnelorgcd.deletefg 
+		left join [dbo].[t_empinfo] vicepresicheck 
+			on t.vicepresicheckid = vicepresicheck.empid and t.deletefg = vicepresicheck.deletefg
+		left join [dbo].[s_organize] vicepresiorgcd 
+			on t.vicepresiorgcdid = vicepresiorgcd.orgcdid and t.deletefg = vicepresiorgcd.deletefg 
+		left join [dbo].[t_empinfo] presicheck 
+			on t.presicheckid = presicheck.empid and t.deletefg = presicheck.deletefg
+		left join [dbo].[s_organize] presiorgcd 
+			on t.presiorgcdid = presiorgcd.orgcdid and t.deletefg = presiorgcd.deletefg 
+		left join [dbo].[t_empinfo] personfilecheck 
+			on t.personfilecheckid = personfilecheck.empid and t.deletefg = personfilecheck.deletefg
+		left join [dbo].[s_organize] personfileorgcd 
+			on t.personfileorgcdid = personfileorgcd.orgcdid and t.deletefg = personfileorgcd.deletefg 
+		where t.deletefg = '0' 
+	]]> 
+		<if test="applyid!=null and applyid!=''">
+			and t.applyid = #{applyid}
+		</if>
+		<if test="exclusivefg!=null and exclusivefg!=''">
+			and t.exclusivefg = #{exclusivefg}
+		</if>
+	</select>
+	<!-- 查询年假明细信息 -->    
+	<select id="expandAnnualvctn" resultType="annualvctn" parameterType="java.util.Map">
+	<![CDATA[
+		SELECT 
+			convert(char(19), t.updatetime, 120) as updatetime,t.exclusivefg,t.empid,t.year,t1.empname,
+			t.legalvctn,t.wealvctn,t.extraworkvctn,t.haslegalvctn,t.haswealvctn,t.hasextraworkvctn,
+			t.unlegalvctn,t.unwealvctn,t.unextraworkvctn,
+			ROW_NUMBER() OVER(order by t.updatetime desc) as rownum 
+		FROM [dbo].[t_annualvctn] t 
+		inner join [dbo].[t_empinfo] t1 
+			on t.empid = t1.empid and t.deletefg = t1.deletefg
+		where t.deletefg = '0' 
+	]]> 
+		<if test="empid!=null and empid!=''">
+			and t.empid = #{empid}
+		</if>
+		<if test="year!=null and year!=''">
+			and t.year = #{year}
+		</if>
+		<if test="year==null or year==''">
+			and t.year = (select substring(CONVERT(varchar(100), GETDATE(), 21),1,4) as sysdate)
+		</if>
+		<if test="exclusivefg!=null and exclusivefg!=''">
+			and t.exclusivefg = #{exclusivefg}
+		</if>
+	</select>
+	<!-- 查询履历 -->    
+	<select id="queryResumeByPid" resultType="resumeEntity" parameterType="java.util.Map">
+	<![CDATA[
+		select 
+			convert(char(19), t.updatetime, 120) as updatetime,
+			t.pid, t.operatorid, t.operatorname, t.operationcd,        
+            dict1.busidictname as operationcddict,
+            t.remark
+        from ${table} t 
+        left join [dbo].[s_busidict] dict1 
+			on t.operationcd = dict1.busidictid and dict1.busidicttypeid = #{busidicttypeid} 
+		where t.pid = #{pid} 
+		order by updatetime 
+	]]> 
+	</select>
+	<insert id="insertAnnualvctn" parameterType="annualvctn">
+	<![CDATA[
+        INSERT INTO [dbo].[t_annualvctn]
+           ([creator]
+           ,[createtime]
+           ,[updator]
+           ,[updatetime]
+           ,[exclusivefg]
+           ,[orgid]
+           ,[deletefg]
+           ,[empid]
+           ,[year]
+           ,[legalvctn]
+           ,[wealvctn]
+           ,[extraworkvctn]
+           ,[haslegalvctn]
+           ,[haswealvctn]
+           ,[hasextraworkvctn]
+           ,[unlegalvctn]
+           ,[unwealvctn]
+           ,[unextraworkvctn]
+           ,[remark1]
+           ,[remark2]
+           ,[remark3])
+     VALUES
+           (#{creator, jdbcType=VARCHAR}
+           ,#{createtime,jdbcType=TIME}
+           ,#{updator, jdbcType=VARCHAR}
+           ,#{updatetime,jdbcType=TIME}
+           ,#{exclusivefg, jdbcType=VARCHAR}
+           ,#{orgid, jdbcType=VARCHAR}
+           ,#{deletefg, jdbcType=CHAR}
+           ,#{empid, jdbcType=VARCHAR}
+           ,#{year, jdbcType=VARCHAR}
+           ,#{legalvctn, jdbcType=VARCHAR}
+           ,#{wealvctn, jdbcType=VARCHAR}
+           ,#{extraworkvctn, jdbcType=VARCHAR}           
+           ,#{haslegalvctn, jdbcType=VARCHAR}
+           ,#{haswealvctn, jdbcType=VARCHAR}
+           ,#{hasextraworkvctn, jdbcType=VARCHAR}
+           ,#{unlegalvctn, jdbcType=VARCHAR}
+           ,#{unwealvctn, jdbcType=VARCHAR}
+           ,#{unextraworkvctn, jdbcType=VARCHAR}
+           ,#{remark1, jdbcType=VARCHAR}
+           ,#{remark2, jdbcType=VARCHAR}
+           ,#{remark3, jdbcType=VARCHAR})
+    ]]>
+    </insert>
+	<insert id="insertHis" parameterType="java.util.Map">
+    	INSERT INTO ${table}  
+    	VALUES
+           (#{creator, jdbcType=VARCHAR}
+           ,#{createtime,jdbcType=TIME}
+           ,#{updator, jdbcType=VARCHAR}
+           ,#{updatetime,jdbcType=TIME}
+           ,#{exclusivefg, jdbcType=VARCHAR}
+           ,#{orgid, jdbcType=VARCHAR}
+           ,#{deletefg, jdbcType=CHAR}
+           ,#{hisid, jdbcType=VARCHAR}
+           ,#{pid, jdbcType=VARCHAR}
+           ,#{operatorid, jdbcType=VARCHAR}
+           ,#{operatorname, jdbcType=VARCHAR}
+           ,#{operationcd, jdbcType=VARCHAR}
+           ,#{viewflg, jdbcType=VARCHAR}
+           ,#{replaceflg, jdbcType=VARCHAR}
+           ,#{remark, jdbcType=VARCHAR})
+	</insert> 
+	<insert id="insertEmpinfo" parameterType="empinfo">
+	<![CDATA[
+        INSERT INTO [dbo].[t_empinfo]
+           ([creator]
+           ,[createtime]
+           ,[updator]
+           ,[updatetime]
+           ,[exclusivefg]
+           ,[orgid]
+           ,[deletefg]
+           ,[empid]
+           ,[empname]
+           ,[empenname]
+           ,[empno]
+           ,[workage]
+           ,[email]
+           ,[domestictel]
+           ,[internttel]
+           ,[extension]
+           ,[straightline]
+           ,[skypenum]
+           ,[cardno]
+           ,[entrytime]
+           ,[offtime]
+           ,[sex]
+           ,[status]
+           ,[username]
+           ,[password]
+           ,[remark1]
+           ,[remark2]
+           ,[remark3])
+     VALUES
+           (#{creator, jdbcType=VARCHAR}
+           ,#{createtime,jdbcType=TIME}
+           ,#{updator, jdbcType=VARCHAR}
+           ,#{updatetime,jdbcType=TIME}
+           ,#{exclusivefg, jdbcType=VARCHAR}
+           ,#{orgid, jdbcType=VARCHAR}
+           ,#{deletefg, jdbcType=CHAR}
+           ,#{empid, jdbcType=VARCHAR}
+           ,#{empname, jdbcType=VARCHAR}
+           ,#{empenname, jdbcType=VARCHAR}
+           ,#{empno, jdbcType=VARCHAR}
+           ,#{workage, jdbcType=VARCHAR}           
+           ,#{email, jdbcType=VARCHAR}
+           ,#{domestictel, jdbcType=VARCHAR}
+           ,#{internttel, jdbcType=VARCHAR}
+           ,#{extension, jdbcType=VARCHAR}
+           ,#{straightline, jdbcType=VARCHAR}
+           ,#{skypenum, jdbcType=VARCHAR}
+           ,#{cardno, jdbcType=VARCHAR}
+           ,#{entrytime,jdbcType=DATE}
+           ,#{offtime,jdbcType=DATE}
+           ,#{sex, jdbcType=VARCHAR}
+           ,#{status, jdbcType=VARCHAR}
+           ,#{username, jdbcType=VARCHAR}
+           ,#{password, jdbcType=VARCHAR}
+           ,#{remark1, jdbcType=VARCHAR}
+           ,#{remark2, jdbcType=VARCHAR}
+           ,#{remark3, jdbcType=VARCHAR})
+    ]]>
+    </insert>
+    <insert id="insertEmporg" parameterType="emporg">
+	<![CDATA[
+        INSERT INTO [dbo].[t_emporg]
+           ([creator]
+           ,[createtime]
+           ,[updator]
+           ,[updatetime]
+           ,[exclusivefg]
+           ,[orgid]
+           ,[deletefg]
+           ,[empid]
+           ,[orgcdid]
+           ,[depid]
+           ,[posid])
+     VALUES
+           (#{creator, jdbcType=VARCHAR}
+           ,#{createtime,jdbcType=TIME}
+           ,#{updator, jdbcType=VARCHAR}
+           ,#{updatetime,jdbcType=TIME}
+           ,#{exclusivefg, jdbcType=VARCHAR}
+           ,#{orgid, jdbcType=VARCHAR}
+           ,#{deletefg, jdbcType=CHAR}           
+           ,#{empid, jdbcType=VARCHAR}
+           ,#{orgcdid, jdbcType=VARCHAR}
+           ,#{depid, jdbcType=VARCHAR}
+           ,#{posid, jdbcType=VARCHAR})
+    ]]>
+    </insert>
+    <insert id="insertEmprole" parameterType="emprole">
+	<![CDATA[
+        INSERT INTO [dbo].[t_emprole]
+           ([creator]
+           ,[createtime]
+           ,[updator]
+           ,[updatetime]
+           ,[exclusivefg]
+           ,[orgid]
+           ,[deletefg]
+           ,[empid]
+           ,[roleid])
+     VALUES
+           (#{creator, jdbcType=VARCHAR}
+           ,#{createtime,jdbcType=TIME}
+           ,#{updator, jdbcType=VARCHAR}
+           ,#{updatetime,jdbcType=TIME}
+           ,#{exclusivefg, jdbcType=VARCHAR}
+           ,#{orgid, jdbcType=VARCHAR}
+           ,#{deletefg, jdbcType=CHAR}           
+           ,#{empid, jdbcType=VARCHAR}
+           ,#{roleid, jdbcType=VARCHAR})
+    ]]>
+    </insert>
+    <insert id="insertNationlegalday" parameterType="nationlegalday">
+	<![CDATA[
+        INSERT INTO [dbo].[t_nationlegalday]
+           ([creator]
+           ,[createtime]
+           ,[updator]
+           ,[updatetime]
+           ,[exclusivefg]
+           ,[orgid]
+           ,[deletefg]
+           ,[legalid]
+           ,[legaldate]
+           ,[legalyear]
+           ,[legalmonth]
+           ,[legalday]
+           ,[dayofweek]
+           ,[weekofyear]
+           ,[dayofyear]
+           ,[dayofmonth]
+           ,[status])
+     VALUES
+           (#{creator, jdbcType=VARCHAR}
+           ,#{createtime,jdbcType=TIME}
+           ,#{updator, jdbcType=VARCHAR}
+           ,#{updatetime,jdbcType=TIME}
+           ,#{exclusivefg, jdbcType=VARCHAR}
+           ,#{orgid, jdbcType=VARCHAR}
+           ,#{deletefg, jdbcType=CHAR}           
+           ,#{legalid, jdbcType=VARCHAR}
+           ,#{legaldate, jdbcType=DATE}
+           ,#{legalyear, jdbcType=VARCHAR}
+           ,#{legalmonth, jdbcType=VARCHAR}
+           ,#{legalday, jdbcType=VARCHAR}
+           ,#{dayofweek, jdbcType=VARCHAR}
+           ,#{weekofyear, jdbcType=VARCHAR}
+           ,#{dayofyear, jdbcType=VARCHAR}
+           ,#{dayofmonth, jdbcType=VARCHAR}
+           ,#{status, jdbcType=VARCHAR})
+    ]]>
+    </insert>
+     <insert id="insertDeviceinfo" parameterType="deviceinfo">
+	<![CDATA[
+        INSERT INTO [dbo].[t_dailydeviceinfo]
+           ([creator]
+           ,[createtime]
+           ,[updator]
+           ,[updatetime]
+           ,[exclusivefg]
+           ,[orgid]
+           ,[deletefg]
+           ,[dailydeviceid]
+           ,[orgcdid]
+           ,[dailydevicename]
+           ,[comment])
+     VALUES
+           (#{creator, jdbcType=VARCHAR}
+           ,#{createtime,jdbcType=TIME}
+           ,#{updator, jdbcType=VARCHAR}
+           ,#{updatetime,jdbcType=TIME}
+           ,#{exclusivefg, jdbcType=VARCHAR}
+           ,#{orgid, jdbcType=INTEGER}
+           ,#{deletefg, jdbcType=CHAR}
+           ,#{dailydeviceid, jdbcType=VARCHAR}
+           ,#{orgcdid, jdbcType=VARCHAR}
+           ,#{dailydevicename, jdbcType=VARCHAR}
+           ,#{comment, jdbcType=VARCHAR})
+    ]]>
+    </insert>
+     <insert id="insertOrganize" parameterType="organize">
+	<![CDATA[
+        INSERT INTO [dbo].[s_organize]
+           ([creator]
+           ,[createtime]
+           ,[updator]
+           ,[updatetime]
+           ,[exclusivefg]
+           ,[orgid]
+           ,[deletefg]
+           ,[orgcdid]
+           ,[regionid]
+           ,[orgname]
+           ,[orgshortname]
+           ,[address]
+           ,[tel]
+           ,[fax]
+           ,[zipcode]
+           ,[effectivedate])
+     VALUES
+           (#{creator, jdbcType=VARCHAR}
+           ,#{createtime,jdbcType=TIME}
+           ,#{updator, jdbcType=VARCHAR}
+           ,#{updatetime,jdbcType=TIME}
+           ,#{exclusivefg, jdbcType=VARCHAR}
+           ,#{orgid, jdbcType=VARCHAR}
+           ,#{deletefg, jdbcType=CHAR}           
+           ,#{orgcdid, jdbcType=VARCHAR}
+           ,#{regionid, jdbcType=VARCHAR}
+           ,#{orgname, jdbcType=VARCHAR}
+           ,#{orgshortname, jdbcType=VARCHAR}
+           ,#{address, jdbcType=VARCHAR}
+           ,#{tel, jdbcType=VARCHAR}
+           ,#{fax, jdbcType=VARCHAR}
+           ,#{zipcode, jdbcType=VARCHAR}
+           ,#{effectivedate, jdbcType=DATE})
+    ]]>
+    </insert>
+	<insert id="insertEvent" parameterType="event">
+	<![CDATA[
+        INSERT INTO [dbo].[t_event]
+           ([creator]
+           ,[createtime]
+           ,[updator]
+           ,[updatetime]
+           ,[exclusivefg]
+           ,[orgid]
+           ,[deletefg]
+           ,[eventid]
+           ,[originateid]
+           ,[dailycycle]
+           ,[eventtype]
+           ,[eventstart]
+           ,[eventend]
+           ,[eventstarthm]
+           ,[eventendhm]
+           ,[eventstarttime]
+           ,[eventendtime]
+           ,[title]
+           ,[comment]
+           ,[status])
+     VALUES
+           (#{creator, jdbcType=VARCHAR}
+           ,#{createtime,jdbcType=TIME}
+           ,#{updator, jdbcType=VARCHAR}
+           ,#{updatetime,jdbcType=TIME}
+           ,#{exclusivefg, jdbcType=VARCHAR}
+           ,#{orgid, jdbcType=VARCHAR}
+           ,#{deletefg, jdbcType=CHAR}           
+           ,#{eventid, jdbcType=VARCHAR}
+           ,#{originateid, jdbcType=VARCHAR}
+           ,#{dailycycle, jdbcType=VARCHAR}
+           ,#{eventtype, jdbcType=VARCHAR}
+           ,#{eventstart, jdbcType=DATE}
+           ,#{eventend, jdbcType=DATE}
+           ,#{eventstarthm, jdbcType=VARCHAR}
+           ,#{eventendhm, jdbcType=VARCHAR}
+           ,#{eventstarttime, jdbcType=TIME}
+           ,#{eventendtime, jdbcType=TIME}
+           ,#{title, jdbcType=VARCHAR}
+           ,#{comment, jdbcType=VARCHAR}
+           ,#{status, jdbcType=VARCHAR})
+    ]]>
+    </insert>
+    <insert id="insertEventTime" parameterType="eventTime">
+	<![CDATA[
+        INSERT INTO [dbo].[t_eventtime]
+           ([creator]
+           ,[createtime]
+           ,[updator]
+           ,[updatetime]
+           ,[exclusivefg]
+           ,[orgid]
+           ,[deletefg]
+           ,[eventtimeid]
+           ,[eventid]
+           ,[daily]
+           ,[eventstarttime]
+           ,[eventendtime])
+     VALUES
+           (#{creator, jdbcType=VARCHAR}
+           ,#{createtime,jdbcType=TIME}
+           ,#{updator, jdbcType=VARCHAR}
+           ,#{updatetime,jdbcType=TIME}
+           ,#{exclusivefg, jdbcType=VARCHAR}
+           ,#{orgid, jdbcType=VARCHAR}
+           ,#{deletefg, jdbcType=CHAR}     
+           ,#{eventtimeid, jdbcType=VARCHAR}      
+           ,#{eventid, jdbcType=VARCHAR}
+           ,#{daily, jdbcType=DATE}
+           ,#{eventstarttime, jdbcType=TIME}
+           ,#{eventendtime, jdbcType=TIME})
+    ]]>
+    </insert>
+    <insert id="insertEventConnect" parameterType="eventconnect">
+	<![CDATA[
+        INSERT INTO [dbo].[t_eventconnect]
+           ([creator]
+           ,[createtime]
+           ,[updator]
+           ,[updatetime]
+           ,[exclusivefg]
+           ,[orgid]
+           ,[deletefg]
+           ,[eventid]
+           ,[empid])
+     VALUES
+           (#{creator, jdbcType=VARCHAR}
+           ,#{createtime,jdbcType=TIME}
+           ,#{updator, jdbcType=VARCHAR}
+           ,#{updatetime,jdbcType=TIME}
+           ,#{exclusivefg, jdbcType=VARCHAR}
+           ,#{orgid, jdbcType=VARCHAR}
+           ,#{deletefg, jdbcType=CHAR}           
+           ,#{eventid, jdbcType=VARCHAR}
+           ,#{empid, jdbcType=VARCHAR})
+    ]]>
+    </insert>
+    <insert id="insertEventDevice" parameterType="eventdevice">
+	<![CDATA[
+        INSERT INTO [dbo].[t_eventdevice]
+           ([creator]
+           ,[createtime]
+           ,[updator]
+           ,[updatetime]
+           ,[exclusivefg]
+           ,[orgid]
+           ,[deletefg]
+           ,[eventid]
+           ,[dailydeviceid])
+     VALUES
+           (#{creator, jdbcType=VARCHAR}
+           ,#{createtime,jdbcType=TIME}
+           ,#{updator, jdbcType=VARCHAR}
+           ,#{updatetime,jdbcType=TIME}
+           ,#{exclusivefg, jdbcType=VARCHAR}
+           ,#{orgid, jdbcType=VARCHAR}
+           ,#{deletefg, jdbcType=CHAR}           
+           ,#{eventid, jdbcType=VARCHAR}
+           ,#{dailydeviceid, jdbcType=VARCHAR})
+    ]]>
+    </insert>
+    <insert id="insertDailyPlan" parameterType="dailyplan">
+	<![CDATA[
+        INSERT INTO [dbo].[t_dailyplan]
+           ([creator]
+           ,[createtime]
+           ,[updator]
+           ,[updatetime]
+           ,[exclusivefg]
+           ,[orgid]
+           ,[deletefg]
+           ,[dailyid]
+           ,[empid]
+           ,[eventid]
+           ,[originateid]
+           ,[dailycycle]
+           ,[conflictflag]
+           ,[eventtype]
+           ,[daily]
+           ,[dailystarthm]
+           ,[dailystarttime]
+           ,[dailyendhm]
+           ,[dailyendtime]
+           ,[title]
+           ,[comment])
+     VALUES
+           (#{creator, jdbcType=VARCHAR}
+           ,#{createtime,jdbcType=TIME}
+           ,#{updator, jdbcType=VARCHAR}
+           ,#{updatetime,jdbcType=TIME}
+           ,#{exclusivefg, jdbcType=VARCHAR}
+           ,#{orgid, jdbcType=VARCHAR}
+           ,#{deletefg, jdbcType=CHAR}
+           ,#{dailyid, jdbcType=VARCHAR}   
+           ,#{empid, jdbcType=VARCHAR}      
+           ,#{eventid, jdbcType=VARCHAR}
+           ,#{originateid, jdbcType=VARCHAR}
+           ,#{dailycycle, jdbcType=VARCHAR}
+           ,#{conflictflag, jdbcType=VARCHAR}  
+           ,#{eventtype, jdbcType=VARCHAR}
+           ,#{daily, jdbcType=DATE}
+           ,#{dailystarthm, jdbcType=VARCHAR}  
+           ,#{dailystarttime, jdbcType=TIME}
+           ,#{dailyendhm, jdbcType=VARCHAR}  
+           ,#{dailyendtime, jdbcType=TIME}
+           ,#{title, jdbcType=VARCHAR}
+           ,#{comment, jdbcType=VARCHAR})
+    ]]>
+    </insert>
+    <insert id="insertApplyForm" parameterType="applyform">
+	<![CDATA[
+        INSERT INTO [dbo].[t_applyform]
+	        ([creator]
+	        ,[createtime]
+	        ,[updator]
+	        ,[updatetime]
+	        ,[exclusivefg]
+	        ,[orgid]
+	        ,[deletefg]
+	        ,[applyid]					
+			,[sourceid]					
+			,[applyno]					
+			,[applyempid]					
+			,[processempid]					
+			,[processtime]					
+			,[managercheckid]					
+			,[managerorgcdid]					
+			,[managerdepid]					
+			,[personnelcheckid]					
+			,[personnelorgcdid]					
+			,[personneldepid]					
+			,[vicepresicheckid]					
+			,[vicepresiorgcdid]					
+			,[vicepresidepid]					
+			,[presicheckid]					
+			,[presiorgcdid]					
+			,[presidepid]					
+			,[personfilecheckid]					
+			,[personfileorgcdid]					
+			,[personfiledepid]					
+			,[applytype]					
+			,[vacatereasontype]					
+			,[otherremark]					
+			,[applyreason]					
+			,[applystart]					
+			,[applyend]					
+			,[applystarthm]					
+			,[applyendhm]					
+			,[applystarttime]					
+			,[applyendtime]					
+			,[extraworkapplytype]					
+			,[evectionworkflag]					
+			,[extraworkstart]					
+			,[extraworkend]					
+			,[extraworkstarthm]					
+			,[extraworkendhm]					
+			,[extraworkstarttime]					
+			,[extraworkendtime]					
+			,[evectioncountry]					
+			,[evectionprovince]					
+			,[evectioncity]					
+			,[evectionaddress1]					
+			,[evectionaddress2]					
+			,[totalhours]					
+			,[evectionmoney]				
+			,[evectionallowance]					
+			,[totalmoney]					
+			,[status]					
+			,[remark]					
+			,[remark1]					
+			,[remark2]					
+			,[remark3])
+     VALUES
+			(#{creator, jdbcType=VARCHAR}
+			,#{createtime,jdbcType=TIME}
+			,#{updator, jdbcType=VARCHAR}
+			,#{updatetime, jdbcType=TIME}
+			,#{exclusivefg, jdbcType=VARCHAR}
+			,#{orgid, jdbcType=VARCHAR}
+			,#{deletefg, jdbcType=CHAR}
+			,#{applyid, jdbcType=VARCHAR}					
+			,#{sourceid, jdbcType=VARCHAR}					
+			,#{applyno, jdbcType=VARCHAR}					
+			,#{applyempid, jdbcType=VARCHAR}					
+			,#{processempid, jdbcType=VARCHAR}					
+			,#{processtime, jdbcType=TIME}					
+			,#{managercheckid, jdbcType=VARCHAR}					
+			,#{managerorgcdid, jdbcType=VARCHAR}					
+			,#{managerdepid, jdbcType=VARCHAR}					
+			,#{personnelcheckid, jdbcType=VARCHAR}					
+			,#{personnelorgcdid, jdbcType=VARCHAR}					
+			,#{personneldepid, jdbcType=VARCHAR}					
+			,#{vicepresicheckid, jdbcType=VARCHAR}					
+			,#{vicepresiorgcdid, jdbcType=VARCHAR}					
+			,#{vicepresidepid, jdbcType=VARCHAR}					
+			,#{presicheckid, jdbcType=VARCHAR}					
+			,#{presiorgcdid, jdbcType=VARCHAR}					
+			,#{presidepid, jdbcType=VARCHAR}					
+			,#{personfilecheckid, jdbcType=VARCHAR}					
+			,#{personfileorgcdid, jdbcType=VARCHAR}					
+			,#{personfiledepid, jdbcType=VARCHAR}					
+			,#{applytype, jdbcType=VARCHAR}					
+			,#{vacatereasontype, jdbcType=VARCHAR}					
+			,#{otherremark, jdbcType=VARCHAR}					
+			,#{applyreason, jdbcType=VARCHAR}					
+			,#{applystart, jdbcType=DATE}					
+			,#{applyend, jdbcType=DATE}					
+			,#{applystarthm, jdbcType=VARCHAR}					
+			,#{applyendhm, jdbcType=VARCHAR}					
+			,#{applystarttime, jdbcType=TIME}					
+			,#{applyendtime, jdbcType=TIME}					
+			,#{extraworkapplytype, jdbcType=VARCHAR}					
+			,#{evectionworkflag, jdbcType=VARCHAR}					
+			,#{extraworkstart, jdbcType=DATE}					
+			,#{extraworkend, jdbcType=DATE}					
+			,#{extraworkstarthm, jdbcType=VARCHAR}					
+			,#{extraworkendhm, jdbcType=VARCHAR}					
+			,#{extraworkstarttime, jdbcType=TIME}					
+			,#{extraworkendtime, jdbcType=TIME}					
+			,#{evectioncountry, jdbcType=VARCHAR}					
+			,#{evectionprovince, jdbcType=VARCHAR}					
+			,#{evectioncity, jdbcType=VARCHAR}					
+			,#{evectionaddress1, jdbcType=VARCHAR}					
+			,#{evectionaddress2, jdbcType=VARCHAR}					
+			,#{totalhours, jdbcType=VARCHAR}					
+			,#{evectionmoney, jdbcType=DECIMAL}					
+			,#{evectionallowance, jdbcType=DECIMAL}					
+			,#{totalmoney, jdbcType=DECIMAL}					
+			,#{status, jdbcType=VARCHAR}					
+			,#{remark, jdbcType=VARCHAR}					
+			,#{remark1, jdbcType=VARCHAR}					
+			,#{remark2, jdbcType=VARCHAR}					
+			,#{remark3, jdbcType=VARCHAR})
+    ]]>
+    </insert>
+    <insert id="insertHisApplyForm" parameterType="hisapplyform">
+	<![CDATA[
+        INSERT INTO [dbo].[his_applyform]
+           ([creator]
+           ,[createtime]
+           ,[updator]
+           ,[updatetime]
+           ,[exclusivefg]
+           ,[orgid]
+           ,[deletefg]
+           ,[hisid]
+           ,[applyid]
+           ,[operatorid]
+           ,[operatorname]
+           ,[operationcd]
+           ,[viewflg]
+           ,[replaceflg]
+           ,[remark])
+     VALUES
+           (#{creator, jdbcType=VARCHAR}
+           ,#{createtime,jdbcType=TIME}
+           ,#{updator, jdbcType=VARCHAR}
+           ,#{updatetime,jdbcType=TIME}
+           ,#{exclusivefg, jdbcType=VARCHAR}
+           ,#{orgid, jdbcType=VARCHAR}
+           ,#{deletefg, jdbcType=CHAR}
+           ,#{hisid, jdbcType=VARCHAR}   
+           ,#{applyid, jdbcType=VARCHAR} 
+           ,#{operatorid, jdbcType=VARCHAR}
+           ,#{operatorname, jdbcType=VARCHAR}
+           ,#{operationcd, jdbcType=VARCHAR}  
+           ,#{viewflg, jdbcType=VARCHAR}
+           ,#{replaceflg, jdbcType=VARCHAR} 
+           ,#{remark, jdbcType=VARCHAR})
+    ]]>
+    </insert>
+</mapper>

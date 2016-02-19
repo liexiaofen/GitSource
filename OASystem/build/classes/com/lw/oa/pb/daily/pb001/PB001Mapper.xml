@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+    "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+    
+<mapper namespace="pb.pb001">
+	<!-- 根据显示日历查询周日历 -->    
+	<select id="pb001001searchWeekListByDisplayDT" resultType="pa003001resultCommand" parameterType="pb001001searchCommand">
+	<![CDATA[
+		SELECT 
+			top 7 convert(char(10), legaldate, 23) as legaldate, dayofweek
+		from [dbo].[t_nationlegalday] where convert(char(10), legaldate, 23) >= #{displaydate} order by legaldate
+	]]> 			
+	</select>
+	
+	<!-- 根据日期查询每周日期 -->    
+	<select id="pb001001searchEveryWeekByDate" resultType="pa003001resultCommand" parameterType="java.util.Map">
+	<![CDATA[
+		SELECT 
+			convert(char(10), legaldate, 23) as legaldate
+		from [dbo].[t_nationlegalday] where legalyear = LEFT( #{date}, 4) and dayofweek = (
+			SELECT 
+				t.dayofweek
+			FROM [dbo].[t_nationlegalday] t 
+	 		where convert(char(10), t.legaldate, 23) = #{date}
+		) 
+	]]> and legaldate &gt;= CONVERT(date, #{date}, 23)					
+	 			
+	</select>
+	
+	<!-- 根据日期查询每月日期 -->    
+	<select id="pb001001searchEveryMonthByDate" resultType="pa003001resultCommand" parameterType="java.util.Map">
+	<![CDATA[
+		SELECT 
+			convert(char(10), legaldate, 23) as legaldate
+		from [dbo].[t_nationlegalday] where legalyear = LEFT( #{date}, 4) and dayofmonth = (
+			SELECT 
+				t.dayofmonth
+			FROM [dbo].[t_nationlegalday] t 
+	 		where convert(char(10), t.legaldate, 23) = #{date}
+		) 
+	]]> and legaldate &gt;= CONVERT(date, #{date}, 23)				
+	 			
+	</select>	
+	<!-- 查询员工信息 -->    
+	<select id="pb001001searchListByPage" resultType="pb001001resultCommand" parameterType="pb001001searchCommand">
+	<![CDATA[
+		select V.empid,V.empname,ROW_NUMBER() OVER(order by V.flag, V.entrytime) as rownum  from (
+			SELECT 
+				t.empid, t.empname, t.entrytime, t.deletefg, 0 as flag
+			FROM [dbo].[t_empinfo] t
+			where t.deletefg = '0' and t.empid = #{empid}
+			union all
+			SELECT 
+				t.empid, t.empname, t.entrytime, t.deletefg, 1 as flag
+			FROM [dbo].[t_empinfo] t
+			where t.deletefg = '0' and t.empid != #{empid} 
+		) V where V.deletefg = '0'
+	]]> 			
+		<if test="orgcdid!=null and orgcdid!=''">
+			and V.empid in (select empid from t_emporg where orgcdid = #{orgcdid})
+		</if>
+		<if test="depid!=null and depid!=''">
+			and V.empid in (select empid from t_emporg where depid = #{depid})
+		</if>
+		<if test="empname!=null and empname!=''">
+			and V.empname like '%'+#{empname}+'%'
+		</if>			
+	</select>
+	
+	<!-- 查询个人日程安排信息 -->    
+	<select id="pb001001searchDailyPlanListByIdDate" resultType="pb001Command" parameterType="java.util.Map">
+	<![CDATA[
+		SELECT 
+			convert(char(10), t.daily, 23) as daily, t.dailyid, t.empid, t.conflictflag, t.title, dict1.busidictname as eventtypedict, 
+			t.dailystarthm, t.dailyendhm, ROW_NUMBER() OVER(order by t.dailystarttime,t.conflictflag) as rownum 
+		from [dbo].[t_dailyplan] t 
+		left join [dbo].[s_busidict] dict1 
+			on t.eventtype = dict1.busidictid and dict1.busidicttypeid = 'OA_PB001_EventType' 
+	 		where t.empid = #{empid} and convert(char(10), t.daily, 23) = #{date} and t.deletefg = '0'			
+	]]> 			
+	</select>
+	
+	<!-- 查询日程安排某一时间段详细信息 -->    
+	<select id="pb001001expandById" resultType="pb001Command" parameterType="java.util.Map">
+	<![CDATA[
+		SELECT 
+			t.dailyid, t.empid, t.eventid, t1.exclusivefg as eventexclusivefg, t2.empname as originatename, t.originateid, t.dailycycle, dict2.busidictname as dailycycledict, t.conflictflag, t.eventtype, dict1.busidictname as eventtypedict, convert(char(10), t.daily, 23) as daily, 
+			t.dailystarthm, t.dailyendhm,t1.eventstarthm, t1.eventendhm, convert( char(10), t1.eventstart, 23) as eventstart,  convert( char(10), t1.eventend, 23) as eventend, 
+			convert( char(19), t1.eventstarttime, 120) as eventstarttime,  convert( char(19), t1.eventendtime, 120) as eventendtime,
+			convert( char(19), t.dailystarttime, 120) as dailystarttime,  convert( char(19), t.dailyendtime, 120) as dailyendtime, 
+			t.title, t.comment, convert( char(19), t1.createtime, 120) as createtime, convert( char(19), t.updatetime, 120) as updatetime, t3.empname as updator
+		from [dbo].[t_dailyplan] t 
+		inner join [dbo].[t_event] t1
+			on t.eventid = t1.eventid and t.deletefg = t1.deletefg 
+		left join [dbo].[t_empinfo] t2 
+			on t.originateid = t2.empid and t.deletefg = t2.deletefg 
+		left join [dbo].[t_empinfo] t3 
+			on t.updator = t3.empid and t.deletefg = t3.deletefg 
+		left join [dbo].[s_busidict] dict1 
+			on t.eventtype = dict1.busidictid and dict1.busidicttypeid = 'OA_PB001_EventType' 
+		left join [dbo].[s_busidict] dict2 
+			on t.dailycycle = dict2.busidictid and dict2.busidicttypeid = 'OA_PB001_DailyCycle'
+ 		where t.deletefg = '0' and t.dailyid = #{dailyid} 
+	]]>		
+	</select>
+	
+	<!-- 个人取消查询日程安排 -->    
+	<select id="pb001002personCancelSearchDailyPlan" resultType="pb001Command" parameterType="java.util.Map">
+	<![CDATA[
+		SELECT 
+			t.dailyid, t.empid, t.eventid, t.conflictflag, t.eventtype, convert(char(10), t.daily, 23) as daily, 
+			convert( char(19), t.dailystarttime, 120) as dailystarttime,  convert( char(19), t.dailyendtime, 120) as dailyendtime, 
+			t.title, t.comment, ROW_NUMBER() OVER(partition by t.empid,t.daily order by t.dailystarttime) as rownum 
+		from [dbo].[t_dailyplan] t where t.deletefg = '0' and t.daily in ( select daily from [dbo].[t_dailyplan] where eventid = #{eventid} ) 
+	]]>	
+		<if test="empid!=null and empid!=''">
+			and t.empid = #{empid}
+		</if>
+	</select>
+	
+	<!-- 取消查询日程安排 -->    
+	<select id="pb001002cancelSearchDailyPlan" resultType="pb001Command" parameterType="java.util.Map">
+	<![CDATA[
+		SELECT 
+			t.dailyid, t.empid, t.eventid, t.conflictflag, t.eventtype, convert(char(10), t.daily, 23) as daily, 
+			convert( char(19), t.dailystarttime, 120) as dailystarttime,  convert( char(19), t.dailyendtime, 120) as dailyendtime, 
+			t.title, t.comment, ROW_NUMBER() OVER(partition by t.empid,t.daily order by t.dailystarttime) as rownum 
+		from [dbo].[t_dailyplan] t where t.deletefg = '0' and t.daily in ( select daily from [dbo].[t_dailyplan] where eventid = #{eventid} ) 
+		and t.empid in (select empid from [dbo].[t_dailyplan] where eventid = #{eventid})
+	]]>	
+	</select>
+	
+	<!-- 更新日程冲突标识 --> 
+	<update id="pb001002updateDailyPlanConflict" parameterType="java.util.Map">
+	<![CDATA[
+        update t_dailyplan set
+           conflictflag = #{conflictflag}
+    	where dailyid = #{dailyid, jdbcType=VARCHAR} and deletefg = '0'           
+    ]]>
+    </update>
+    
+	<!-- 根据事件id查询相关参加者 -->    
+	<select id="pb001001searchConnectsByEventid" resultType="resultCommand" parameterType="java.util.Map">
+	<![CDATA[
+		SELECT 
+			t.eventid, t.empid, t1.empname
+		from [dbo].[t_eventconnect] t 
+		left join [dbo].[t_empinfo] t1 
+			on t.empid = t1.empid and t.deletefg = t1.deletefg 
+ 		where t.deletefg = '0' and t.eventid = #{eventid}
+	]]>		
+	</select>
+	
+	<!-- 根据事件id查询相关设备 -->    
+	<select id="pb001001searchDevicesByEventid" resultType="resultCommand" parameterType="java.util.Map">
+	<![CDATA[
+		SELECT 
+			t.eventid, t.dailydeviceid, t1.dailydevicename
+		from [dbo].[t_eventdevice] t 
+		left join [dbo].[t_dailydeviceinfo] t1 
+			on t.dailydeviceid = t1.dailydeviceid and t.deletefg = t1.deletefg 
+ 		where t.deletefg = '0' and t.eventid = #{eventid}
+	]]>		
+	</select>
+	
+	<update id="pb001002updateEvent" parameterType="event">
+	<![CDATA[
+        update t_event set
+           updator = #{updator, jdbcType=VARCHAR}
+           ,updatetime = #{updatetime, jdbcType=TIME}
+           ,exclusivefg = #{updateexclusivefg, jdbcType=VARCHAR}
+           ,orgid = #{orgid, jdbcType=VARCHAR}
+           ,dailycycle = #{dailycycle, jdbcType=VARCHAR}
+           ,eventtype = #{eventtype, jdbcType=VARCHAR}
+           ,eventstart = #{eventstart, jdbcType=DATE}
+           ,eventend = #{eventend, jdbcType=DATE}           
+           ,eventstarthm = #{eventstarthm, jdbcType=VARCHAR}
+           ,eventendhm = #{eventendhm, jdbcType=VARCHAR}           
+           ,eventstarttime = #{eventstarttime, jdbcType=TIME}
+           ,eventendtime = #{eventendtime, jdbcType=TIME}
+           ,title = #{title, jdbcType=VARCHAR}
+           ,comment = #{comment, jdbcType=VARCHAR}
+    	where eventid = #{eventid, jdbcType=VARCHAR} and deletefg = '0'           
+    ]]>
+    	<if test="exclusivefg!=null and exclusivefg!=''">
+			and exclusivefg = #{exclusivefg , jdbcType=VARCHAR}
+		</if>	   
+    </update>
+    <delete id="pb001002deleteEventConnect" parameterType="java.lang.String">
+    	delete from t_eventconnect where eventid = #{eventid, jdbcType=VARCHAR} and deletefg = '0'    
+    </delete>
+    <delete id="pb001002deleteEventDevice"  parameterType="java.lang.String">
+    	delete from t_eventdevice where eventid = #{eventid, jdbcType=VARCHAR} and deletefg = '0'    
+    </delete>
+    <update id="pb001002deleteEventTime" parameterType="eventTime">
+	<![CDATA[
+        update t_eventtime set
+           updator = #{updator, jdbcType=VARCHAR}
+           ,updatetime = #{updatetime, jdbcType=TIME}
+           ,exclusivefg = #{updateexclusivefg, jdbcType=VARCHAR}
+           ,orgid = #{orgid, jdbcType=VARCHAR}
+           ,deletefg = '1'
+    	where eventid = #{eventid, jdbcType=VARCHAR} and deletefg = '0'           
+    ]]>
+    </update>     
+    <update id="pb001002deleteDailyPlan" parameterType="event">
+	<![CDATA[
+        update t_dailyplan set
+           updator = #{updator, jdbcType=VARCHAR}
+           ,updatetime = #{updatetime, jdbcType=TIME}
+           ,exclusivefg = #{updateexclusivefg, jdbcType=VARCHAR}
+           ,orgid = #{orgid, jdbcType=VARCHAR}
+           ,deletefg = '1'
+    	where eventid = #{eventid, jdbcType=VARCHAR} and deletefg = '0'           
+    ]]>
+    </update>    
+    <update id="pb001002personCancelEvent" parameterType="event">
+	<![CDATA[
+        update t_event set
+           updator = #{updator, jdbcType=VARCHAR}
+           ,updatetime = #{updatetime, jdbcType=TIME}
+           ,exclusivefg = #{updateexclusivefg, jdbcType=VARCHAR}
+           ,orgid = #{orgid, jdbcType=VARCHAR}
+    	where eventid = #{eventid, jdbcType=VARCHAR} and deletefg = '0'           
+    ]]>
+    	<if test="exclusivefg!=null and exclusivefg!=''">
+			and exclusivefg = #{exclusivefg , jdbcType=VARCHAR}
+		</if>
+    </update>
+    <delete id="pb001002personCancelEventConnect"  parameterType="java.util.Map">
+    	delete from t_eventconnect where eventid = #{eventid, jdbcType=VARCHAR} and empid = #{empid, jdbcType=VARCHAR} 
+    	and deletefg = '0'    
+    </delete>
+    <update id="pb001002personCancelDailyPlan" parameterType="java.util.Map">
+	<![CDATA[
+        update t_dailyplan set
+           updator = #{updator, jdbcType=VARCHAR}
+           ,updatetime = #{updatetime, jdbcType=TIME}
+           ,exclusivefg = #{exclusivefg, jdbcType=VARCHAR}
+           ,orgid = #{orgid, jdbcType=VARCHAR}
+           ,deletefg = '1'        
+    	where eventid = #{eventid, jdbcType=VARCHAR} and empid = #{empid, jdbcType=VARCHAR}  
+    	and deletefg = '0'           
+    ]]>
+    </update>
+    <update id="pb001002CancelEvent" parameterType="event">
+	<![CDATA[
+        update t_event set
+           updator = #{updator, jdbcType=VARCHAR}
+           ,updatetime = #{updatetime, jdbcType=TIME}
+           ,exclusivefg = #{updateexclusivefg, jdbcType=VARCHAR}
+           ,orgid = #{orgid, jdbcType=VARCHAR}
+           ,status = '9'
+    	where eventid = #{eventid, jdbcType=VARCHAR} and deletefg = '0'           
+    ]]>
+    	<if test="exclusivefg!=null and exclusivefg!=''">
+			and exclusivefg = #{exclusivefg , jdbcType=VARCHAR}
+		</if>
+    </update>
+    <update id="pb001002CancelEventConnect"  parameterType="java.util.Map">
+    	update t_eventconnect set
+           updator = #{updator, jdbcType=VARCHAR}
+           ,updatetime = #{updatetime, jdbcType=TIME}
+           ,exclusivefg = #{exclusivefg, jdbcType=VARCHAR}
+           ,orgid = #{orgid, jdbcType=VARCHAR}
+           ,deletefg = '1'        
+    	where eventid = #{eventid, jdbcType=VARCHAR} and deletefg = '0'
+    </update>
+    <update id="pb001002CancelEventDevice"  parameterType="java.util.Map">
+    	update t_eventdevice set
+           updator = #{updator, jdbcType=VARCHAR}
+           ,updatetime = #{updatetime, jdbcType=TIME}
+           ,exclusivefg = #{exclusivefg, jdbcType=VARCHAR}
+           ,orgid = #{orgid, jdbcType=VARCHAR}
+           ,deletefg = '1'        
+    	where eventid = #{eventid, jdbcType=VARCHAR} and deletefg = '0'
+    </update>
+    <update id="pb001002CancelDailyPlan" parameterType="java.util.Map">
+	<![CDATA[
+        update t_dailyplan set
+           updator = #{updator, jdbcType=VARCHAR}
+           ,updatetime = #{updatetime, jdbcType=TIME}
+           ,exclusivefg = #{exclusivefg, jdbcType=VARCHAR}
+           ,orgid = #{orgid, jdbcType=VARCHAR}
+           ,deletefg = '1'        
+    	where eventid = #{eventid, jdbcType=VARCHAR} and deletefg = '0'           
+    ]]>
+    </update>
+    <update id="pb001002CancelEventTime" parameterType="java.util.Map">
+	<![CDATA[
+        update t_eventtime set
+           updator = #{updator, jdbcType=VARCHAR}
+           ,updatetime = #{updatetime, jdbcType=TIME}
+           ,exclusivefg = #{exclusivefg, jdbcType=VARCHAR}
+           ,orgid = #{orgid, jdbcType=VARCHAR}
+           ,deletefg = '1'        
+    	where eventid = #{eventid, jdbcType=VARCHAR} and deletefg = '0'           
+    ]]>
+    </update>
+</mapper>

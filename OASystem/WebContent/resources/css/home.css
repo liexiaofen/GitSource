@@ -1,0 +1,42 @@
+
+#inform{
+	border-top:#bfcfe0 2px solid; 
+	border-bottom:#bfcfe0 2px solid; 
+	font-size:12px; 
+	width:679px; 
+	text-align:left; 
+	margin:10px 0 10px 70px;
+	}
+.con02{
+	background:url(../images/homebg02.gif) #CCC; 
+	padding:0 0 10px 25px;
+	}
+.con02_2{
+	background:url(../images/homebg02_2.gif) #CCC;
+	padding:0 0 10px 25px;
+	}
+h3{
+	color:#5974b2; 
+	font-size:12px; 
+	border-bottom:#CCC 1px solid; 
+	padding:5px 0 4px 0; 
+	margin:5px 0;
+	}
+ul{
+	list-style-type:none; 
+	padding:0; margin:0;
+	}
+div.subcon01{
+	width:180px; 
+	float:left; 
+	margin:0 30px 0 0; 
+	padding:0;
+	}
+li{
+	height:18px; 
+	color:#666;
+	}
+#inform a{
+	color:#999; 
+	text-decoration:none;
+	}

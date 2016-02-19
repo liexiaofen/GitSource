@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+    "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+    
+<mapper namespace="pc.pc003">	
+    <!-- 查询申请管理一览信息 -->    
+	<select id="pc003001searchListByPage" resultType="applyResultCommand" parameterType="applySearchCommand">
+	<![CDATA[
+		select 
+			V.processtime, V.applyid, V.applyno, V.exclusivefg, V.applyempid, V.applyempname, 
+			V.processempid, V.processempname, V.applytype, V.applytypedict, V.status, V.statusdict, V.statusalias, 
+			ROW_NUMBER() OVER(order by V.statusalias, V.processtime desc, V.applyno ) as rownum 
+		from (
+			SELECT 
+				convert(char(19), t.processtime, 120) as processtime, t.applyid, t.applyno, t.exclusivefg, t.applyempid, t1.empname as applyempname, 
+				t.processempid, t2.empname as processempname, t.applytype, dict1.busidictname as applytypedict, t.status, dict2.busidictname as statusdict, '0' as statusalias
+			FROM [dbo].[t_applyform] t 
+			inner join [dbo].[t_empinfo] t1 
+				on t.applyempid = t1.empid and t.deletefg = t1.deletefg
+			inner join [dbo].[t_empinfo] t2 
+				on t.processempid = t2.empid and t.deletefg = t2.deletefg  
+			left join [dbo].[s_busidict] dict1 
+				on t.applytype = dict1.busidictid and dict1.busidicttypeid = 'OA_PC001_ApplyType' 
+			left join [dbo].[s_busidict] dict2 
+				on t.status = dict2.busidictid and dict2.busidicttypeid = 'OA_PC003_Status' 
+			where t.deletefg = '0' and ( (t.status = 1 and t.managercheckid = #{empid}) or (t.status = 2 and t.personnelcheckid = #{empid}) 
+				or (t.status = 3 and t.vicepresicheckid = #{empid}) or (t.status = 4 and t.presicheckid = #{empid}) )
+			union all
+			SELECT 
+				convert(char(19), t.processtime, 120) as processtime, t.applyid, t.applyno, t.exclusivefg, t.applyempid, t1.empname as applyempname, 
+				t.processempid, t2.empname as processempname, t.applytype, dict1.busidictname as applytypedict, t.status, dict2.busidictname as statusdict, '1' as statusalias
+			FROM [dbo].[t_applyform] t 
+			inner join [dbo].[t_empinfo] t1 
+				on t.applyempid = t1.empid and t.deletefg = t1.deletefg
+			inner join [dbo].[t_empinfo] t2 
+				on t.processempid = t2.empid and t.deletefg = t2.deletefg  
+			left join [dbo].[s_busidict] dict1 
+				on t.applytype = dict1.busidictid and dict1.busidicttypeid = 'OA_PC001_ApplyType' 
+			left join [dbo].[s_busidict] dict2 
+				on t.status = dict2.busidictid and dict2.busidicttypeid = 'OA_PC003_Status' 
+			where t.deletefg = '0' and ( (t.managercheckid = #{empid}) or (t.personnelcheckid = #{empid}) 
+				or (t.vicepresicheckid = #{empid}) or (t.presicheckid = #{empid}) ) 
+				and t.applyid not in (
+					SELECT t.applyid FROM [dbo].[t_applyform] t 
+					inner join [dbo].[t_empinfo] t1 
+						on t.applyempid = t1.empid and t.deletefg = t1.deletefg
+					inner join [dbo].[t_empinfo] t2 
+						on t.processempid = t2.empid and t.deletefg = t2.deletefg  
+					left join [dbo].[s_busidict] dict1 
+						on t.applytype = dict1.busidictid and dict1.busidicttypeid = 'OA_PC001_ApplyType' 
+					left join [dbo].[s_busidict] dict2 
+						on t.status = dict2.busidictid and dict2.busidicttypeid = 'OA_PC003_Status' 
+					where t.deletefg = '0' and ( (t.status = 1 and t.managercheckid = #{empid}) or (t.status = 2 and t.personnelcheckid = #{empid}) 
+					or (t.status = 3 and t.vicepresicheckid = #{empid}) or (t.status = 4 and t.presicheckid = #{empid}) )
+				)
+			) V where V.status != '9'  
+	]]> 
+		<if test="applyno!=null and applyno!=''">
+			and V.applyno like '%'+#{applyno}+'%'
+		</if>
+		<if test="applytype!=null and applytype!=''">
+			and V.applytype = #{applytype}
+		</if>	
+		<if test="statusalias!=null and statusalias!=''">
+			and V.statusalias = #{statusalias}
+		</if>	
+	</select>
+	<update id="pc003003Update" parameterType="applyform">
+	<![CDATA[
+        update t_applyform set
+           updator = #{updator, jdbcType=VARCHAR}
+           ,updatetime = #{updatetime, jdbcType=TIME}
+           ,exclusivefg = #{updateexclusivefg, jdbcType=VARCHAR}
+           ,orgid = #{orgid, jdbcType=VARCHAR}
+           ,processempid = #{processempid, jdbcType=VARCHAR}
+           ,processtime = #{processtime, jdbcType=TIME}          
+           ,status = #{status, jdbcType=VARCHAR}      
+    	where applyid = #{applyid, jdbcType=VARCHAR} and deletefg = '0'           
+    ]]>
+    	<if test="exclusivefg!=null and exclusivefg!=''">
+			and exclusivefg = #{exclusivefg , jdbcType=VARCHAR}
+		</if>	   
+    </update>
+</mapper>

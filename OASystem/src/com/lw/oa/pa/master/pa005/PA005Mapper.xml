@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+    "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+    
+<mapper namespace="pa.pa005">	
+    <!-- 查询年假信息 -->    
+	<select id="pa005001searchListByPage" resultType="pa005001resultCommand" parameterType="pa005001searchCommand">
+	<![CDATA[
+		SELECT 
+			convert(char(19), t.updatetime, 120) as updatetime,t.exclusivefg,t.empid,t.year,t1.empname,
+			t.legalvctn,t.wealvctn,t.extraworkvctn,t.haslegalvctn,t.haswealvctn,t.hasextraworkvctn,
+			t.unlegalvctn,t.unwealvctn,t.unextraworkvctn,
+			ROW_NUMBER() OVER(order by t.updatetime desc) as rownum 
+		FROM [dbo].[t_annualvctn] t 
+		inner join [dbo].[t_empinfo] t1 
+			on t.empid = t1.empid and t.deletefg = t1.deletefg
+		where t.deletefg = '0' 
+	]]> 
+		<if test="empname!=null and empname!=''">
+			and t1.empname like '%'+#{empname}+'%'
+		</if>
+		<if test="year!=null and year!=''">
+			and t.year = #{year}
+		</if>
+	</select>
+	<!-- 查询员工信息 -->    
+	<select id="pa005003searchEmpList" resultType="resultCommand" parameterType="pa005001searchCommand">
+	<![CDATA[
+		SELECT 
+			t.empid,t.workage
+		FROM [dbo].[t_empinfo] t
+		where t.deletefg = '0' 
+	]]> 
+	</select>
+	<!-- 查询年假明细信息 -->    
+	<select id="pa005001expandByEmpidYear" resultType="pa005Command" parameterType="pa005001searchCommand">
+	<![CDATA[
+		SELECT 
+			convert(char(19), t.updatetime, 120) as updatetime,t.exclusivefg,t.empid,t.year,t1.empname,
+			t.legalvctn,t.wealvctn,t.extraworkvctn,t.haslegalvctn,t.haswealvctn,t.hasextraworkvctn,
+			t.unlegalvctn,t.unwealvctn,t.unextraworkvctn,
+			ROW_NUMBER() OVER(order by t.updatetime desc) as rownum 
+		FROM [dbo].[t_annualvctn] t 
+		inner join [dbo].[t_empinfo] t1 
+			on t.empid = t1.empid and t.deletefg = t1.deletefg
+		where t.deletefg = '0' 
+	]]> 
+		<if test="empid!=null and empid!=''">
+			and t.empid = #{empid}
+		</if>
+		<if test="year!=null and year!=''">
+			and t.year = #{detailyear}
+		</if>
+		<if test="exclusivefg!=null and exclusivefg!=''">
+			and t.exclusivefg = #{exclusivefg}
+		</if>
+	</select>
+	<update id="pa005004update" parameterType="annualvctn">
+	<![CDATA[
+        update t_annualvctn set
+           updator = #{updator, jdbcType=VARCHAR}
+           ,updatetime = #{updatetime, jdbcType=TIME}
+           ,exclusivefg = #{updateexclusivefg, jdbcType=VARCHAR}
+           ,orgid = #{orgid, jdbcType=VARCHAR}
+           ,legalvctn = #{legalvctn, jdbcType=VARCHAR}
+           ,wealvctn = #{wealvctn, jdbcType=VARCHAR}
+           ,extraworkvctn = #{extraworkvctn, jdbcType=VARCHAR}
+           ,unlegalvctn = #{unlegalvctn, jdbcType=VARCHAR}
+           ,unwealvctn = #{unwealvctn, jdbcType=VARCHAR}
+           ,unextraworkvctn = #{unextraworkvctn, jdbcType=VARCHAR}
+    	where empid = #{empid, jdbcType=VARCHAR} and year = #{year, jdbcType=VARCHAR} and deletefg = '0'           
+    ]]>
+    	<if test="exclusivefg!=null and exclusivefg!=''">
+			and exclusivefg = #{exclusivefg , jdbcType=VARCHAR}
+		</if>	   
+    </update>    
+</mapper>

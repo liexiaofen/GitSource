@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+    "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+    
+<mapper namespace="pa.pa004">	
+    <!-- 查询日程设备信息 -->    
+	<select id="pa004001searchListByPage" resultType="pa004001resultCommand" parameterType="pa004001searchCommand">
+	<![CDATA[
+		SELECT 
+			convert(char(19), t.updatetime, 120) as updatetime,t.exclusivefg,t.orgcdid,t.orgname,t.orgshortname,t.regionid, dict1.busidictname as regioniddict,
+			t.address,t.tel,t.fax,t.zipcode,convert(char(10), t.effectivedate, 23) as effectivedate,ROW_NUMBER() OVER(order by t.regionid,t.updatetime desc) as rownum 
+		FROM [dbo].[s_organize] t 
+		left join [dbo].[s_busidict] dict1 
+			on t.regionid = dict1.busidictid and dict1.busidicttypeid = 'OA_COMMON_Region' 
+		where t.deletefg = '0' 
+	]]> 
+		<if test="regionid!=null and regionid!=''">
+			and t.regionid = #{regionid}
+		</if>
+		<if test="orgname!=null and orgname!=''">
+			and t.orgname like '%'+#{orgname}+'%'
+		</if>		
+	</select>
+	<!-- 查询日程设备明细信息 -->    
+	<select id="pa004001expandById" resultType="pa004Command" parameterType="pa004001searchCommand">
+	<![CDATA[
+		SELECT 
+			t.exclusivefg,t.orgcdid,t.orgname,t.orgshortname,t.regionid,
+			t.address,t.tel,t.fax,t.zipcode,convert(char(10), t.effectivedate, 23) as effectivedate 
+		FROM [dbo].[s_organize] t 
+		where t.deletefg = '0' 
+	]]> 
+		<if test="orgcdid!=null and orgcdid!=''">
+			and t.orgcdid = #{orgcdid}
+		</if>
+	</select>
+	<update id="pa004002update" parameterType="organize">
+	<![CDATA[
+        update s_organize set
+           updator = #{updator, jdbcType=VARCHAR}
+           ,updatetime = #{updatetime, jdbcType=TIME}
+           ,exclusivefg = #{updateexclusivefg, jdbcType=VARCHAR}
+           ,orgid = #{orgid, jdbcType=VARCHAR}
+           ,regionid = #{regionid, jdbcType=VARCHAR}
+           ,orgname = #{orgname, jdbcType=VARCHAR}
+           ,orgshortname = #{orgshortname, jdbcType=VARCHAR}
+           ,address = #{address, jdbcType=VARCHAR}
+           ,tel = #{tel, jdbcType=VARCHAR}
+           ,fax = #{fax, jdbcType=VARCHAR}
+           ,zipcode = #{zipcode, jdbcType=VARCHAR}
+           ,effectivedate = #{effectivedate, jdbcType=DATE}
+    	where orgcdid = #{orgcdid, jdbcType=VARCHAR} and deletefg = '0'           
+    ]]>
+    	<if test="exclusivefg!=null and exclusivefg!=''">
+			and exclusivefg = #{exclusivefg , jdbcType=VARCHAR}
+		</if>	   
+    </update>
+    <update id="pa004002delete" parameterType="organize">
+	<![CDATA[
+        update s_organize set
+           updator = #{updator, jdbcType=VARCHAR}
+           ,updatetime = #{updatetime, jdbcType=TIME}
+           ,exclusivefg = #{updateexclusivefg, jdbcType=VARCHAR}
+           ,orgid = #{orgid, jdbcType=VARCHAR}
+           ,deletefg = '1'
+    	where orgcdid = #{orgcdid, jdbcType=VARCHAR} and deletefg = '0'           
+    ]]>
+    	<if test="exclusivefg!=null and exclusivefg!=''">
+			and exclusivefg = #{exclusivefg , jdbcType=VARCHAR}
+		</if>     
+    </update>
+   
+</mapper>

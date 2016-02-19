@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+    "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+    
+<mapper namespace="fa.fa004">
+	<!-- 根据业务字典类型id查询业务字典 -->    
+	<select id="fa004001searchDictById" resultType="fa004001resultCommand" parameterType="fa004001searchCommand">
+	<![CDATA[
+		SELECT 
+			busidicttypeid,
+			busidictid,
+			busidictname					
+		FROM [OA].[dbo].[s_busidict] t where 1=1
+	]]> 
+		<if test="busidicttypeid!=null and busidicttypeid!=''">
+			and t.busidicttypeid = #{busidicttypeid}
+		</if>
+		<if test="busidictid!=null and busidictid!=''">
+			and t.busidictid = #{busidictid}
+		</if>
+		order by t.sortno	
+	</select>
+</mapper>
