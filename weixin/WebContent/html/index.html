@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Index</title>
+<link rel="stylesheet" href="../css/jquery.mobile-1.4.5.min.css" />
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script src="../js/jquery.mobile-1.4.5.min.js"></script>
+</head>
+
+<script type="text/javascript">
+$(document).on("pageinit","#div_index",function(){
+
+	//打卡查询
+	$("#btnchecklist").on("click",function(){
+		window.location.href="checklist.html";
+	}); 
+
+	//工作日志
+	$("#btnworkloglist").on("click",function(){
+		window.location.href="checklist.html";
+	}); 
+
+	//报销
+	$("#btnexpenseacclist").on("click",function(){
+		window.location.href="checklist.html";
+	}); 
+
+	//请假审核
+	$("#btnvocationcheck").on("click",function(){
+		window.location.href="vocationcheck.html";
+	});
+
+	//假期查询
+	$("#btnvocationlist").on("click",function(){
+		window.location.href="vocationsum.html";
+	}); 
+
+	//加班查询
+	$("#btnovertimelist").on("click",function(){
+		window.location.href="checklist.html";
+	}); 
+
+	//公告
+	$("#btnannouncelist").on("click",function(){
+		window.location.href="checklist.html";
+	}); 
+
+	
+  
+
+}); 
+</script>
+
+
+
+<body>
+<div data-role="page" id="div_index" data-add-back-btn="true">
+	<!-- 页眉 -->
+	<div data-role="header"><!--data-position="fixed"-->
+		<h1>首页</h1>
+	</div>
+	
+	
+	<div data-role="content"><!-- 内容 START -->
+		
+	<div class="ui-grid-a">
+		<div class="ui-block-b">
+			<div style="text-align:center">
+				<input id="btnchecklist" type="image" src="../images/手机打卡.png" data-role="none" />
+				<label>打卡查询</label>
+            </div>
+			<div style="text-align:center">
+				<input id="btnworkloglist" type="image" src="../images/手机打卡.png" data-role="none" />
+				<label>工作日志</label>
+			</div>
+			<div style="text-align:center">
+				<input id="btnexpenseacclist" type="image" src="../images/手机打卡.png" data-role="none" />
+				<label>报销</label>
+			</div>
+			<div style="text-align:center">
+				<input id="btnvocationcheck" type="image" src="../images/手机打卡.png" data-role="none" />
+				<label>请假审核</label>
+			</div>
+		</div>
+		<div class="ui-block-b">
+			<div style="text-align:center">
+				<input id="btnvocationlist" type="image" src="../images/手机打卡.png" data-role="none" />
+				<label>假期查询</label>
+			</div>
+			<div style="text-align:center">
+				<input id="btnovertimelist" type="image" src="../images/手机打卡.png" data-role="none" />
+				<label>加班查询</label>
+			</div>
+			<div style="text-align:center">
+				<input id="btnannouncelist" type="image" src="../images/手机打卡.png" data-role="none" />
+				<label>公告</label>
+			</div>
+			<div style="text-align:center">
+				<input id="btnannouncelist" type="image" src="../images/手机打卡.png" data-role="none" />
+				<label>加班审核</label>
+			</div>
+		</div>
+	</div>
+	
+	</div><!-- 内容 END -->
+
+	
+
+	<!-- 页脚-->
+	<div data-role="footer" data-position="fixed">
+		<h1>@版权所有&nbsp;&nbsp;&nbsp;上海微恩索软件技术有限公司</h1>
+	</div>
+</div>
+
+
+
+</body>
+</html>

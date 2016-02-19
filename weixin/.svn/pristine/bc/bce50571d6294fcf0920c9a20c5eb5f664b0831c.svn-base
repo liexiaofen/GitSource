@@ -1,0 +1,4 @@
+a=com.mysql.jdbc.Driver
+b=jdbc:mysql://192.168.1.2:3306/mobi_app?useUnicode=true&amp;characterEncoding=UTF-8
+c=root
+d=12344567

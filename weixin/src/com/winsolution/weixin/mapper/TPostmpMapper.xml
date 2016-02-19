@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper   
+	 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+	 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.winsolution.weixin.dao.ITPosTmpDao">  
+<!--  新增记录  -->  
+    <insert id="insertTPosTmp" parameterType="TPostmpEntity" >  
+       insert into t_postmp(uid,createTime,latitude,longitude,prec,appid) values(#{uid},#{createTime},#{latitude},#{longitude},#{prec},#{appid})   
+   </insert>
+   
+   <select id="getTPosTmpCountInFiveMinutes" parameterType="TPostmpEntity" resultType="int">
+   		select count(1) from t_postmp
+   		where
+   		createTime+300000>=${createTime}+0 and
+   		uid=#{uid}
+   </select>
+</mapper>  

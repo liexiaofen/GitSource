@@ -1,0 +1,19 @@
+org.springframework.aop- 4.1.4.RELEASE--------------------Spring的面向切面编程,提供AOP(面向切面编程)实现  
+org.springframework.aspects- 4.1.4.RELEASE----------------Spring提供对AspectJ框架的整合\  
+org.springframework.beans- 4.1.4.RELEASE------------------SpringIoC(依赖注入)的基础实现  
+org.springframework.context- 4.1.4.RELEASE----------------Spring提供在基础IoC功能上的扩展服务，此外还提供许多企业级服务的支持，如邮件服务、任务调度、JNDI定位、EJB集成、远程访问、缓存以及各种视图层框架的封装等  
+org.springframework.context.support- 4.1.4.RELEASE--------Spring-context的扩展支持,用于MVC方面  
+org.springframework.core- 4.1.4.RELEASE-------------------Spring4.1.4的核心工具包 
+org.springframework.expression- 4.1.4.RELEASE-------------Spring表达式语言 
+org.springframework.instrument- 4.1.4.RELEASE-------------Spring4.1.4对服务器的代理接口  
+org.springframework.instrument.tomcat- 4.1.4.RELEASE------Spring4.1.4对Tomcat的连接池的集成  
+org.springframework.jdbc- 4.1.4.RELEASE-------------------对JDBC的简单封装 
+org.springframework.jms- 4.1.4.RELEASE--------------------为简化JMS API的使用而作的简单封装  
+org.springframework.messaging- 4.1.4.RELEASE--------------对JMS的扩展
+org.springframework.orm- 4.1.4.RELEASE--------------------整合第三方的ORM框架，如hibernate,ibatis,jdo，以及spring的JPA实现  
+org.springframework.oxm- 4.1.4.RELEASE--------------------Spring 对Object/XMl的映射支持,可以让Java与XML之间来回切换  
+org.springframework.test- 4.1.4.RELEASE--------------------对Junit等测试框架的简单封装  
+org.springframework.tx- 4.1.4.RELEASE----------------------为JDBC、Hibernate、JDO、JPA等提供的一致的声明式和编程式事务管理  
+org.springframework.web- 4.1.4.RELEASE---------------------SpringWeb下的工具  
+org.springframework.webmvc- 4.1.4.RELEASE------------------SpringMVC 
+org.springframework.websocket- 4.1.4.RELEASE---------------对websocket操作

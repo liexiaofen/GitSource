@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias alias="TempSignEntity" type="com.winsolution.weixin.entity.TempSignEntity"/>
+		<typeAlias alias="TempInfoEntity" type="com.winsolution.weixin.entity.TempInfoEntity"/>
+		<typeAlias alias="TPostmpEntity" type="com.winsolution.weixin.entity.TPostmpEntity" />
+	</typeAliases>
+	
+	<!-- 配置mysql分页拦截器 start --> 
+	<plugins>
+		<plugin interceptor="com.winsolution.weixin.mybatis.interceptor.PagePlugin">
+			<property name="dialect" value="mysql" />
+			<property name="pageSqlId" value=".*Lst.*" />
+		</plugin>
+	</plugins>
+</configuration>

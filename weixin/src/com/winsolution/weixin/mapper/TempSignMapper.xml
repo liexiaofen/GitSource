@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper   
+	 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+	 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.winsolution.weixin.dao.ITempSignDao">
+	<resultMap type="TempSignEntity" id="tempSignResult">
+		<result property="rownum" column="rownum" />
+		<result property="signtype" column="signtype" />
+		<result property="msgtime" column="msgtime" />
+		<result property="longitude" column="longitude" />
+		<result property="latitude" column="latitude" />
+		<association property="tempInfo" column="usrname" javaType="TempInfoEntity" resultMap="tempInfoTypeResult"/>
+	</resultMap>
+	 <resultMap type="TempInfoEntity" id="tempInfoTypeResult">
+		<result property="uid" column="uid" />
+		<result property="usrname" column="usrname" />
+	</resultMap>
+	<!-- 新增记录 -->
+	<insert id="insertTempSign" parameterType="TempSignEntity">
+		insert into t_empsign
+		(latitude,longitude,prec,appid,uid,signtype,msgtime,signyyyymm,signdate,msgfrom,ent)
+		select
+		latitude,longitude,prec,appid,#{uid},#{signtype},#{msgtime},#{signyyyymm},#{signdate},#{msgfrom},#{ent}
+		from t_postmp where uid = #{uid} order by createTime desc limit 1
+	</insert>
+
+	<!-- 考勤 -->
+	<select id="getTempSignLst" parameterType="TempSignEntity" resultMap="tempSignResult">
+		select @rownum:=@rownum+1 AS rownum,t.* from (
+		select 
+			i.usrname,
+			i.uid,
+			case when s.signtype ='1' then '签到' else '签退' end as signtype,
+			from_unixtime(msgtime/1000, '%Y-%m-%d %H:%i:%s') as msgtime
+		from t_empsign s 
+		left join t_empinfo i
+		on s.uid = i.uid
+		where 1=1  
+		<if test="signtype!=null">
+			and signtype=#{signtype}
+		</if>
+		<if test="startdate!=null">
+			 and signdate &gt;= #{startdate}
+		</if>
+		<if test="enddate!=null">
+		  	 and signdate &lt;= #{enddate}
+		</if> 
+		order by s.msgtime desc
+		) t,(select @rownum:=0) r
+	</select>
+	
+	<!--地图 -->
+	<select id="getMap" parameterType="TempSignEntity" resultMap="tempSignResult">
+		select 
+			t2.usrname,
+			t1.uid,
+			case when t1.signtype ='1' then min(msgtime) else max(msgtime) end as msgtime, 
+			t1.msgtime,
+			t1.longitude,
+			t1.latitude
+		from t_empsign t1 
+		left join t_empinfo t2
+		on t1.uid = t2.uid
+		where 1=1  
+		<if test="signtype!=null">
+			and t1.signtype = #{signtype}
+		</if>
+		<if test="startdate!=null">
+			 and t1.signdate = #{startdate}
+		</if>
+		group by t1.uid,t1.signtype
+	</select>
+</mapper>  
