@@ -23,7 +23,7 @@ public class PC001Controller implements ConstantUtil{
 	//休假申请画面	
 	private static final String  PAGE_APPLY_A1 = "pc/pc001/pc001002A1";
 	//休假取消申请画面	
-	private static final String  PAGE_APPLY_A2 = "design";	
+	private static final String  PAGE_APPLY_A2 = "pc/pc001/pc001002A2";	
 	@Autowired
 	private IPC001Service pc001Service;
 	/**
