@@ -260,7 +260,7 @@ function btn_clear(obj) {
 					<font color="#ff0000">*</font><label class="message">员工号</label>
 				</td>	
 				<td class="td_value" width="26%">
-					<input id="empno" name="empno" class="input_txt input_num2" maxlength="100"  title="required,intege1" />
+					<input id="empno" name="empno" class="input_txt" maxlength="10"  title="required" />
 				</td>			
 			</tr>	
 			<tr>				

@@ -263,7 +263,7 @@ $(document).ready(function(){
 					<font color="#ff0000">*</font><label class="message">员工号</label>
 				</td>
 				<td class="td_value">
-					<input id="empno" name="empno" class="input_txt input_num2" value="${command.empno}" maxlength="3"  title="required,intege1" />
+					<input id="empno" name="empno" class="input_txt" value="${command.empno}" maxlength="10"  title="required" />
 				</td>			
 			</tr>
 			<tr>
