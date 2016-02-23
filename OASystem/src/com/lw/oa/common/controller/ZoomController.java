@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.lw.oa.common.command.ApplyResultCommand;
 import com.lw.oa.common.command.DeviceOrderSearchCommand;
 import com.lw.oa.common.command.ResultCommand;
 import com.lw.oa.common.command.RetInfo;
@@ -38,6 +39,8 @@ public class ZoomController implements ConstantUtil {
 	private static final String PAGE_DEVICEORDER = "zoom/deviceOrderList";
 	// 机构信息一览模式窗口	
 	private static final String  PAGE_ORGLIST = "zoom/orgList";	
+	// 休假申请一览模式窗口	
+	private static final String  PAGE_APPLYA1LIST = "zoom/applyA1List";		
 	@Autowired
 	private IZoomService zoomService;
 
@@ -271,6 +274,50 @@ public class ZoomController implements ConstantUtil {
 		resultMap.put("orgname", orgname);
 		resultMap.put("searchRetInfo", searchRetInfo);
 		ModelAndView mav = new ModelAndView( PAGE_ORGLIST, resultMap);				
+		return mav;
+	}
+	 
+	/**
+	 * 休假申请一览画面
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = { "searchApplyA1List.do" },method = RequestMethod.GET)
+	public ModelAndView searchApplyA1List(HttpServletRequest request)
+	{			
+		String empid = request.getParameter("empid");
+		String applyno = request.getParameter("applyno");
+		@SuppressWarnings("unchecked")
+		List<ApplyResultCommand> list = (List<ApplyResultCommand>) zoomService.searchApplyA1List( empid, applyno);
+		RetInfo searchRetInfo = MessageUtil.getMessageNoResult(list.size());
+		Map<String,Object> resultMap = new HashMap<String,Object>();	
+		resultMap.put("list", list);
+		resultMap.put("empid", empid);
+		resultMap.put("applyno", applyno);
+		resultMap.put("searchRetInfo", searchRetInfo);
+		ModelAndView mav = new ModelAndView( PAGE_APPLYA1LIST, resultMap);				
+		return mav;
+	}
+	
+	/**
+	 * 模式窗口画面查询
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = { "searchApplyA1List.do" },method = RequestMethod.POST)
+	public ModelAndView searchApplyA1ModalList(HttpServletRequest request)
+	{			
+		String empid = request.getParameter("empid");
+		String applyno = request.getParameter("applyno");
+		@SuppressWarnings("unchecked")
+		List<ApplyResultCommand> list = (List<ApplyResultCommand>) zoomService.searchApplyA1List( empid, applyno);
+		RetInfo searchRetInfo = MessageUtil.getMessageNoResult(list.size());
+		Map<String,Object> resultMap = new HashMap<String,Object>();	
+		resultMap.put("list", list);
+		resultMap.put("empid", empid);
+		resultMap.put("applyno", applyno);
+		resultMap.put("searchRetInfo", searchRetInfo);
+		ModelAndView mav = new ModelAndView( PAGE_APPLYA1LIST, resultMap);				
 		return mav;
 	}
 }

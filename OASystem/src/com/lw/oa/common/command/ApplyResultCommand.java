@@ -34,7 +34,27 @@ public class ApplyResultCommand implements Serializable {
 	// 状态
 	private String statusalias;
 	// 状态业务字典
-	private String statusdict;
+	private String statusdict;													
+	// 休假事由类型	
+	private String vacatereasontype;
+	// 休假事由类型业务字典	
+	private String vacatereasontypedict;
+	// 其他备注
+	private String otherremark;
+	// 申请开始日	
+	private String applystart;
+	// 申请结束日
+	private String applyend;
+	// 申请开始时分
+	private String applystarthm;
+	// 申请结束时分
+	private String applyendhm;		
+	// 申请开始时间
+	private String applystarttime;
+	// 申请结束时间
+	private String applyendtime;
+	// 总工时
+	private String totalhours;											
 
 	public String getUpdatetime() {
 		return updatetime;
@@ -146,6 +166,86 @@ public class ApplyResultCommand implements Serializable {
 
 	public void setStatusdict(String statusdict) {
 		this.statusdict = statusdict;
+	}
+
+	public String getVacatereasontype() {
+		return vacatereasontype;
+	}
+
+	public void setVacatereasontype(String vacatereasontype) {
+		this.vacatereasontype = vacatereasontype;
+	}
+
+	public String getVacatereasontypedict() {
+		return vacatereasontypedict;
+	}
+
+	public void setVacatereasontypedict(String vacatereasontypedict) {
+		this.vacatereasontypedict = vacatereasontypedict;
+	}
+
+	public String getOtherremark() {
+		return otherremark;
+	}
+
+	public void setOtherremark(String otherremark) {
+		this.otherremark = otherremark;
+	}
+
+	public String getApplystart() {
+		return applystart;
+	}
+
+	public void setApplystart(String applystart) {
+		this.applystart = applystart;
+	}
+
+	public String getApplyend() {
+		return applyend;
+	}
+
+	public void setApplyend(String applyend) {
+		this.applyend = applyend;
+	}
+
+	public String getApplystarthm() {
+		return applystarthm;
+	}
+
+	public void setApplystarthm(String applystarthm) {
+		this.applystarthm = applystarthm;
+	}
+
+	public String getApplyendhm() {
+		return applyendhm;
+	}
+
+	public void setApplyendhm(String applyendhm) {
+		this.applyendhm = applyendhm;
+	}
+
+	public String getApplystarttime() {
+		return applystarttime;
+	}
+
+	public void setApplystarttime(String applystarttime) {
+		this.applystarttime = applystarttime;
+	}
+
+	public String getApplyendtime() {
+		return applyendtime;
+	}
+
+	public void setApplyendtime(String applyendtime) {
+		this.applyendtime = applyendtime;
+	}
+
+	public String getTotalhours() {
+		return totalhours;
+	}
+
+	public void setTotalhours(String totalhours) {
+		this.totalhours = totalhours;
 	}
 
 }

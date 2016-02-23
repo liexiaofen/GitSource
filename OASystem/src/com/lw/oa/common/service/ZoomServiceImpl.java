@@ -2,7 +2,10 @@ package com.lw.oa.common.service;
 
 import java.util.HashMap;
 import java.util.List;
+
 import org.springframework.stereotype.Service;
+
+import com.lw.oa.common.command.ApplyResultCommand;
 import com.lw.oa.common.command.DeviceOrderSearchCommand;
 import com.lw.oa.common.command.ResultCommand;
 import com.lw.oa.common.dao.IMybatisDAO;
@@ -84,6 +87,18 @@ public class ZoomServiceImpl implements IZoomService,ConstantUtil {
 		@SuppressWarnings("unchecked")
 		List<ResultCommand> list = (List<ResultCommand>) mybatisDAOImpl
 				.queryByObj("common.zoom.searchOrgList", map);
+		return list;
+	}	
+	@Override
+	public List<?> searchApplyA1List( String empid, String applyno){
+		// TODO Auto-generated method stub
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("empid", empid);
+		map.put("applyno", applyno);		
+		mybatisDAOImpl.openSession();
+		@SuppressWarnings("unchecked")
+		List<ApplyResultCommand> list = (List<ApplyResultCommand>) mybatisDAOImpl
+				.queryByObj("common.zoom.searchApplyA1List", map);
 		return list;
 	}	
 }
