@@ -234,12 +234,36 @@ $(document).ready(function(){
 		}		
 	});
 });
+/*
+*名       称: btn_applyA1ListSearch()
+*输入参数: 无
+*输出参数: 无
+*机       能: 休假申请列表查询
+*创 建  者: yuliang          
+*创建时间: 2016-02-23
+*更 新  者: 
+*更新时间: 
+*/
+function btn_applyA1ListSearch() {
+	c_ShowProgressBar(1); 
+	var obj = new Object();
+	obj.url = 'common/zoom/searchApplyA1List.do';
+	obj.navi = '申请管理 > 申请单填写 > 休假申请一览';
+	var ret = selectZoom( '<%= request.getContextPath()%>/'+obj.url+'?empid='+$('#applyempid').val(), obj);
+	if(ret){
+		if(ret[0]){
+			document.getElementById("eventdevicesid").value = ret[0];
+			document.getElementById("eventdevices").value = ret[1];	
+		}
+	}
+}
 </script>
 </head>
 <body>
 <form id="addForm" action="" method="post" >
-	<input name="applyempid" type="hidden"  value="${command.applyempid}" />
-	<input name="applytype" type="hidden"  value="${command.applytype}" />
+	<input id="applyempid" name="applyempid" type="hidden" value="${command.applyempid}" />
+	<input name="applytype" type="hidden" value="${command.applytype}" />
+	<input name="sourceid" type="hidden" />	
 	<%/*共通隐藏字段 start*/%>
 	<input name="pc001001searchcommand.empid" type="hidden"  value="${command.pc001001searchcommand.empid}" />
 	<input name="pc001001searchcommand.empname" type="hidden"  value="${command.pc001001searchcommand.empname}" />
@@ -268,7 +292,7 @@ $(document).ready(function(){
 				</td>
 				<td class="td_value" width="26%">
 					<input name="applyno" class="input_txt dis_input" value="" readonly="readonly"/>
-					<input name="search" id="search" type="button" class="btn" value="选&nbsp;择" onClick="btn_empListSearch()"/>
+					<input name="search" id="search" type="button" class="btn" value="选&nbsp;择" onClick="btn_applyA1ListSearch()"/>
 					<input name="reset" id="reset" type="button" class="btn" value="清&nbsp;空" onclick="btn_clear(this)">
 				</td>
 			</tr>
