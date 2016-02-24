@@ -68,32 +68,48 @@ function btn_close() {
 */
 function btn_sure()
 {
+	var obj = $( "input[name='rad']:checked" );
+	if ( obj.length < 1 ) {
+		alert(Message.getString("MSG_COMM_0007"));
+		return;
+	}
 	var retArray = new Array();
 	retArray[0] = '';
 	retArray[1] = '';
-	var subBox = $("input[name='subBox']:checked");
-	if(subBox.length == 0){
-		window.close(); 
-	}
-	for(var i=0; i<subBox.length; i++){
-		retArray[0] = retArray[0] + $(subBox[i]).parent().find('input[name="empid"]').val() + ',';
-		retArray[1] = retArray[1] + $(subBox[i]).parent().find('input[name="empname"]').val() + ',';
-	}
-	retArray[0] = retArray[0].substr(0, retArray[0].length - 1);
-	retArray[1] = retArray[1].substr(0, retArray[1].length - 1);
+	retArray[2] = '';
+	retArray[3] = '';
+	retArray[4] = '';
+	retArray[5] = '';
+	retArray[6] = '';
+	retArray[7] = '';
+	retArray[8] = '';
+	retArray[9] = '';
+	var applyid = $(obj).parent().parent().find('input[name="applyid"]').val();
+	var applyno = $(obj).parent().parent().find('input[name="applyno"]').val();
+	var vacatereasontype = $(obj).parent().parent().find('input[name="vacatereasontype"]').val();
+	var vacatereasontypedict = $(obj).parent().parent().find('input[name="vacatereasontypedict"]').val();
+	var otherremark = $(obj).parent().parent().find('input[name="otherremark"]').val();
+	var applystart = $(obj).parent().parent().find('input[name="applystart"]').val();
+	var applyend = $(obj).parent().parent().find('input[name="applyend"]').val();
+	var applystarthm = $(obj).parent().parent().find('input[name="applystarthm"]').val();
+	var applyendhm = $(obj).parent().parent().find('input[name="applyendhm"]').val();
+	var totalhours = $(obj).parent().parent().find('input[name="totalhours"]').val();
+	retArray[0] = applyid;
+	retArray[1] = applyno;
+	retArray[2] = vacatereasontype;
+	retArray[3] = vacatereasontypedict;
+	retArray[4] = otherremark;
+	retArray[5] = applystart;
+	retArray[6] = applyend;
+	retArray[7] = applystarthm;
+	retArray[8] = applyendhm;
+	retArray[9] = totalhours;
 	window.returnValue = retArray; 
 	window.close(); 
 }
 //初始化全选框
 $(function() {
 	$('#span1').text(navi);
-    $("#checkAll").click(function() {
-         $('input[name="subBox"]').attr("checked",this.checked); 
-     });
-     var $subBox = $("input[name='subBox']");
-     $subBox.click(function(){
-         $("#checkAll").attr("checked",$subBox.length == $("input[name='subBox']:checked").length ? true : false);
-     });
  });
 
 </script>
@@ -152,7 +168,7 @@ $(function() {
 	<div class="div_result" id="div_result">  
 		<table id="tresult" class="pg_result">
 		    <tr class="pg_result_head">
-		    	<td width="3%"><input type="checkbox" name="checkAll" id="checkAll" value='abc'/></td>
+		    	<td width="3%"></td>
 		    	<td width="3%">&nbsp;序号&nbsp;</td>
 				<td width="15%" nowrap>&nbsp;申请单号&nbsp;</td>		
 				<td width="15%" nowrap>&nbsp;申请类型&nbsp;</td>
@@ -164,16 +180,22 @@ $(function() {
 		    	<c:forEach items="${list}" var="iterator">
 		    		<tr class="pg_result_content">
 		    			<td align="center" nowrap>
-		    				<input name="subBox" type="checkbox" />
+		    				<input name="rad" type="radio" />
 		    			</td>
 		    			<% num++;%>
 		    			<td align="center" nowrap><%=num %></td>
 						<td align="left" nowrap>
-							<a href="#" onclick="javascript:link_view(this);return false;">${iterator.applyno}</a>
+							${iterator.applyno}
 							<input name="applyid" type="hidden"  value="${iterator.applyid}" />
-							<input name="exclusivefg" type="hidden"  value="${iterator.exclusivefg}" />						
-							<input name="applytype_result" type="hidden"  value="${iterator.applytype}" />
-							<input name="status" type="hidden"  value="${iterator.status}" />
+							<input name="applyno" type="hidden"  value="${iterator.applyno}" />	
+							<input name="vacatereasontype" type="hidden"  value="${iterator.vacatereasontype}" />
+							<input name="vacatereasontypedict" type="hidden"  value="${iterator.vacatereasontypedict}" />
+							<input name="otherremark" type="hidden"  value="${iterator.otherremark}" />
+							<input name="applystart" type="hidden"  value="${iterator.applystart}" />
+							<input name="applyend" type="hidden"  value="${iterator.applyend}" />
+							<input name="applystarthm" type="hidden"  value="${iterator.applystarthm}" />
+							<input name="applyendhm" type="hidden"  value="${iterator.applyendhm}" />
+							<input name="totalhours" type="hidden"  value="${iterator.totalhours}" />	
 						</td>
 						<td align="center" nowrap>${iterator.applytypedict}</td>
 						<td align="center" nowrap>${iterator.statusdict}</td>

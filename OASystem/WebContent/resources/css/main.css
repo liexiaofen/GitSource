@@ -306,9 +306,11 @@ vertical-align:middle;
 }
 .input_small{
 width: 60px;
+height: 20px;
 }
 .input_short{
 width: 120px;
+height: 20px;
 }
 .input_middle{
 width: 190px;

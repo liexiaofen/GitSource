@@ -252,18 +252,50 @@ function btn_applyA1ListSearch() {
 	var ret = selectZoom( '<%= request.getContextPath()%>/'+obj.url+'?empid='+$('#applyempid').val(), obj);
 	if(ret){
 		if(ret[0]){
-			document.getElementById("eventdevicesid").value = ret[0];
-			document.getElementById("eventdevices").value = ret[1];	
+			document.getElementById("sourceid").value = ret[0];
+			document.getElementById("applyno").value = ret[1];	
+			document.getElementById("vacatereasontype").value = ret[2];
+			document.getElementById("vacatereasontypedict").value = ret[3];	
+			document.getElementById("otherremark").value = ret[4];
+			document.getElementById("applystart").value = ret[5];	
+			document.getElementById("applyend").value = ret[6];
+			document.getElementById("applystarthm").value = ret[7];	
+			document.getElementById("applyendhm").value = ret[8];
+			document.getElementById("totalhours").value = ret[9];	
 		}
 	}
+}
+/*
+*名       称: btn_clear()
+*输入参数: 无
+*输出参数: 无
+*机       能: 清空
+*创 建  者: yuliang          
+*创建时间: 2016-02-24
+*更 新  者: 
+*更新时间: 
+*/
+function btn_clear(obj) {
+	if ( !window.confirm( Message.getString("MSG_IC_COMM_0021"))) 
+		return;
+	document.getElementById("sourceid").value = '';
+	document.getElementById("applyno").value = '';	
+	document.getElementById("vacatereasontype").value = '';
+	document.getElementById("vacatereasontypedict").value = '';	
+	document.getElementById("otherremark").value = '';
+	document.getElementById("applystart").value = '';	
+	document.getElementById("applyend").value = '';
+	document.getElementById("applystarthm").value = '';	
+	document.getElementById("applyendhm").value = '';
+	document.getElementById("totalhours").value = '';
 }
 </script>
 </head>
 <body>
 <form id="addForm" action="" method="post" >
 	<input id="applyempid" name="applyempid" type="hidden" value="${command.applyempid}" />
-	<input name="applytype" type="hidden" value="${command.applytype}" />
-	<input name="sourceid" type="hidden" />	
+	<input id="applytype" name="applytype" type="hidden" value="${command.applytype}" />
+	<input id="sourceid" name="sourceid" type="hidden" />	
 	<%/*共通隐藏字段 start*/%>
 	<input name="pc001001searchcommand.empid" type="hidden"  value="${command.pc001001searchcommand.empid}" />
 	<input name="pc001001searchcommand.empname" type="hidden"  value="${command.pc001001searchcommand.empname}" />
@@ -291,9 +323,9 @@ function btn_applyA1ListSearch() {
 					<label class="message">休假申请单号</label>
 				</td>
 				<td class="td_value" width="26%">
-					<input name="applyno" class="input_txt dis_input" value="" readonly="readonly"/>
+					<input id="applyno" name="applyno" class="input_txt dis_input" readonly="readonly"/>
 					<input name="search" id="search" type="button" class="btn" value="选&nbsp;择" onClick="btn_applyA1ListSearch()"/>
-					<input name="reset" id="reset" type="button" class="btn" value="清&nbsp;空" onclick="btn_clear(this)">
+					<input name="reset" id="reset" type="button" class="btn" value="清&nbsp;空" onclick="btn_clear()">
 				</td>
 			</tr>
 			<tr>
@@ -315,11 +347,12 @@ function btn_applyA1ListSearch() {
 					<font color="#ff0000">*</font><label class="message">请假事由</label>
 				</td>
 				<td class="td_value"  width="26%">
-					<dict:select id="vacatereasontype" name="vacatereasontype" busiDictTypeId="OA_PC001_VacReasonType" cssClass="input_select" nullLabel="请选择" title='required'></dict:select>
+					<input id="vacatereasontypedict" name="vacatereasontypedict" class="input_txt dis_input" readonly="readonly" title="required"/>
+					<input id="vacatereasontype" name="vacatereasontype" type="hidden" />	
 				</td>
 				<td class="td_key" width="8%"><label class="message">其他休假请注明</label></td>
 				<td class="td_value" colspan="3">
-					<input id="otherremark" name="otherremark" class="input_bigger1" maxlength="50" />
+					<input id="otherremark" name="otherremark" class="input_bigger1 dis_input" maxlength="50" readonly="readonly"/>
 				</td>							
 			</tr>
 			<tr>
@@ -327,12 +360,12 @@ function btn_applyA1ListSearch() {
 					<font color="#ff0000">*</font><label class="message">请假时间</label>
 				</td>
 				<td class="td_value" colspan="3">
-					<input id="applystart" name="applystart" class="input_date Wdate" value="${command.currentdate}" readonly="readonly" onclick="WdatePicker()" title="required"/>&nbsp;<dict:select id="applystarthm" name="applystarthm" busiDictTypeId="OA_PB001_DailyHM" cssClass="input_select_small" value="08:30" nullLabel="请选择" title="required"></dict:select>&nbsp;~
-					<input id="applyend" name="applyend" class="input_date Wdate" value="${command.currentdate}" readonly="readonly" onclick="WdatePicker()" title="required"/>&nbsp;<dict:select id="applyendhm" name="applyendhm" busiDictTypeId="OA_PB001_DailyHM" cssClass="input_select_small" value="08:30" nullLabel="请选择" title="required"></dict:select>
+					<input id="applystart" name="applystart" class="input_short dis_input" readonly="readonly" title="required"/>&nbsp;<input id="applystarthm" name="applystarthm" class="input_small dis_input" readonly="readonly" title="required" />&nbsp;~
+					<input id="applyend" name="applyend" class="input_short dis_input" readonly="readonly" title="required"/>&nbsp;<input id="applyendhm" name="applyendhm" class="input_small dis_input" readonly="readonly" title="required" />
 				</td>
 				<td class="td_key" width="8%"><font color="#ff0000">*</font><label class="message">总工时</label></td>
 				<td class="td_value" width="26%">
-					<input id="totalhours" name="totalhours" class="input_txt input_num1" title='required' maxlength="3"/>小时
+					<input id="totalhours" name="totalhours" class="input_txt dis_input" readonly="readonly" title='required' maxlength="3"/>小时
 				</td>								
 			</tr>			
 			<tr>				

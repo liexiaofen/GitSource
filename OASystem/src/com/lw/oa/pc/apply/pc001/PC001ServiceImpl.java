@@ -137,7 +137,7 @@ public class PC001ServiceImpl implements IPC001Service,ConstantUtil {
 		entity.setVacatereasontype( command.getVacatereasontype());
 		entity.setOtherremark( command.getOtherremark());
 		entity.setApplyreason( command.getApplyreason());
-		if(APPLY_A1.equals(command.getApplytype())){
+		if(APPLY_A1.equals(command.getApplytype())||APPLY_A2.equals(command.getApplytype())){
 			entity.setApplystarthm( command.getApplystarthm());
 			entity.setApplyendhm( command.getApplyendhm());		
 			entity.setApplystart( DateUtil.parseDate( command.getApplystart(), DATE_FORMAT_YMD));

@@ -136,7 +136,8 @@
 	<select id="searchApplyA1List" resultType="applyResultCommand" parameterType="java.util.Map">
 	<![CDATA[
 		SELECT 
-			convert(char(19), t.processtime, 120) as processtime, t.vacatereasontype, t.otherremark, t.applystarthm, t.applyendhm,
+			convert(char(19), t.processtime, 120) as processtime, t.vacatereasontype, dict3.busidictname as vacatereasontypedict, 
+			t.otherremark, t.applystarthm, t.applyendhm,
 			convert(char(10), t.applystart, 23) as applystart, convert(char(10), t.applyend, 23) as applyend, 
 			convert(char(19), t.applystarttime, 120) as applystarttime, convert(char(19), t.applyendtime, 120) as applyendtime, t.applyid, 
 			t.applyno, t.exclusivefg, t.applyempid, t1.empname as applyempname, 
@@ -152,6 +153,8 @@
 			on t.applytype = dict1.busidictid and dict1.busidicttypeid = 'OA_PC001_ApplyType' 
 		left join [dbo].[s_busidict] dict2 
 			on t.status = dict2.busidictid and dict2.busidicttypeid = 'OA_PC002_Status' 
+		left join [dbo].[s_busidict] dict3 
+			on t.vacatereasontype = dict3.busidictid and dict3.busidicttypeid = 'OA_PC001_VacReasonType' 
 		where t.deletefg = '0' and t.applytype = 'A1' and t.status in ( '6', '7', '8') and t.applyempid = #{empid}
 	]]> 
 		<if test="applyno!=null and applyno!=''">
