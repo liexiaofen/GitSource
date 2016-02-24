@@ -79,6 +79,6 @@ public interface ConstantUtil {
 	public static final String APPLY_A3 = "A3";
 	//模板休假申请文件
 	public static final String TEMPLATE_A1_FILE = "template\\Apply_A1.xlsx";
-	
+	//模板休假取消申请文件
 	public static final String TEMPLATE_A2_FILE = "template\\Apply_A2.xlsx";
 }

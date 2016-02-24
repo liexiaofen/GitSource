@@ -27,6 +27,8 @@ public class ApplyFormCommand implements Serializable {
 	private String sourceid;
 	// 申请单号
 	private String applyno;
+	// 源申请单号
+	private String sourceapplyno;
 	// 申请人id
 	private String applyempid;
 	// 申请人
@@ -105,6 +107,8 @@ public class ApplyFormCommand implements Serializable {
 	private String applytype;
 	// 休假事由类型
 	private String vacatereasontype;
+	// 休假事由类型业务字典	
+	private String vacatereasontypedict;
 	// 其他备注
 	private String otherremark;
 	// 申请事由
@@ -243,6 +247,14 @@ public class ApplyFormCommand implements Serializable {
 
 	public void setApplyno(String applyno) {
 		this.applyno = applyno;
+	}
+
+	public String getSourceapplyno() {
+		return sourceapplyno;
+	}
+
+	public void setSourceapplyno(String sourceapplyno) {
+		this.sourceapplyno = sourceapplyno;
 	}
 
 	public String getApplyempid() {
@@ -555,6 +567,14 @@ public class ApplyFormCommand implements Serializable {
 
 	public void setVacatereasontype(String vacatereasontype) {
 		this.vacatereasontype = vacatereasontype;
+	}
+
+	public String getVacatereasontypedict() {
+		return vacatereasontypedict;
+	}
+
+	public void setVacatereasontypedict(String vacatereasontypedict) {
+		this.vacatereasontypedict = vacatereasontypedict;
 	}
 
 	public String getOtherremark() {

@@ -36,11 +36,7 @@ public class PC004Controller implements ConstantUtil {
 	// 休假申请详细画面
 	private static final String PAGE_APPLY_DETAIL_A1 = "pc/pc004/pc004002A1Detail";
 	// 休假取消申请详细画面
-	private static final String PAGE_APPLY_DETAIL_A2 = "design";
-	// 休假申请修改画面
-	private static final String PAGE_APPLY_UPDATE_A1 = "pc/pc004/pc004003A1Update";
-	// 休假取消申请修改画面
-	private static final String PAGE_APPLY_UPDATE_A2 = "design";
+	private static final String PAGE_APPLY_DETAIL_A2 = "pc/pc004/pc004002A2Detail";
 	@Autowired
 	private IPC004Service pc004Service;
 
@@ -185,15 +181,4 @@ public class PC004Controller implements ConstantUtil {
 		return page;
 	}
 
-	public String setApplyUpdatePage(String type) {
-		String page = StringUtils.EMPTY;
-		if (APPLY_A1.equals(type)) {
-			page = PAGE_APPLY_UPDATE_A1;
-		} else if (APPLY_A2.equals(type)) {
-			page = PAGE_APPLY_UPDATE_A2;
-		} else {
-			page = PAGE_APPLY_UPDATE_A2;
-		}
-		return page;
-	}
 }

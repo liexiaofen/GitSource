@@ -12,7 +12,7 @@ import com.lw.oa.common.command.ResumeEntity;
 
 public class TemplateUtil implements ConstantUtil{
 	/**
-	 * 模板数据写入
+	 * 休假申请模板数据写入
 	 * 
 	 * @param workbook
 	 *            工作簿
@@ -74,9 +74,72 @@ public class TemplateUtil implements ConstantUtil{
 		// 设置审核履历
 		setA1Resume( sheet, obj);
 	}
-	
-	public static Workbook templateA2write( Workbook workbook, ApplyFormCommand obj){
-		return null;
+	/**
+	 * 休假取消申请模板数据写入
+	 * 
+	 * @param workbook
+	 *            工作簿
+	 * @param obj
+	 *            数据集合
+	 */
+	public static void templateA2write( Workbook workbook, ApplyFormCommand obj){
+		Sheet sheet = workbook.getSheetAt(0);
+		// 设置当前日期
+		Row daterow = sheet.getRow(2);
+		Cell datecell = daterow.getCell(18);
+		String sysdate = DateUtil.getSystemTime(DATE_FORMAT_YMDHMS);
+		datecell.setCellValue(sysdate);
+		// 设置申请人
+		Row emprow = sheet.getRow(3);
+		Cell empcell = emprow.getCell(4);
+		empcell.setCellValue(obj.getApplyempname());
+		// 设置申请单号
+		Row applynorow = sheet.getRow(3);
+		Cell applynocell = applynorow.getCell(11);
+		applynocell.setCellValue(obj.getApplyno());
+		// 设置休假申请单号
+		Row sourceapplynorow = sheet.getRow(3);
+		Cell sourceapplynocell = sourceapplynorow.getCell(20);
+		sourceapplynocell.setCellValue(obj.getSourceapplyno());
+		// 设置机构
+		Row orgrow = sheet.getRow(4);
+		Cell orgcell = orgrow.getCell(4);
+		orgcell.setCellValue(obj.getOrgcddepposes());		
+		// 设置请假事由
+		String vacatetype = obj.getVacatereasontype();
+		setA1Vacatereasontype(sheet, vacatetype);
+		// 设置备注			 
+		Row otherremarkrow = sheet.getRow(8);
+		Cell otherremarkcell = otherremarkrow.getCell(12);
+		otherremarkcell.setCellValue(obj.getOtherremark());
+		// 设置请假时间
+		Row startrow = sheet.getRow(9);
+		Cell startcell = startrow.getCell(4);
+		startcell.setCellValue(obj.getApplystarttime());
+		Row endrow = sheet.getRow(9);
+		Cell endcell = endrow.getCell(11);
+		endcell.setCellValue(obj.getApplyendtime());
+		// 设置总工时
+		Row totalhoursrow = sheet.getRow(10);
+		Cell totalhourscell = totalhoursrow.getCell(4);
+		totalhourscell.setCellValue(obj.getTotalhours());
+		// 设置法定休假
+		Row legalvctnrow = sheet.getRow(14);
+		Cell legalvctncell = legalvctnrow.getCell(5);
+		legalvctncell.setCellValue(obj.getUnlegalvctn());
+		// 设置福利休假
+		Row wealvctnrow = sheet.getRow(15);
+		Cell wealvctncell = wealvctnrow.getCell(5);
+		wealvctncell.setCellValue(obj.getUnwealvctn());
+		// 设置加班调休
+		Row extraworkvctnrow = sheet.getRow(16);
+		Cell extraworkvctncell = extraworkvctnrow.getCell(5);
+		extraworkvctncell.setCellValue(obj.getUnextraworkvctn());
+		// 设置审核人
+		String status = obj.getStatus();
+		setA1Checkname( sheet,  status,  obj);	
+		// 设置审核履历
+		setA1Resume( sheet, obj);
 	}
 	/**
 	 * 设置A1履历

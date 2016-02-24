@@ -253,7 +253,7 @@ function btn_applyA1ListSearch() {
 	if(ret){
 		if(ret[0]){
 			document.getElementById("sourceid").value = ret[0];
-			document.getElementById("applyno").value = ret[1];	
+			document.getElementById("sourceapplyno").value = ret[1];	
 			document.getElementById("vacatereasontype").value = ret[2];
 			document.getElementById("vacatereasontypedict").value = ret[3];	
 			document.getElementById("otherremark").value = ret[4];
@@ -279,7 +279,7 @@ function btn_clear(obj) {
 	if ( !window.confirm( Message.getString("MSG_IC_COMM_0021"))) 
 		return;
 	document.getElementById("sourceid").value = '';
-	document.getElementById("applyno").value = '';	
+	document.getElementById("sourceapplyno").value = '';	
 	document.getElementById("vacatereasontype").value = '';
 	document.getElementById("vacatereasontypedict").value = '';	
 	document.getElementById("otherremark").value = '';
@@ -323,7 +323,7 @@ function btn_clear(obj) {
 					<label class="message">休假申请单号</label>
 				</td>
 				<td class="td_value" width="26%">
-					<input id="applyno" name="applyno" class="input_txt dis_input" readonly="readonly"/>
+					<input id="sourceapplyno" name="sourceapplyno" class="input_txt dis_input" readonly="readonly"/>
 					<input name="search" id="search" type="button" class="btn" value="选&nbsp;择" onClick="btn_applyA1ListSearch()"/>
 					<input name="reset" id="reset" type="button" class="btn" value="清&nbsp;空" onclick="btn_clear()">
 				</td>

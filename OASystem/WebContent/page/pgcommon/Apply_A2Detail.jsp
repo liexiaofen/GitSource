@@ -18,10 +18,16 @@
 	    <tbody>
 			<tr>
 				<td class="td_key" width="8%">
-					<label class="message">申请单号</label>
+					<label class="message">休假取消申请单号</label>
 				</td>
 				<td class="td_value" width="26%">
 					<input name="applyno" class="input_txt dis_input" value="${ command.applyno}" readonly="readonly"/>
+				</td>
+				<td class="td_key" width="8%">
+					<label class="message">休假申请单号</label>
+				</td>
+				<td class="td_value" width="26%">
+					<input class="input_txt dis_input" value="${ command.sourceapplyno}" readonly="readonly"/>
 				</td>
 			</tr>
 			<tr>
@@ -68,7 +74,7 @@
 					<label class="message">备注</label>
 				</td>
 				<td class="td_value" colspan="5">
-					关于休假顺序，原则上先加班调休、后带薪休假（先扣法定后扣福利）
+					休假取消申请需要打印出相应的休假申请，并附在该申请之后交给人事。
 				</td>
 			</tr>
 	    </tbody>
@@ -199,19 +205,19 @@
 					<label class="message">法定休假</label>
 				</td>
 				<td class="td_value">
-					<input id="username" name="username" class="input_txt dis_input" value="40" readonly="readonly"/>小时
+					<input class="input_txt dis_input" value="${ command.unlegalvctn}" readonly="readonly"/>小时
 				</td>
 				<td class="td_key" width="8%">
 					<label class="message">福利休假</label>
 				</td>
 				<td class="td_value">
-					<input id="username" name="username" class="input_txt dis_input" value="16" readonly="readonly"/>小时
+					<input class="input_txt dis_input" value="${ command.unwealvctn}" readonly="readonly"/>小时
 				</td>
 				<td class="td_key" width="8%">
 					<label class="message">加班调休</label>
 				</td>
 				<td class="td_value">
-					<input id="username" name="username" class="input_txt dis_input" value="10" readonly="readonly"/>小时
+					<input class="input_txt dis_input" value="${ command.unextraworkvctn}" readonly="readonly"/>小时
 				</td>
 			</tr>		
 	    </tbody>

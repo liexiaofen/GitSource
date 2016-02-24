@@ -34,11 +34,11 @@ public class PC003Controller implements ConstantUtil{
 	//休假申请详细画面	
 	private static final String  PAGE_APPLY_DETAIL_A1 = "pc/pc003/pc003002A1Detail";
 	//休假取消申请详细画面	
-	private static final String  PAGE_APPLY_DETAIL_A2 = "design";
+	private static final String  PAGE_APPLY_DETAIL_A2 = "pc/pc003/pc003002A2Detail";
 	//休假申请修改画面	
 	private static final String  PAGE_APPLY_UPDATE_A1 = "pc/pc003/pc003003A1Update";
 	//休假取消申请修改画面
-	private static final String  PAGE_APPLY_UPDATE_A2 = "design";	
+	private static final String  PAGE_APPLY_UPDATE_A2 = "pc/pc003/pc003003A2Update";	
 	@Autowired
 	private IPC003Service pc003Service;
 	/**
