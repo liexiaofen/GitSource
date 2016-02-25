@@ -40,27 +40,27 @@
 		</tr>
 		<tr>
 			<td class="td_key" width="8%">
-				<label class="message">请假事由</label>
+				<font color="#ff0000">*</font><label class="message">请假事由</label>
 			</td>
 			<td class="td_value"  width="26%">
-				<input class="input_txt dis_input" value='<dict:write busiDictTypeId="OA_PC001_VacReasonType" value="${ command.vacatereasontype}"></dict:write>' readonly="readonly"/>					
+				<dict:select id="vacatereasontype" name="vacatereasontype" busiDictTypeId="OA_PC001_VacReasonType" value="${ command.vacatereasontype}" cssClass="input_select" nullLabel="请选择" title='required'></dict:select>
 			</td>
 			<td class="td_key" width="8%"><label class="message">其他休假请注明</label></td>
 			<td class="td_value" colspan="3">
-				<input id="otherremark" name="otherremark" class="input_bigger1 dis_input" value="${ command.otherremark}"/>
+				<input id="otherremark" name="otherremark" class="input_bigger1" maxlength="50" value="${ command.otherremark}"/>
 			</td>							
 		</tr>
 		<tr>
 			<td class="td_key" width="8%">
-				<label class="message">请假时间</label>
+				<font color="#ff0000">*</font><label class="message">请假时间</label>
 			</td>
 			<td class="td_value" colspan="3">
-				<input id="applystarttime" name="applystarttime" class="input_txt dis_input" value="${command.applystarttime}" readonly="readonly"/>&nbsp;~
-				<input id="applyendtime" name="applyendtime" class="input_txt dis_input" value="${command.applyendtime}" readonly="readonly"/>
+				<input id="applystart" name="applystart" class="input_date Wdate" value="${command.applystart}" readonly="readonly" onclick="WdatePicker()" title="required"/>&nbsp;<dict:select id="applystarthm" name="applystarthm" value="${command.applystarthm}" busiDictTypeId="OA_PB001_DailyHM" cssClass="input_select_small" nullLabel="请选择" title="required"></dict:select>&nbsp;~
+				<input id="applyend" name="applyend" class="input_date Wdate" value="${command.applyend}" readonly="readonly" onclick="WdatePicker()" title="required"/>&nbsp;<dict:select id="applyendhm" name="applyendhm" value="${command.applyendhm}" busiDictTypeId="OA_PB001_DailyHM" cssClass="input_select_small" nullLabel="请选择" title="required"></dict:select>
 			</td>
-			<td class="td_key" width="8%"><label class="message">总工时</label></td>
+			<td class="td_key" width="8%"><font color="#ff0000">*</font><label class="message">总工时</label></td>
 			<td class="td_value" width="26%">
-				<input id="totalhours" name="totalhours" class="input_txt dis_input" value="${ command.totalhours}" readonly="readonly"/>小时
+				<input id="totalhours" name="totalhours" class="input_txt input_num1" title='required' maxlength="3" value="${ command.totalhours}" />小时
 			</td>								
 		</tr>			
 		<tr>				
@@ -74,4 +74,4 @@
     </tbody>
   </table>
 </div>
-<jsp:include page="Apply_AuthorityDetail.jsp"></jsp:include>	
+<jsp:include page="Apply_AuthorityEdit.jsp"></jsp:include>	

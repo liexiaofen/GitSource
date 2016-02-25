@@ -35,26 +35,7 @@ function btn_back() {
 	<div class="div_navi"><span><img src="<%= request.getContextPath()%>/resources/images/home.png">&nbsp;您当前的位置：申请管理&nbsp;&gt;&nbsp;审核管理&nbsp;&gt;&nbsp;休假申请明细</span></div>
 	
 	<jsp:include page="../../pgcommon/Apply_A1Detail.jsp"></jsp:include>
-	<div class="div_search_title">
-		<table class="tb_title">
-			<tbody>
-				<tr class="tr_caption">
-					<td class="td_caption_mark" ><IMG src="<%= request.getContextPath()%>/resources/images/m_nav_dian.gif"></td>
-					<td class="td_caption">审核履历</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-	<div class="div_search_content" id="div_view_resumes">
-		<table class="tb_search">
-			<tr>
-				<td class="td_key" width="8%">履历</td>
-				<td class="td_value">
-					<textarea class="input_memo_lang dis_input"  readonly="readonly">${ command.resume}</textarea>
-				</td>
-			</tr>
-		</table>
-	</div>
+	<jsp:include page="../../pgcommon/Apply_ResumeDetail.jsp"></jsp:include>
 	<div class="div_result_button">
 		<table class="tb_result">
 			<tr>
