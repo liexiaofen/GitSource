@@ -11,8 +11,7 @@
 
 <html>
 <head>
-	<title>OA系统</title>	
-	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+	<title>OA系统</title>		
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<script type="text/javascript">
 		var contextPath = "<%=request.getContextPath()%>";

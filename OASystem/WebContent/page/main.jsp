@@ -7,7 +7,6 @@
 <html>
 <head>
 <base href="<%=basePath%>">
-<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>OA</title>
 </head>
