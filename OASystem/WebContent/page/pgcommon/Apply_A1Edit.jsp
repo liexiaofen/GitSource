@@ -75,3 +75,4 @@
   </table>
 </div>
 <jsp:include page="Apply_AuthorityEdit.jsp"></jsp:include>	
+<jsp:include page="Apply_VacationEdit.jsp"></jsp:include>

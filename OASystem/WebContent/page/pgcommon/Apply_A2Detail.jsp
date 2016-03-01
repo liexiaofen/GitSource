@@ -49,7 +49,7 @@
 				<label class="message">请假事由</label>
 			</td>
 			<td class="td_value"  width="26%">
-				<input class="input_txt dis_input" value='<dict:write busiDictTypeId="OA_PC001_VacReasonType" value="${ command.vacatereasontype}"></dict:write>' readonly="readonly"/>					
+				<input class="input_txt dis_input" value='<dict:write busiDictTypeId="OA_PC001_VacReasonType" value="${ command.vacatereasontype}" />' readonly="readonly"/>					
 			</td>
 			<td class="td_key" width="8%"><label class="message">其他休假请注明</label></td>
 			<td class="td_value" colspan="3">
@@ -81,3 +81,4 @@
   </table>
 </div>
 <jsp:include page="Apply_AuthorityDetail.jsp"></jsp:include>
+<jsp:include page="Apply_VacationDetail.jsp"></jsp:include>

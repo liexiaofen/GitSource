@@ -47,7 +47,7 @@
 			</td>
 			<td class="td_key" width="8%"><label class="message">其他休假请注明</label></td>
 			<td class="td_value" colspan="3">
-				<input id="otherremark" name="otherremark" class="input_bigger1 dis_input" value="${ command.otherremark}"/>
+				<input id="otherremark" name="otherremark" class="input_bigger1 dis_input" value="${ command.otherremark}" readonly="readonly"/>
 			</td>							
 		</tr>
 		<tr>
@@ -74,4 +74,5 @@
     </tbody>
   </table>
 </div>
-<jsp:include page="Apply_AuthorityDetail.jsp"></jsp:include>	
+<jsp:include page="Apply_AuthorityDetail.jsp"></jsp:include>
+<jsp:include page="Apply_VacationDetail.jsp"></jsp:include>
