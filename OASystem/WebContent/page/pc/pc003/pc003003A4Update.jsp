@@ -31,7 +31,7 @@ function btn_agree(status) {
 	$("#updateForm").submit();	
 }
 /*
-*名       称: btn_reject(status)
+*名       称: btn_reject()
 *输入参数: status
 *输出参数: 无
 *机       能: 驳回
@@ -97,8 +97,8 @@ function btn_back() {
 	<input name="searchcommand.applytype" type="hidden"  value="${command.searchcommand.applytype}" />
 	<input name="searchcommand.statusalias" type="hidden"  value="${command.searchcommand.statusalias}" />
 	<%/*共通隐藏字段 end*/%>
-	<div class="div_navi"><span><img src="<%= request.getContextPath()%>/resources/images/home.png">&nbsp;您当前的位置：申请管理&nbsp;&gt;&nbsp;审核管理&nbsp;&gt;&nbsp;休假申请审核</span></div>
-	<jsp:include page="../../pgcommon/Apply_A1Detail.jsp"></jsp:include>
+	<div class="div_navi"><span><img src="<%= request.getContextPath()%>/resources/images/home.png">&nbsp;您当前的位置：申请管理&nbsp;&gt;&nbsp;审核管理&nbsp;&gt;&nbsp;加班确认申请审核</span></div>
+	<jsp:include page="../../pgcommon/Apply_A3Detail.jsp"></jsp:include>
 	<jsp:include page="../../pgcommon/Apply_ResumeEdit.jsp"></jsp:include>
 	<div class="div_result_button">
 		<table class="tb_result">

@@ -31,7 +31,7 @@ function btn_agree(status) {
 	$("#updateForm").submit();	
 }
 /*
-*名       称: btn_reject()
+*名       称: btn_reject(status)
 *输入参数: status
 *输出参数: 无
 *机       能: 驳回
@@ -50,14 +50,14 @@ function btn_reject(status) {
 	if ( !window.confirm( Message.getString("MSG_IC_COMM_0016"))) 
 		return;
 	//设置状态
-	$("#updateForm").find("input[name='status']").val(status);
-	if(status == '2'){
+	$("#updateForm").find("input[name='status']").val('0');
+	if(status == '1'){
 		$("#updateForm").find("input[name='operationcd']").val("A004");
-	}else if(status == '3'){
+	}else if(status == '2'){
 		$("#updateForm").find("input[name='operationcd']").val("A006");
-	}else if(status == '4'){
+	}else if(status == '3'){
 		$("#updateForm").find("input[name='operationcd']").val("A008");
-	}else if(status == '5'){
+	}else if(status == '4'){
 		$("#updateForm").find("input[name='operationcd']").val("A010");
 	}
 	c_ShowProgressBar(); 
@@ -92,6 +92,7 @@ function btn_back() {
 	<input name="exclusivefg" type="hidden"  value="${command.exclusivefg}" />
 	<%/*共通隐藏字段 start*/%>
 	<input name="searchcommand.empid" type="hidden"  value="${command.searchcommand.empid}" />
+	<input name="searchcommand.applyid" type="hidden"  value="${command.searchcommand.applyid}" />
 	<input name="searchcommand.applyno" type="hidden"  value="${command.searchcommand.applyno}" />
 	<input name="searchcommand.applytype" type="hidden"  value="${command.searchcommand.applytype}" />
 	<input name="searchcommand.statusalias" type="hidden"  value="${command.searchcommand.statusalias}" />
@@ -107,25 +108,25 @@ function btn_back() {
 						<input name="checkid" type="hidden"  value="${command.managercheckid}" />
 						<input name="operationcd" type="hidden"  value="A003" />
 						<input name="agree" id="agree" type="button" class="btn" value="同&nbsp;意" onClick="btn_agree('2')"/>
-						<input name="reject" id="reject" type="button" class="btn" value="驳&nbsp;回" onClick="btn_reject('0')"/>
+						<input name="reject" id="reject" type="button" class="btn" value="驳&nbsp;回" onClick="btn_reject(${ command.status})"/>
 					</c:if>
 					<c:if test="${ command.status eq 2}">
 						<input name="checkid" type="hidden"  value="${command.personnelcheckid}" />
 						<input name="operationcd" type="hidden"  value="A005" />
 						<input name="agree" id="agree" type="button" class="btn" value="同&nbsp;意" onClick="btn_agree('3')"/>
-						<input name="reject" id="reject" type="button" class="btn" value="驳&nbsp;回" onClick="btn_reject('0')"/>
+						<input name="reject" id="reject" type="button" class="btn" value="驳&nbsp;回" onClick="btn_reject(${ command.status})"/>
 					</c:if>
 					<c:if test="${ command.status eq 3}">
 						<input name="checkid" type="hidden"  value="${command.vicepresicheckid}" />
 						<input name="operationcd" type="hidden"  value="A007" />
 						<input name="agree" id="agree" type="button" class="btn" value="同&nbsp;意" onClick="btn_agree('4')"/>
-						<input name="reject" id="reject" type="button" class="btn" value="驳&nbsp;回" onClick="btn_reject('0')"/>
+						<input name="reject" id="reject" type="button" class="btn" value="驳&nbsp;回" onClick="btn_reject(${ command.status})"/>
 					</c:if>
 					<c:if test="${ command.status eq 4}">
 						<input name="checkid" type="hidden"  value="${command.presicheckid}" />
 						<input name="operationcd" type="hidden"  value="A009" />
 						<input name="agree" id="agree" type="button" class="btn" value="同&nbsp;意" onClick="btn_agree('5')"/>
-						<input name="reject" id="reject" type="button" class="btn" value="驳&nbsp;回" onClick="btn_reject('0')"/>
+						<input name="reject" id="reject" type="button" class="btn" value="驳&nbsp;回" onClick="btn_reject(${ command.status})"/>
 					</c:if>					
 					<input name="back" id="back" type="button" class="btn" value="返&nbsp;回" onClick="btn_back()" />
 				</td>

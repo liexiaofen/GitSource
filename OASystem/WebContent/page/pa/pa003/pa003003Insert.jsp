@@ -66,7 +66,7 @@ function btn_back() {
 	$("#addForm").submit();
 }
 $(document).ready(function(){	
-	var dt = new Date().getYear().toString();
+	var dt = new Date().getFullYear().toString();
     var cnt = parseInt(dt) + 2;
     $('select[name="legalyear"]').append("<option value='' >请选择</option>");
  	for(var i=dt-1;i<cnt;i++){

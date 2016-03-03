@@ -12,18 +12,18 @@ body{
 font-family:Microsoft YaHei,Verdana,Arial,SimSun;
 text-align:center;
 background-color:#f6f6f6;
-font-size:8pt;
+font-size:10pt;
 }
 a:link {color:#0000FF;}      /* unvisited link */
 a:visited {color:#0000FF;}  /* visited link */
 a:hover {color:#FF00FF;background-color:#B2FF99;}  /* mouse over link */
 a:active {color:green;}  /* selected link */ 
 tr{
-font-size:9pt;
+font-size:10pt;
 word-break: keep-all;
 }
 td{
-font-size:9pt;
+font-size:10pt;
 word-break: keep-all;
 }
 
@@ -456,7 +456,7 @@ BORDER-RIGHT: #7c97af 1px solid;
 PADDING-RIGHT: 2px; 
 BORDER-TOP: #d2dfe9 1px solid; 
 PADDING-LEFT: 2px; 
-FONT-SIZE: 10px;
+FONT-SIZE: 12px;
 FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#b5d0e9); 
 BORDER-LEFT: #d2dfe9 1px solid; 
 CURSOR: hand; 
@@ -469,7 +469,7 @@ BORDER-RIGHT: #7c97af 1px solid;
 PADDING-RIGHT: 2px; 
 BORDER-TOP: #d2dfe9 1px solid; 
 PADDING-LEFT: 2px; 
-FONT-SIZE: 12px;
+FONT-SIZE: 13px;
 FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#5c84a7); 
 BORDER-LEFT: #d2dfe9 1px solid; 
 CURSOR: hand; 

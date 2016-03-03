@@ -37,12 +37,16 @@ public class PC003Controller implements ConstantUtil{
 	private static final String  PAGE_APPLY_DETAIL_A2 = "pc/pc003/pc003002A2Detail";
 	//加班申请详细画面	
 	private static final String  PAGE_APPLY_DETAIL_A3 = "pc/pc003/pc003002A3Detail";
+	//加班确认申请详细画面	
+	private static final String  PAGE_APPLY_DETAIL_A4 = "pc/pc003/pc003002A4Detail";
 	//休假申请修改画面	
 	private static final String  PAGE_APPLY_UPDATE_A1 = "pc/pc003/pc003003A1Update";
 	//休假取消申请修改画面
 	private static final String  PAGE_APPLY_UPDATE_A2 = "pc/pc003/pc003003A2Update";	
 	//加班申请修改画面
 	private static final String  PAGE_APPLY_UPDATE_A3 = "pc/pc003/pc003003A3Update";	
+	//加班确认申请修改画面
+	private static final String  PAGE_APPLY_UPDATE_A4 = "pc/pc003/pc003003A4Update";	
 	@Autowired
 	private IPC003Service pc003Service;
 	/**
@@ -200,6 +204,8 @@ public class PC003Controller implements ConstantUtil{
 			page = PAGE_APPLY_DETAIL_A2;
 		}else if(APPLY_A3.equals(type)){
 			page = PAGE_APPLY_DETAIL_A3;
+		}else if(APPLY_A4.equals(type)){
+			page = PAGE_APPLY_DETAIL_A4;
 		}
 		return page;
 	}
@@ -211,6 +217,8 @@ public class PC003Controller implements ConstantUtil{
 			page = PAGE_APPLY_UPDATE_A2;
 		}else if(APPLY_A3.equals(type)){
 			page = PAGE_APPLY_UPDATE_A3;
+		}else if(APPLY_A4.equals(type)){
+			page = PAGE_APPLY_UPDATE_A4;
 		}
 		return page;
 	}

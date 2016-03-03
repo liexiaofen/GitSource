@@ -39,6 +39,8 @@ public class PC004Controller implements ConstantUtil {
 	private static final String PAGE_APPLY_DETAIL_A2 = "pc/pc004/pc004002A2Detail";
 	// 加班申请详细画面
 	private static final String PAGE_APPLY_DETAIL_A3 = "pc/pc004/pc004002A3Detail";
+	// 加班确认申请详细画面
+	private static final String PAGE_APPLY_DETAIL_A4 = "pc/pc004/pc004002A4Detail";
 	@Autowired
 	private IPC004Service pc004Service;
 
@@ -175,10 +177,12 @@ public class PC004Controller implements ConstantUtil {
 		String page = StringUtils.EMPTY;
 		if (APPLY_A1.equals(type)) {
 			page = PAGE_APPLY_DETAIL_A1;
-		} else if (APPLY_A2.equals(type)) {
+		}else if (APPLY_A2.equals(type)) {
 			page = PAGE_APPLY_DETAIL_A2;
-		} else if (APPLY_A3.equals(type)) {
+		}else if (APPLY_A3.equals(type)) {
 			page = PAGE_APPLY_DETAIL_A3;
+		}else if (APPLY_A4.equals(type)) {
+			page = PAGE_APPLY_DETAIL_A4;
 		}
 		return page;
 	}

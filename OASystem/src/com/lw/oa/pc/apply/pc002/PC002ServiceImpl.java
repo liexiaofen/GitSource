@@ -120,6 +120,8 @@ public class PC002ServiceImpl implements IPC002Service,ConstantUtil {
 			sqlid = "pc.pc002.pc002003A2Update";
 		}else if(APPLY_A3.equals(applytype)){
 			sqlid = "pc.pc002.pc002003A3Update";
+		}else if(APPLY_A4.equals(applytype)){
+			sqlid = "pc.pc002.pc002003A4Update";
 		}
 		return sqlid;
 	}
@@ -191,7 +193,7 @@ public class PC002ServiceImpl implements IPC002Service,ConstantUtil {
 			entity.setApplyend( DateUtil.parseDate( command.getApplyend(), DATE_FORMAT_YMD));
 			entity.setApplystarttime( new Timestamp(DateUtil.parseDate(command.getApplystart()+STRING_SPACE+command.getApplystarthm()+TIME_SS, DATE_FORMAT_YMDHMS).getTime()));
 			entity.setApplyendtime( new Timestamp(DateUtil.parseDate(command.getApplyend()+STRING_SPACE+command.getApplyendhm()+TIME_SS, DATE_FORMAT_YMDHMS).getTime()));
-		}else{
+		}else if(APPLY_A4.equals(command.getApplytype())){
 			entity.setExtraworkstarthm( command.getExtraworkstarthm());
 			entity.setExtraworkendhm( command.getExtraworkendhm());
 			entity.setExtraworkstart( DateUtil.parseDate( command.getExtraworkstart(), DATE_FORMAT_YMD));

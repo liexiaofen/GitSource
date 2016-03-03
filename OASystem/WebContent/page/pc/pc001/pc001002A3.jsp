@@ -53,7 +53,7 @@ $(document).ready(function(){
 	//初始化时间
 	$('#applystart').val('<c:out value="${command.currentdate}" />');
 	$('#applyend').val('<c:out value="${command.currentdate}" />');
-	$('#applystarthm').val('09:00');
+	$('#applystarthm').val('9:00');
 	$('#applyendhm').val('17:30');
 	//获取orgcdid
 	var orgcdid = $('#managerorgcdid').val();

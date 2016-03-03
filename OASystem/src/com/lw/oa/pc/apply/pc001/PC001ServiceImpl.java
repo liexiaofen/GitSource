@@ -73,9 +73,9 @@ public class PC001ServiceImpl implements IPC001Service,ConstantUtil {
 		// TODO Auto-generated method stub
 		int flag = 1;		
 		try {
-			// 获取申请单号
-			String applyno = SequencenoUtil.getApplyNo(command.getApplytype());		
 			mybatisDAOImpl.openSession();
+			// 获取申请单号
+			String applyno = SequencenoUtil.getApplyNo( command.getApplytype(), mybatisDAOImpl);					
 			// 数据转换
 			ApplyForm entity = prepareCommand(command);
 			// 获取系统时间

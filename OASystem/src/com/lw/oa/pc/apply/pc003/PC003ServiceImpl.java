@@ -1,5 +1,7 @@
 package com.lw.oa.pc.apply.pc003;
 
+import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +20,9 @@ import com.lw.oa.common.model.ApplyForm;
 import com.lw.oa.common.model.CommonBean;
 import com.lw.oa.common.util.ConstantUtil;
 import com.lw.oa.common.util.DataUtil;
+import com.lw.oa.common.util.DateUtil;
 import com.lw.oa.common.util.ResumeUtil;
+import com.lw.oa.common.util.SequencenoUtil;
 
 /**
  ** @author yuliang
@@ -95,7 +99,9 @@ public class PC003ServiceImpl implements IPC003Service,ConstantUtil {
 			String hisid = DataUtil.getKey(sysdate);
 			// 创建履历对象
 			HashMap<String,Object> map  = DataUtil.creatHisMap("[dbo].[his_applyform]", hisid, command.getApplyid(), command.getOperationcd(), "0", "0", command.getRemark(), bean, request);
-			mybatisDAOImpl.insert("common.insertHis", map);			
+			mybatisDAOImpl.insert("common.insertHis", map);		
+			// 根据不同的申请类型，状态做相应的特殊处理
+			specialProcess( sysdate, command, request);			
 			mybatisDAOImpl.commit();
 		} catch (Exception e) {
 			mybatisDAOImpl.rollback();
@@ -105,6 +111,46 @@ public class PC003ServiceImpl implements IPC003Service,ConstantUtil {
 			mybatisDAOImpl.close();
 		}
 		return flag;
+	}
+	
+	public void specialProcess( Date sysdate, ApplyFormCommand cmd, HttpServletRequest request){			
+		//申请类型为加班申请，状态为副总已审批，生成加班确认申请单
+		if(APPLY_A3.equals(cmd.getApplytype()) && "4".equals(cmd.getStatus())){
+			try {
+				// 获取申请单号
+				String applyno = SequencenoUtil.getApplyNo( APPLY_A4, mybatisDAOImpl);	
+				ApplyFormCommand command = (ApplyFormCommand) mybatisDAOImpl.expandByObj(
+						"common.expandApplyForm", cmd.getSearchcommand());
+				// 数据转换
+				ApplyForm entity = convertCommand(command);
+				// 获取申请id
+				String key = DataUtil.getKey(sysdate);				
+				// 获取共通插入字段
+				CommonBean bean;				
+				bean = DataUtil.getInsertCol(sysdate, request);				
+				// 设置主键
+				entity.setApplyid(key);
+				entity.setSourceid(command.getApplyid());
+				entity.setApplytype(APPLY_A4);
+				entity.setApplyno(applyno);
+				entity.setProcessempid(bean.getUpdator());
+				entity.setProcesstime(bean.getUpdatetime());
+				entity.setStatus("1");
+				// 设置共通插入字段
+				DataUtil.setInsertCol(entity, bean);		
+				// 插入申请单表
+				mybatisDAOImpl.insert("common.insertApplyForm", entity);
+				// 获取履历id
+				String hisid = DataUtil.getKey(sysdate);
+				// 创建履历对象
+				HashMap<String,Object> map  = DataUtil.creatHisMap("[dbo].[his_applyform]", hisid, key, "A001", "0", "0", "", bean, request);
+				mybatisDAOImpl.insert("common.insertHis", map);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				mybatisDAOImpl.rollback();
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	@Override
@@ -137,6 +183,63 @@ public class PC003ServiceImpl implements IPC003Service,ConstantUtil {
 		ApplyForm entity = new ApplyForm();
 		entity.setApplyid(command.getApplyid());
 		entity.setExclusivefg(command.getExclusivefg());
+		entity.setStatus(command.getStatus());
+		entity.setRemark(command.getRemark());		
+		return entity;
+	}
+	
+	public ApplyForm convertCommand(ApplyFormCommand command) {
+		ApplyForm entity = new ApplyForm();
+		entity.setApplyid(command.getApplyid());
+		entity.setExclusivefg(command.getExclusivefg());
+		entity.setSourceid(command.getSourceid());
+		entity.setApplyno(command.getApplyno());
+		entity.setApplyempid( command.getApplyempid());
+		entity.setManagercheckid( command.getManagercheckid());
+		entity.setManagerorgcdid( command.getManagerorgcdid());
+		entity.setManagerdepid( command.getManagerdepid());
+		entity.setPersonnelcheckid( command.getPersonnelcheckid());
+		entity.setPersonnelorgcdid( command.getPersonnelorgcdid());
+		entity.setPersonneldepid( command.getPersonneldepid());
+		entity.setVicepresicheckid( command.getVicepresicheckid());
+		entity.setVicepresiorgcdid( command.getVicepresiorgcdid());
+		entity.setVicepresidepid( command.getVicepresidepid());
+		entity.setPresicheckid( command.getPresicheckid());
+		entity.setPresiorgcdid( command.getPresiorgcdid());
+		entity.setPresidepid( command.getPresidepid());
+		entity.setPersonfilecheckid( command.getPersonfilecheckid());
+		entity.setPersonfileorgcdid( command.getPersonfileorgcdid());
+		entity.setPersonfiledepid( command.getPersonfiledepid());
+		entity.setApplytype( command.getApplytype());
+		entity.setVacatereasontype( command.getVacatereasontype());
+		entity.setOtherremark( command.getOtherremark());
+		entity.setApplyreason( command.getApplyreason());
+		if(APPLY_A1.equals(command.getApplytype())||APPLY_A2.equals(command.getApplytype())||APPLY_A3.equals(command.getApplytype())){
+			entity.setApplystarthm( command.getApplystarthm());
+			entity.setApplyendhm( command.getApplyendhm());		
+			entity.setApplystart( DateUtil.parseDate( command.getApplystart(), DATE_FORMAT_YMD));
+			entity.setApplyend( DateUtil.parseDate( command.getApplyend(), DATE_FORMAT_YMD));
+			entity.setApplystarttime( new Timestamp(DateUtil.parseDate(command.getApplystart()+STRING_SPACE+command.getApplystarthm()+TIME_SS, DATE_FORMAT_YMDHMS).getTime()));
+			entity.setApplyendtime( new Timestamp(DateUtil.parseDate(command.getApplyend()+STRING_SPACE+command.getApplyendhm()+TIME_SS, DATE_FORMAT_YMDHMS).getTime()));
+		}else if(APPLY_A4.equals(command.getApplytype())){
+			entity.setExtraworkstarthm( command.getExtraworkstarthm());
+			entity.setExtraworkendhm( command.getExtraworkendhm());
+			entity.setExtraworkstart( DateUtil.parseDate( command.getExtraworkstart(), DATE_FORMAT_YMD));
+			entity.setExtraworkend( DateUtil.parseDate( command.getExtraworkend(), DATE_FORMAT_YMD));
+			entity.setExtraworkstarttime( new Timestamp(DateUtil.parseDate(command.getExtraworkstart()+STRING_SPACE+command.getExtraworkstarthm()+TIME_SS, DATE_FORMAT_YMDHMS).getTime()));
+			entity.setExtraworkendtime( new Timestamp(DateUtil.parseDate(command.getExtraworkend()+STRING_SPACE+command.getExtraworkendhm()+TIME_SS, DATE_FORMAT_YMDHMS).getTime()));
+		}
+		entity.setExtraworkapplytype(command.getExtraworkapplytype());
+		entity.setEvectionworkflag(command.getEvectionworkflag());		
+		entity.setEvectioncountry(command.getEvectioncountry());
+		entity.setEvectionprovince(command.getEvectionprovince());
+		entity.setEvectioncity(command.getEvectioncity());
+		entity.setEvectionaddress1(command.getEvectionaddress1());
+		entity.setEvectionaddress2(command.getEvectionaddress2());					
+		entity.setTotalhours(command.getTotalhours());					
+		entity.setEvectionmoney(new BigDecimal(command.getEvectionmoney()==null ? "0" : command.getEvectionmoney()));						
+		entity.setEvectionallowance(new BigDecimal(command.getEvectionallowance()==null ? "0" : command.getEvectionallowance()));						
+		entity.setTotalmoney(new BigDecimal(command.getTotalmoney()==null ? "0" : command.getTotalmoney()));	
 		entity.setStatus(command.getStatus());
 		entity.setRemark(command.getRemark());		
 		return entity;

@@ -1,33 +1,24 @@
 package com.lw.oa.common.util;
 
 import java.util.HashMap;
-
 import org.apache.commons.lang.StringUtils;
-
 import com.lw.oa.common.command.ResultCommand;
 import com.lw.oa.common.dao.IMybatisDAO;
-import com.lw.oa.common.dao.MybatisDAOImpl;
 
 /**
  * *@author yuliang
  */
 public class SequencenoUtil implements ConstantUtil {
-	private static IMybatisDAO mybatisDAOImpl;	
-	static{
-		mybatisDAOImpl = new MybatisDAOImpl();
-	}
 	/**
 	 * 功能：获得申请单号
 	 * 输入：申请类型
 	 * 输出：申请单号的序列号值
 	 */
-	public static String getApplyNo(String applytype) {
+	public static String getApplyNo( String applytype, IMybatisDAO mybatisDAOImpl) {
 		String applyno = StringUtils.EMPTY;		
 		String key = StringUtils.EMPTY;	 
 		String seq = StringUtils.EMPTY;	
 		try{
-			// 连接数据库
-			mybatisDAOImpl.openSession();
 			// 取得生成时间
 			String sysdate = DateUtil.getSystemTime(DATE_FORMAT_YYYYMMDD);	
 			// 申请番号最大值的取得
@@ -47,13 +38,7 @@ public class SequencenoUtil implements ConstantUtil {
 		} catch(Exception e){
 			mybatisDAOImpl.rollback();
 			e.printStackTrace();
-		} finally {
-			try {
-				mybatisDAOImpl.close();
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-		}
+		} 
 		return applyno;
 	}
 }

@@ -14,7 +14,7 @@ public interface ConstantUtil {
 	//工龄工龄0-10对应的年假
 	public static final String WORKAGE_ZERO_HOURS = "40";
 	//福利年假
-	public static final String WEAL_HOURS = "16";
+	public static final String WEAL_HOURS = "0";
 	//月份
 	public static final int MONTHS = 12;
 	//编码格式
@@ -77,6 +77,8 @@ public interface ConstantUtil {
 	public static final String APPLY_A2 = "A2";
 	//加班申请
 	public static final String APPLY_A3 = "A3";
+	//加班确认申请
+	public static final String APPLY_A4 = "A4";
 	//模板休假申请文件
 	public static final String TEMPLATE_A1_FILE = "template\\Apply_A1.xlsx";
 	//模板休假取消申请文件

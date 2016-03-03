@@ -68,7 +68,7 @@
 				<label class="message">备注</label>
 			</td>
 			<td class="td_value" colspan="5">
-				关于休假顺序，原则上先加班调休、后带薪休假（先扣法定后扣福利）
+				关于休假顺序，原则上先加班调休、后带薪休假。
 			</td>
 		</tr>
     </tbody>
