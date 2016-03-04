@@ -60,9 +60,9 @@
 				<input id="applystarttime" name="applystarttime" class="input_txt dis_input" value="${command.applystarttime}" readonly="readonly"/>&nbsp;~
 				<input id="applyendtime" name="applyendtime" class="input_txt dis_input" value="${command.applyendtime}" readonly="readonly"/>
 			</td>
-			<td class="td_key" width="8%"><label class="message">总工时</label></td>
+			<td class="td_key" width="8%"><font color="#ff0000">*</font><label class="message">总工时</label></td>
 			<td class="td_value" width="26%">
-				<input id="totalhours" name="totalhours" class="input_txt" value="${ command.totalhours}"/>小时
+				<input id="totalhours" name="totalhours" class="input_txt input_num1" title='required' maxlength="4" value="${ command.totalhours}"/>小时
 			</td>								
 		</tr>	
 		<tr>
@@ -83,7 +83,7 @@
 		</tr>
 		<tr>
 			<td class="td_key" width="8%">
-				<label class="message">加班实施时间（事后入力）</label>
+				<font color="#ff0000">*</font><label class="message">加班实施时间（事后入力）</label>
 			</td>
 			<td class="td_value" colspan="3">
 				<input id="extraworkstart" name="extraworkstart" class="input_date Wdate" value="${command.extraworkstart}" readonly="readonly" onclick="WdatePicker()" title="required"/>&nbsp;<dict:select id="extraworkstarthm" name="extraworkstarthm" value="${command.extraworkstarthm}" busiDictTypeId="OA_PB001_DailyHM" cssClass="input_select_small" nullLabel="请选择" title="required"></dict:select>&nbsp;~

@@ -49,7 +49,7 @@
 				<font color="#ff0000">*</font><label class="message">申请加班类型</label>
 			</td>
 			<td class="td_value"  width="26%">
-				<dict:select id="extraworkapplytype" name="extraworkapplytype" busiDictTypeId="OA_PC001_EWApplyType" value="${ command.extraworkapplytype}" cssClass="input_select" nullLabel="请选择" title='required'></dict:select>				
+				<dict:select id="extraworkapplytype" name="extraworkapplytype" busiDictTypeId="OA_PC001_EWApplyType" value="${ command.extraworkapplytype}" cssClass="input_select" title='required'></dict:select>				
 			</td>							
 		</tr>
 		<tr>
