@@ -89,6 +89,30 @@ public interface ConstantUtil {
 	public static final String APPLY_STATUS_7 = "7";
 	//已删除											
 	public static final String APPLY_STATUS_9 = "9";
+	//请假事由带薪休假
+	public static final String VACATEREASON_TYPE_0 = "0";
+	//请假事由调休								
+	public static final String VACATEREASON_TYPE_1 = "1";
+	//请假事由病假						
+	public static final String VACATEREASON_TYPE_2 = "2";
+	//请假事由事假								
+	public static final String VACATEREASON_TYPE_3 = "3";
+	//请假事由产假										
+	public static final String VACATEREASON_TYPE_4 = "4";
+	//请假事由婚假									
+	public static final String VACATEREASON_TYPE_5 = "5";
+	//请假事由丧假									
+	public static final String VACATEREASON_TYPE_6 = "6";
+	//请假事由其他									
+	public static final String VACATEREASON_TYPE_7 = "7";
+	//出差地加班否
+	public static final String EVECTION_WORKFLAG_0 = "0";
+	//出差地加班是								
+	public static final String EVECTION_WORKFLAG_1 = "1";	
+	//审批流程等级1
+	public static final String CHECKLEVEL_1 = "1";
+	//审批流程等级2							
+	public static final String CHECKLEVEL_2 = "2";
 	//休假申请
 	public static final String APPLY_A1 = "A1";
 	//休假取消申请
