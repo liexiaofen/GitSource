@@ -71,6 +71,24 @@ public interface ConstantUtil {
 	public static final String SATURDAY = "周六";
 	//周六
 	public static final String SUNDAY = "周日";
+	//已驳回
+	public static final String APPLY_STATUS_0 = "0";
+	//已申请										
+	public static final String APPLY_STATUS_1 = "1";
+	//经理已审批									
+	public static final String APPLY_STATUS_2 = "2";
+	//人事已审批									
+	public static final String APPLY_STATUS_3 = "3";
+	//副总已审批											
+	public static final String APPLY_STATUS_4 = "4";
+	//总经理已审批											
+	public static final String APPLY_STATUS_5 = "5";
+	//人事已归档											
+	public static final String APPLY_STATUS_6 = "6";
+	//文件已生成											
+	public static final String APPLY_STATUS_7 = "7";
+	//已删除											
+	public static final String APPLY_STATUS_9 = "9";
 	//休假申请
 	public static final String APPLY_A1 = "A1";
 	//休假取消申请
@@ -83,4 +101,6 @@ public interface ConstantUtil {
 	public static final String TEMPLATE_A1_FILE = "template\\Apply_A1.xlsx";
 	//模板休假取消申请文件
 	public static final String TEMPLATE_A2_FILE = "template\\Apply_A2.xlsx";
+	//模板加班申请文件
+	public static final String TEMPLATE_A3_FILE = "template\\Apply_A3.xlsx";
 }

@@ -13,5 +13,6 @@ public interface IPC003Service {
 	public List<?> pc003001search(ApplySearchCommand searchCommand);
 	public ApplyFormCommand pc003001view(ApplySearchCommand searchCommand);
 	public int pc003003update(ApplyFormCommand command, HttpServletRequest request);
+	public int pc003003reject(ApplyFormCommand command, HttpServletRequest request);
 	public int pc003003delete(ApplyFormCommand command, HttpServletRequest request);
 }

@@ -24,8 +24,15 @@
 				on t.applytype = dict1.busidictid and dict1.busidicttypeid = 'OA_PC001_ApplyType' 
 			left join [dbo].[s_busidict] dict2 
 				on t.status = dict2.busidictid and dict2.busidicttypeid = 'OA_PC003_Status' 
-			where t.deletefg = '0' and ( (t.status = 1 and t.managercheckid = #{empid}) or (t.status = 2 and t.personnelcheckid = #{empid}) 
-				or (t.status = 3 and t.vicepresicheckid = #{empid}) or (t.status = 4 and t.presicheckid = #{empid}) )
+			where t.deletefg = '0' and ( 
+				( 
+					t.applytype in ( 'A1', 'A2') and ((t.status = 1 and t.managercheckid = #{empid}) or (t.status = 2 and t.personnelcheckid = #{empid}) 
+					or (t.status = 3 and t.vicepresicheckid = #{empid}) or (t.status = 4 and t.presicheckid = #{empid}))
+				) 
+				or (
+					t.applytype = 'A3' and ( (t.status = 1 and t.managercheckid = #{empid}) or (t.status = 2 and t.vicepresicheckid = #{empid} and t.checklevel='1') or (t.status = 2 and t.presicheckid = #{empid} and t.checklevel='2') ) 
+				) 
+			)
 			union all
 			SELECT 
 				convert(char(19), t.processtime, 120) as processtime, t.applyid, t.applyno, t.exclusivefg, t.applyempid, t1.empname as applyempname, 
@@ -51,8 +58,15 @@
 						on t.applytype = dict1.busidictid and dict1.busidicttypeid = 'OA_PC001_ApplyType' 
 					left join [dbo].[s_busidict] dict2 
 						on t.status = dict2.busidictid and dict2.busidicttypeid = 'OA_PC003_Status' 
-					where t.deletefg = '0' and ( (t.status = 1 and t.managercheckid = #{empid}) or (t.status = 2 and t.personnelcheckid = #{empid}) 
-					or (t.status = 3 and t.vicepresicheckid = #{empid}) or (t.status = 4 and t.presicheckid = #{empid}) )
+					where t.deletefg = '0' and ( 
+						( 
+							t.applytype in ( 'A1', 'A2') and ((t.status = 1 and t.managercheckid = #{empid}) or (t.status = 2 and t.personnelcheckid = #{empid}) 
+							or (t.status = 3 and t.vicepresicheckid = #{empid}) or (t.status = 4 and t.presicheckid = #{empid}))
+						) 
+						or (
+							t.applytype = 'A3' and ( (t.status = 1 and t.managercheckid = #{empid}) or (t.status = 2 and t.vicepresicheckid = #{empid} and t.checklevel='1') or (t.status = 2 and t.presicheckid = #{empid} and t.checklevel='2') ) 
+						) 
+					)
 				)
 			) V where V.status != '9'  
 	]]> 
@@ -81,5 +95,19 @@
     	<if test="exclusivefg!=null and exclusivefg!=''">
 			and exclusivefg = #{exclusivefg , jdbcType=VARCHAR}
 		</if>	   
+    </update>
+    <update id="pc003003UpdateChecklevel" parameterType="applyform">
+	<![CDATA[
+        update t_applyform set                 
+           	status = #{status, jdbcType=VARCHAR}   
+           	,checklevel = #{checklevel, jdbcType=VARCHAR}
+           	,extraworkstart=#{extraworkstart, jdbcType=DATE}					
+			,extraworkend=#{extraworkend, jdbcType=DATE}					
+			,extraworkstarthm=#{extraworkstarthm, jdbcType=VARCHAR}					
+			,extraworkendhm=#{extraworkendhm, jdbcType=VARCHAR}					
+			,extraworkstarttime=#{extraworkstarttime, jdbcType=TIME}					
+			,extraworkendtime=#{extraworkendtime, jdbcType=TIME}		      
+    	where applyid = #{applyid, jdbcType=VARCHAR} and deletefg = '0'           
+    ]]>
     </update>
 </mapper>

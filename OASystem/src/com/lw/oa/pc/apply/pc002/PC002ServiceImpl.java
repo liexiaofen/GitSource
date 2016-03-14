@@ -94,7 +94,7 @@ public class PC002ServiceImpl implements IPC002Service,ConstantUtil {
 			entity.setProcessempid(bean.getUpdator());
 			entity.setProcesstime(bean.getUpdatetime());
 			// 根据申请单类型获取对应update sql
-			String sqlid = getSqlidByApplytype(command.getApplytype());
+			String sqlid = getSqlidByApplytype(command);
 			flag = mybatisDAOImpl.update( sqlid, entity);			
 			// 获取履历id
 			String hisid = DataUtil.getKey(sysdate);
@@ -112,16 +112,18 @@ public class PC002ServiceImpl implements IPC002Service,ConstantUtil {
 		return flag;
 	}
 
-	public String getSqlidByApplytype(String applytype){
+	public String getSqlidByApplytype(ApplyFormCommand command){
 		String sqlid = StringUtils.EMPTY;
+		String applytype = command.getApplytype();
+		String checklevel = command.getChecklevel();
 		if(APPLY_A1.equals(applytype)){
 			sqlid = "pc.pc002.pc002003A1Update";
 		}else if(APPLY_A2.equals(applytype)){
 			sqlid = "pc.pc002.pc002003A2Update";
-		}else if(APPLY_A3.equals(applytype)){
-			sqlid = "pc.pc002.pc002003A3Update";
-		}else if(APPLY_A4.equals(applytype)){
-			sqlid = "pc.pc002.pc002003A4Update";
+		}else if(APPLY_A3.equals(applytype) && "1".equals(checklevel)){
+			sqlid = "pc.pc002.pc002003A3Update1";
+		}else if(APPLY_A3.equals(applytype) && "2".equals(checklevel)){
+			sqlid = "pc.pc002.pc002003A3Update2";
 		}
 		return sqlid;
 	}
@@ -186,14 +188,14 @@ public class PC002ServiceImpl implements IPC002Service,ConstantUtil {
 		entity.setVacatereasontype( command.getVacatereasontype());
 		entity.setOtherremark( command.getOtherremark());
 		entity.setApplyreason( command.getApplyreason());
-		if(APPLY_A1.equals(command.getApplytype())||APPLY_A2.equals(command.getApplytype())||APPLY_A3.equals(command.getApplytype())){
+		if(APPLY_A1.equals(command.getApplytype())||APPLY_A2.equals(command.getApplytype())|| (APPLY_A3.equals(command.getApplytype()) && "1".equals(command.getChecklevel())) ){
 			entity.setApplystarthm( command.getApplystarthm());
 			entity.setApplyendhm( command.getApplyendhm());		
 			entity.setApplystart( DateUtil.parseDate( command.getApplystart(), DATE_FORMAT_YMD));
 			entity.setApplyend( DateUtil.parseDate( command.getApplyend(), DATE_FORMAT_YMD));
 			entity.setApplystarttime( new Timestamp(DateUtil.parseDate(command.getApplystart()+STRING_SPACE+command.getApplystarthm()+TIME_SS, DATE_FORMAT_YMDHMS).getTime()));
 			entity.setApplyendtime( new Timestamp(DateUtil.parseDate(command.getApplyend()+STRING_SPACE+command.getApplyendhm()+TIME_SS, DATE_FORMAT_YMDHMS).getTime()));
-		}else if(APPLY_A4.equals(command.getApplytype())){
+		}else if(APPLY_A3.equals(command.getApplytype()) && "2".equals(command.getChecklevel())){
 			entity.setExtraworkstarthm( command.getExtraworkstarthm());
 			entity.setExtraworkendhm( command.getExtraworkendhm());
 			entity.setExtraworkstart( DateUtil.parseDate( command.getExtraworkstart(), DATE_FORMAT_YMD));

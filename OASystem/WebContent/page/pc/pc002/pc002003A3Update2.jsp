@@ -245,6 +245,7 @@ $(document).ready(function(){
 	<input name="applyid" type="hidden"  value="${command.applyid}" />
 	<input name="applyempid" type="hidden"  value="${command.applyempid}" />
 	<input name="applytype" type="hidden"  value="${command.applytype}" />
+	<input name="checklevel" type="hidden" value="${command.checklevel}" />
 	<input name="exclusivefg" type="hidden"  value="${command.exclusivefg}" />
 	<%/*共通隐藏字段 start*/%>
 	<input name="searchcommand.empid" type="hidden"  value="${command.searchcommand.empid}" />
@@ -253,7 +254,7 @@ $(document).ready(function(){
 	<input name="searchcommand.status" type="hidden"  value="${command.searchcommand.status}" />
 	<%/*共通隐藏字段 end*/%>
 	<div class="div_navi"><span><img src="<%= request.getContextPath()%>/resources/images/home.png">&nbsp;您当前的位置：申请管理&nbsp;&gt;&nbsp;申请管理&nbsp;&gt;&nbsp;加班确认申请编辑</span></div>
-	<jsp:include page="../../pgcommon/Apply_A4Edit.jsp"></jsp:include>
+	<jsp:include page="../../pgcommon/Apply_A3Edit2.jsp"></jsp:include>
 	<jsp:include page="../../pgcommon/Apply_ResumeEdit.jsp"></jsp:include>
 	<div class="div_result_button">
 		<table class="tb_result">

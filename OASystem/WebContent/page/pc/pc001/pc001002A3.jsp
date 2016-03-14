@@ -230,7 +230,7 @@ function btn_clear(obj) {
 	<input name="pc001001searchcommand.applytype" type="hidden"  value="${command.pc001001searchcommand.applytype}" />
 	<%/*共通隐藏字段 end*/%>	 
 	<div class="div_navi"><span><img src="<%= request.getContextPath()%>/resources/images/home.png">&nbsp;您当前的位置：申请管理&nbsp;&gt;&nbsp;申请单填写&nbsp;&gt;&nbsp;加班申请</span></div>
-	<jsp:include page="../../pgcommon/Apply_A3Edit.jsp"></jsp:include>	
+	<jsp:include page="../../pgcommon/Apply_A3Edit1.jsp"></jsp:include>	
 	<div class="div_result_button">
 		<table class="tb_result">
 			<tr>

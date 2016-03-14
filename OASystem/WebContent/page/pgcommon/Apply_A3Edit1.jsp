@@ -40,37 +40,37 @@
 		</tr>
 		<tr>
 			<td class="td_key" width="8%">
-				<label class="message">申请事由</label>
+				<font color="#ff0000">*</font><label class="message">申请事由</label>
 			</td>
 			<td class="td_value"  width="26%">
-				<input id="applyreason" name="applyreason" class="input_bigger1 dis_input" value="${ command.applyreason}" readonly="readonly"/>					
+				<input id="applyreason" name="applyreason" class="input_bigger1" value="${ command.applyreason}" title="required"/>					
 			</td>		
 			<td class="td_key" width="8%">
-				<label class="message">申请加班类型</label>
+				<font color="#ff0000">*</font><label class="message">申请加班类型</label>
 			</td>
 			<td class="td_value"  width="26%">
-				<input class="input_txt dis_input" value='<dict:write busiDictTypeId="OA_PC001_EWApplyType" value="${ command.extraworkapplytype}" />' readonly="readonly"/>					
-			</td>				
+				<dict:select id="extraworkapplytype" name="extraworkapplytype" busiDictTypeId="OA_PC001_EWApplyType" value="${ command.extraworkapplytype}" cssClass="input_select" title='required'></dict:select>				
+			</td>							
 		</tr>
 		<tr>
 			<td class="td_key" width="8%">
-				<label class="message">加班申请时间</label>
+				<font color="#ff0000">*</font><label class="message">加班申请时间</label>
 			</td>
 			<td class="td_value" colspan="3">
-				<input id="applystarttime" name="applystarttime" class="input_txt dis_input" value="${command.applystarttime}" readonly="readonly"/>&nbsp;~
-				<input id="applyendtime" name="applyendtime" class="input_txt dis_input" value="${command.applyendtime}" readonly="readonly"/>
+				<input id="applystart" name="applystart" class="input_date Wdate" value="${command.applystart}" readonly="readonly" onclick="WdatePicker()" title="required"/>&nbsp;<dict:select id="applystarthm" name="applystarthm" value="${command.applystarthm}" busiDictTypeId="OA_PB001_DailyHM" cssClass="input_select_small" nullLabel="请选择" title="required"></dict:select>&nbsp;~
+				<input id="applyend" name="applyend" class="input_date Wdate" value="${command.applyend}" readonly="readonly" onclick="WdatePicker()" title="required"/>&nbsp;<dict:select id="applyendhm" name="applyendhm" value="${command.applyendhm}" busiDictTypeId="OA_PB001_DailyHM" cssClass="input_select_small" nullLabel="请选择" title="required"></dict:select>
 			</td>
 			<td class="td_key" width="8%"><font color="#ff0000">*</font><label class="message">总工时</label></td>
 			<td class="td_value" width="26%">
-				<input id="totalhours" name="totalhours" class="input_txt input_num1" title='required' maxlength="4" value="${ command.totalhours}"/>小时
+				<input id="totalhours" name="totalhours" class="input_txt input_num1" title='required' maxlength="4" value="${ command.totalhours}" />小时
 			</td>								
-		</tr>	
+		</tr>			
 		<tr>
 			<td class="td_key" width="8%">
-				<label class="message">是否出差地加班</label>
+				<font color="#ff0000">*</font><label class="message">是否出差地加班</label>
 			</td>
 			<td class="td_value"  width="26%">
-				<input class="input_small dis_input" value='<dict:write busiDictTypeId="OA_PC001_EWFlag" value="${ command.evectionworkflag}" />' readonly="readonly"/>					
+				<dict:select id="evectionworkflag" name="evectionworkflag" busiDictTypeId="OA_PC001_EWFlag" value="${ command.evectionworkflag}" cssClass="input_select_small" title='required'></dict:select>
 			</td>			
 		</tr>		
 		<tr>				
@@ -83,11 +83,11 @@
 		</tr>
 		<tr>
 			<td class="td_key" width="8%">
-				<font color="#ff0000">*</font><label class="message">加班实施时间（事后入力）</label>
+				<label class="message">加班实施时间（事后入力）</label>
 			</td>
 			<td class="td_value" colspan="3">
-				<input id="extraworkstart" name="extraworkstart" class="input_date Wdate" value="${command.extraworkstart}" readonly="readonly" onclick="WdatePicker()" title="required"/>&nbsp;<dict:select id="extraworkstarthm" name="extraworkstarthm" value="${command.extraworkstarthm}" busiDictTypeId="OA_PB001_DailyHM" cssClass="input_select_small" nullLabel="请选择" title="required"></dict:select>&nbsp;~
-				<input id="extraworkend" name="extraworkend" class="input_date Wdate" value="${command.extraworkend}" readonly="readonly" onclick="WdatePicker()" title="required"/>&nbsp;<dict:select id="extraworkendhm" name="extraworkendhm" value="${command.extraworkendhm}" busiDictTypeId="OA_PB001_DailyHM" cssClass="input_select_small" nullLabel="请选择" title="required"></dict:select>
+				<input id="extraworkstarttime" name="extraworkstarttime" class="input_txt dis_input" value="${command.extraworkstarttime}" readonly="readonly"/>&nbsp;~
+				<input id="extraworkendtime" name="extraworkendtime" class="input_txt dis_input" value="${command.extraworkendtime}" readonly="readonly"/>
 			</td>
 		</tr>
 		<tr>				
@@ -101,4 +101,4 @@
     </tbody>
   </table>
 </div>
-<jsp:include page="Apply_AuthorityEdit.jsp"></jsp:include>	
+<jsp:include page="Apply_AuthorityA3Edit.jsp"></jsp:include>	

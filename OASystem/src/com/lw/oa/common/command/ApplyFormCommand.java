@@ -161,6 +161,8 @@ public class ApplyFormCommand implements Serializable {
 	private String totalmoney;
 	// 状态
 	private String status;
+	// 审批流程等级
+	private String checklevel;
 	// 备注
 	private String remark;
 	// 履历
@@ -783,6 +785,15 @@ public class ApplyFormCommand implements Serializable {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	
+	public String getChecklevel() {
+		return checklevel;
+	}
+
+	public void setChecklevel(String checklevel) {
+		this.checklevel = checklevel;
 	}
 
 	public String getRemark() {

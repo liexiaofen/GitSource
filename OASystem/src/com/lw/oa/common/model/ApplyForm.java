@@ -110,6 +110,8 @@ public class ApplyForm extends CommonBean {
 	private BigDecimal totalmoney;
 	// 状态
 	private String status;
+	// 审批流程等级
+	private String checklevel;
 	// 备注
 	private String remark;
 	// 备注1
@@ -508,6 +510,14 @@ public class ApplyForm extends CommonBean {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getChecklevel() {
+		return checklevel;
+	}
+
+	public void setChecklevel(String checklevel) {
+		this.checklevel = checklevel;
 	}
 
 	public String getRemark() {

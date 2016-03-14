@@ -101,4 +101,4 @@
     </tbody>
   </table>
 </div>
-<jsp:include page="Apply_AuthorityDetail.jsp"></jsp:include>	
+<jsp:include page="Apply_AuthorityA3Detail.jsp"></jsp:include>	

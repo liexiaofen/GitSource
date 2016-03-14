@@ -118,7 +118,7 @@
 			and exclusivefg = #{exclusivefg , jdbcType=VARCHAR}
 		</if>	   
     </update>
-    <update id="pc002003A3Update" parameterType="applyform">
+    <update id="pc002003A3Update1" parameterType="applyform">
 	<![CDATA[
         update t_applyform set
            updator = #{updator, jdbcType=VARCHAR}
@@ -160,7 +160,7 @@
 			and exclusivefg = #{exclusivefg , jdbcType=VARCHAR}
 		</if>	   
     </update>
-    <update id="pc002003A4Update" parameterType="applyform">
+    <update id="pc002003A3Update2" parameterType="applyform">
 	<![CDATA[
         update t_applyform set
            updator = #{updator, jdbcType=VARCHAR}
@@ -169,21 +169,6 @@
            ,orgid = #{orgid, jdbcType=VARCHAR}
            ,processempid = #{processempid, jdbcType=VARCHAR}
            ,processtime = #{processtime, jdbcType=TIME}
-           ,managercheckid = #{managercheckid, jdbcType=VARCHAR}
-           ,managerorgcdid = #{managerorgcdid, jdbcType=VARCHAR}
-           ,managerdepid = #{managerdepid, jdbcType=VARCHAR}
-           ,personnelcheckid = #{personnelcheckid, jdbcType=VARCHAR}
-           ,personnelorgcdid = #{personnelorgcdid, jdbcType=VARCHAR}
-           ,personneldepid = #{personneldepid, jdbcType=VARCHAR}
-           ,vicepresicheckid = #{vicepresicheckid, jdbcType=VARCHAR}
-           ,vicepresiorgcdid = #{vicepresiorgcdid, jdbcType=VARCHAR}
-           ,vicepresidepid = #{vicepresidepid, jdbcType=VARCHAR}
-           ,presicheckid = #{presicheckid, jdbcType=VARCHAR}
-           ,presiorgcdid = #{presiorgcdid, jdbcType=VARCHAR}
-           ,presidepid = #{presidepid, jdbcType=VARCHAR}
-           ,personfilecheckid = #{personfilecheckid, jdbcType=VARCHAR}
-           ,personfileorgcdid = #{personfileorgcdid, jdbcType=VARCHAR}
-           ,personfiledepid = #{personfiledepid, jdbcType=VARCHAR}
            ,extraworkstart = #{extraworkstart, jdbcType=DATE}
            ,extraworkend = #{extraworkend, jdbcType=DATE}
            ,extraworkstarthm = #{extraworkstarthm, jdbcType=VARCHAR}

@@ -177,12 +177,8 @@ public class PC003Controller implements ConstantUtil{
 	 */
 	@RequestMapping(value = { "pc003003reject.do" },method = RequestMethod.POST)
 	public ModelAndView pc003003reject(HttpServletRequest request, ApplyFormCommand command)
-	{				
-		// 设置状态
-		command.setStatus("0");
-		// 设置操作代码
-		command.setOperationcd("A004");
-		int cnt = pc003Service.pc003003update(command, request);	
+	{
+		int cnt = pc003Service.pc003003reject(command, request);	
 		RetInfo retInfo = MessageUtil.getMessageExclusive(cnt);
 		return pc003001search(request, command.getSearchcommand(), retInfo);
 	}

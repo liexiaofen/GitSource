@@ -47,7 +47,7 @@
 			t.applystarthm, t.applyendhm, convert(char(19), t.applystarttime, 120) as applystarttime, convert(char(19), t.applyendtime, 120) as applyendtime, t.extraworkapplytype, 
 			t.evectionworkflag, convert(char(10), t.extraworkstart, 23) as extraworkstart, convert(char(10), t.extraworkend, 23) as extraworkend, t.extraworkstarthm, t.extraworkendhm, 
 			convert(char(19), t.extraworkstarttime, 120) as extraworkstarttime, convert(char(19), t.extraworkendtime, 120) as extraworkendtime, t.evectioncountry, t.evectionprovince, 
-			t.evectioncity, t.evectionaddress1, t.evectionaddress2, t.totalhours, t.evectionmoney, t.evectionallowance, t.totalmoney, t.status, t.remark,
+			t.evectioncity, t.evectionaddress1, t.evectionaddress2, t.totalhours, t.evectionmoney, t.evectionallowance, t.totalmoney, t.status, t.checklevel, t.remark,
 			t3.unlegalvctn,t3.unwealvctn,t3.unextraworkvctn,source1.applyno as sourceapplyno
 		FROM [dbo].[t_applyform] t 
 		left join [dbo].[s_busidict] dict1 
@@ -647,7 +647,8 @@
 			,[evectionmoney]				
 			,[evectionallowance]					
 			,[totalmoney]					
-			,[status]					
+			,[status]	
+			,[checklevel]					
 			,[remark]					
 			,[remark1]					
 			,[remark2]					
@@ -708,7 +709,8 @@
 			,#{evectionmoney, jdbcType=DECIMAL}					
 			,#{evectionallowance, jdbcType=DECIMAL}					
 			,#{totalmoney, jdbcType=DECIMAL}					
-			,#{status, jdbcType=VARCHAR}					
+			,#{status, jdbcType=VARCHAR}	
+			,'1'			
 			,#{remark, jdbcType=VARCHAR}					
 			,#{remark1, jdbcType=VARCHAR}					
 			,#{remark2, jdbcType=VARCHAR}					

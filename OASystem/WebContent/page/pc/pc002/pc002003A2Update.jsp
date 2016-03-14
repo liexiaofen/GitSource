@@ -301,6 +301,7 @@ function btn_clear(obj) {
 	<input id="sourceid" name="sourceid" type="hidden" value="${command.sourceid}" />
 	<input id="applyempid" name="applyempid" type="hidden"  value="${command.applyempid}" />
 	<input name="applytype" type="hidden"  value="${command.applytype}" />
+	<input name="checklevel" type="hidden" value="${command.checklevel}" />
 	<input name="exclusivefg" type="hidden"  value="${command.exclusivefg}" />
 	<%/*共通隐藏字段 start*/%>
 	<input name="searchcommand.empid" type="hidden"  value="${command.searchcommand.empid}" />
