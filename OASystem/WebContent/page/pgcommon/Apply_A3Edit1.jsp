@@ -43,7 +43,7 @@
 				<font color="#ff0000">*</font><label class="message">申请事由</label>
 			</td>
 			<td class="td_value"  width="26%">
-				<input id="applyreason" name="applyreason" class="input_bigger1" value="${ command.applyreason}" title="required"/>					
+				<input id="applyreason" name="applyreason" class="input_bigger1" value="${ command.applyreason}" maxlength="50" title="required"/>					
 			</td>		
 			<td class="td_key" width="8%">
 				<font color="#ff0000">*</font><label class="message">申请加班类型</label>

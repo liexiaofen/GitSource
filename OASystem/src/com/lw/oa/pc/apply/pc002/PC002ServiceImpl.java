@@ -19,6 +19,7 @@ import com.lw.oa.common.dao.IMybatisDAO;
 import com.lw.oa.common.dao.MybatisDAOImpl;
 import com.lw.oa.common.model.ApplyForm;
 import com.lw.oa.common.model.CommonBean;
+import com.lw.oa.common.model.TicketDetail;
 import com.lw.oa.common.util.ConstantUtil;
 import com.lw.oa.common.util.DataUtil;
 import com.lw.oa.common.util.DateUtil;
@@ -73,10 +74,30 @@ public class PC002ServiceImpl implements IPC002Service,ConstantUtil {
 		//获取履历
 		String resume = ResumeUtil.getResumeByPid(command.getApplyid(), "OA_PC001_Operationcd", "[dbo].[his_applyform]");
 		command.setResume(resume);
+		//不同申请类型的特殊处理
+		specialProcess( command);		
 		mybatisDAOImpl.close();
 		return command;
 	}
-
+	public void specialProcess(ApplyFormCommand command){
+		//申请类型为出差申请
+		if(APPLY_A4.equals(command.getApplytype())){
+			@SuppressWarnings("unchecked")
+			List<TicketDetail> ticketdetail = (List<TicketDetail>)mybatisDAOImpl.queryByObj("common.queryTicketDetailByApplyid", command.getApplyid());
+			TicketDetail[] array = new TicketDetail[ticketdetail.size()];
+			for(int i=0; i<ticketdetail.size(); i++){
+				TicketDetail detail = new TicketDetail();
+				detail.setOrderdate(ticketdetail.get(i).getOrderdate());
+				detail.setFlight(ticketdetail.get(i).getFlight());
+				detail.setStart(ticketdetail.get(i).getStart());
+				detail.setReach(ticketdetail.get(i).getReach());
+				detail.setDiscountflag(ticketdetail.get(i).getDiscountflag());
+				detail.setTicketflag(ticketdetail.get(i).getTicketflag());
+				array[i] = detail;
+			}
+			command.setTicketdetail( array);
+		}
+	}
 	@Override
 	public int pc002003update(ApplyFormCommand command, HttpServletRequest request) {
 		// TODO Auto-generated method stub
@@ -124,6 +145,8 @@ public class PC002ServiceImpl implements IPC002Service,ConstantUtil {
 			sqlid = "pc.pc002.pc002003A3Update1";
 		}else if(APPLY_A3.equals(applytype) && "2".equals(checklevel)){
 			sqlid = "pc.pc002.pc002003A3Update2";
+		}else if(APPLY_A4.equals(applytype)){
+			sqlid = "pc.pc002.pc002003A4Update";
 		}
 		return sqlid;
 	}
@@ -188,7 +211,7 @@ public class PC002ServiceImpl implements IPC002Service,ConstantUtil {
 		entity.setVacatereasontype( command.getVacatereasontype());
 		entity.setOtherremark( command.getOtherremark());
 		entity.setApplyreason( command.getApplyreason());
-		if(APPLY_A1.equals(command.getApplytype())||APPLY_A2.equals(command.getApplytype())|| (APPLY_A3.equals(command.getApplytype()) && "1".equals(command.getChecklevel())) ){
+		if(APPLY_A1.equals(command.getApplytype())||APPLY_A2.equals(command.getApplytype())|| (APPLY_A3.equals(command.getApplytype()) && "1".equals(command.getChecklevel()))||APPLY_A4.equals(command.getApplytype())){
 			entity.setApplystarthm( command.getApplystarthm());
 			entity.setApplyendhm( command.getApplyendhm());		
 			entity.setApplystart( DateUtil.parseDate( command.getApplystart(), DATE_FORMAT_YMD));
@@ -204,12 +227,16 @@ public class PC002ServiceImpl implements IPC002Service,ConstantUtil {
 			entity.setExtraworkendtime( new Timestamp(DateUtil.parseDate(command.getExtraworkend()+STRING_SPACE+command.getExtraworkendhm()+TIME_SS, DATE_FORMAT_YMDHMS).getTime()));
 		}
 		entity.setExtraworkapplytype(command.getExtraworkapplytype());
-		entity.setEvectionworkflag(command.getEvectionworkflag());		
+		entity.setEvectionworkflag(command.getEvectionworkflag());	
+		entity.setEvectionaddress(command.getEvectionaddress());
 		entity.setEvectioncountry(command.getEvectioncountry());
 		entity.setEvectionprovince(command.getEvectionprovince());
 		entity.setEvectioncity(command.getEvectioncity());
 		entity.setEvectionaddress1(command.getEvectionaddress1());
-		entity.setEvectionaddress2(command.getEvectionaddress2());					
+		entity.setEvectionaddress2(command.getEvectionaddress2());		
+		entity.setEvectionconnects(command.getEvectionconnects());
+		entity.setEvectionstart(command.getEvectionstart());
+		entity.setAirplaneflag(command.getAirplaneflag());
 		entity.setTotalhours(command.getTotalhours());					
 		entity.setEvectionmoney(new BigDecimal(command.getEvectionmoney()==null ? "0" : command.getEvectionmoney()));						
 		entity.setEvectionallowance(new BigDecimal(command.getEvectionallowance()==null ? "0" : command.getEvectionallowance()));						

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.lw.oa.common.command.ResultCommand;
+import com.lw.oa.common.model.TicketDetail;
 
 /**
  * *@author yuliang
@@ -15,6 +16,7 @@ public class ApplyFormCommand implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private ApplySearchCommand searchcommand;
 	List<ResumeEntity> list;
+	TicketDetail[] ticketdetail;
 	// 操作代码
 	private String operationcd;
 	// 排他标识
@@ -102,12 +104,12 @@ public class ApplyFormCommand implements Serializable {
 	// 人事归档审核部门id
 	private String personfiledepid;
 	// 人事归档审核部门名称
-	private String personfiledepname;	
+	private String personfiledepname;
 	// 申请类型
 	private String applytype;
 	// 休假事由类型
 	private String vacatereasontype;
-	// 休假事由类型业务字典	
+	// 休假事由类型业务字典
 	private String vacatereasontypedict;
 	// 其他备注
 	private String otherremark;
@@ -147,10 +149,18 @@ public class ApplyFormCommand implements Serializable {
 	private String evectionprovince;
 	// 出差城市
 	private String evectioncity;
+	// 出差地
+	private String evectionaddress;
 	// 出差地1
 	private String evectionaddress1;
 	// 出差地2
 	private String evectionaddress2;
+	// 同行人
+	private String evectionconnects;
+	// 出发自
+	private String evectionstart;
+	// 是否利用飞机
+	private String airplaneflag;
 	// 总工时
 	private String totalhours;
 	// 出差费用
@@ -187,6 +197,7 @@ public class ApplyFormCommand implements Serializable {
 	private String unpresicheckcount;
 	// 人事未归档审核件数
 	private String unpersonfilecheckcount;
+
 	public ApplySearchCommand getSearchcommand() {
 		return searchcommand;
 	}
@@ -201,6 +212,14 @@ public class ApplyFormCommand implements Serializable {
 
 	public void setList(List<ResumeEntity> list) {
 		this.list = list;
+	}	
+
+	public TicketDetail[] getTicketdetail() {
+		return ticketdetail;
+	}
+
+	public void setTicketdetail(TicketDetail[] ticketdetail) {
+		this.ticketdetail = ticketdetail;
 	}
 
 	public String getOperationcd() {
@@ -731,6 +750,38 @@ public class ApplyFormCommand implements Serializable {
 		this.evectioncity = evectioncity;
 	}
 
+	public String getEvectionaddress() {
+		return evectionaddress;
+	}
+
+	public void setEvectionaddress(String evectionaddress) {
+		this.evectionaddress = evectionaddress;
+	}
+
+	public String getEvectionconnects() {
+		return evectionconnects;
+	}
+
+	public void setEvectionconnects(String evectionconnects) {
+		this.evectionconnects = evectionconnects;
+	}
+
+	public String getEvectionstart() {
+		return evectionstart;
+	}
+
+	public void setEvectionstart(String evectionstart) {
+		this.evectionstart = evectionstart;
+	}
+
+	public String getAirplaneflag() {
+		return airplaneflag;
+	}
+
+	public void setAirplaneflag(String airplaneflag) {
+		this.airplaneflag = airplaneflag;
+	}
+
 	public String getEvectionaddress1() {
 		return evectionaddress1;
 	}
@@ -787,7 +838,6 @@ public class ApplyFormCommand implements Serializable {
 		this.status = status;
 	}
 
-	
 	public String getChecklevel() {
 		return checklevel;
 	}

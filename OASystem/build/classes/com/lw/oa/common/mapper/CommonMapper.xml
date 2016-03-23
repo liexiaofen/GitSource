@@ -46,8 +46,8 @@
 			t.applytype, t.vacatereasontype, dict1.busidictname as vacatereasontypedict, t.otherremark, t.applyreason, convert(char(10), t.applystart, 23) as applystart, convert(char(10), t.applyend, 23) as applyend, 
 			t.applystarthm, t.applyendhm, convert(char(19), t.applystarttime, 120) as applystarttime, convert(char(19), t.applyendtime, 120) as applyendtime, t.extraworkapplytype, 
 			t.evectionworkflag, convert(char(10), t.extraworkstart, 23) as extraworkstart, convert(char(10), t.extraworkend, 23) as extraworkend, t.extraworkstarthm, t.extraworkendhm, 
-			convert(char(19), t.extraworkstarttime, 120) as extraworkstarttime, convert(char(19), t.extraworkendtime, 120) as extraworkendtime, t.evectioncountry, t.evectionprovince, 
-			t.evectioncity, t.evectionaddress1, t.evectionaddress2, t.totalhours, t.evectionmoney, t.evectionallowance, t.totalmoney, t.status, t.checklevel, t.remark,
+			convert(char(19), t.extraworkstarttime, 120) as extraworkstarttime, convert(char(19), t.extraworkendtime, 120) as extraworkendtime, t.evectionaddress, t.evectioncountry, t.evectionprovince, 
+			t.evectioncity, t.evectionaddress1, t.evectionaddress2, t.evectionconnects, t.evectionstart, t.airplaneflag, t.totalhours, t.evectionmoney, t.evectionallowance, t.totalmoney, t.status, t.checklevel, t.remark,
 			t3.unlegalvctn,t3.unwealvctn,t3.unextraworkvctn,source1.applyno as sourceapplyno
 		FROM [dbo].[t_applyform] t 
 		left join [dbo].[s_busidict] dict1 
@@ -128,6 +128,18 @@
 			on t.operationcd = dict1.busidictid and dict1.busidicttypeid = #{busidicttypeid} 
 		where t.pid = #{pid} 
 		order by updatetime 
+	]]> 
+	</select>
+	<!-- 查询订票明细 -->    
+	<select id="queryTicketDetailByApplyid" resultType="ticketdetail" parameterType="java.lang.String">
+	<![CDATA[
+		select 
+			convert(char(19), t.updatetime, 120) as updatetime,
+			t.ticketdetailid, t.applyid, t.orderdate, t.flight,        
+            t.start, t.reach, t.discountflag, t.ticketflag
+        from t_ticketdetail t
+		where t.applyid = #{applyid} 
+		order by t.sortno
 	]]> 
 	</select>
 	<insert id="insertAnnualvctn" parameterType="annualvctn">
@@ -637,12 +649,16 @@
 			,[extraworkstarthm]					
 			,[extraworkendhm]					
 			,[extraworkstarttime]					
-			,[extraworkendtime]					
+			,[extraworkendtime]	
+			,[evectionaddress]					
 			,[evectioncountry]					
 			,[evectionprovince]					
 			,[evectioncity]					
 			,[evectionaddress1]					
-			,[evectionaddress2]					
+			,[evectionaddress2]	
+			,[evectionconnects]	
+			,[evectionstart]					
+			,[airplaneflag]					
 			,[totalhours]					
 			,[evectionmoney]				
 			,[evectionallowance]					
@@ -699,12 +715,16 @@
 			,#{extraworkstarthm, jdbcType=VARCHAR}					
 			,#{extraworkendhm, jdbcType=VARCHAR}					
 			,#{extraworkstarttime, jdbcType=TIME}					
-			,#{extraworkendtime, jdbcType=TIME}					
+			,#{extraworkendtime, jdbcType=TIME}		
+			,#{evectionaddress, jdbcType=VARCHAR}				
 			,#{evectioncountry, jdbcType=VARCHAR}					
 			,#{evectionprovince, jdbcType=VARCHAR}					
 			,#{evectioncity, jdbcType=VARCHAR}					
 			,#{evectionaddress1, jdbcType=VARCHAR}					
-			,#{evectionaddress2, jdbcType=VARCHAR}					
+			,#{evectionaddress2, jdbcType=VARCHAR}	
+			,#{evectionconnects, jdbcType=VARCHAR}	
+			,#{evectionstart, jdbcType=VARCHAR}					
+			,#{airplaneflag, jdbcType=VARCHAR}				
 			,#{totalhours, jdbcType=VARCHAR}					
 			,#{evectionmoney, jdbcType=DECIMAL}					
 			,#{evectionallowance, jdbcType=DECIMAL}					
@@ -751,6 +771,44 @@
            ,#{viewflg, jdbcType=VARCHAR}
            ,#{replaceflg, jdbcType=VARCHAR} 
            ,#{remark, jdbcType=VARCHAR})
+    ]]>
+    </insert>
+    <insert id="insertTicketDetail" parameterType="ticketdetail">
+	<![CDATA[
+        INSERT INTO [dbo].[t_ticketdetail]
+           ([creator]
+           ,[createtime]
+           ,[updator]
+           ,[updatetime]
+           ,[exclusivefg]
+           ,[orgid]
+           ,[deletefg]
+           ,[ticketdetailid]
+           ,[applyid]
+           ,[orderdate]
+           ,[flight]
+           ,[start]
+           ,[reach]
+           ,[discountflag]
+           ,[ticketflag]
+           ,[sortno])
+     VALUES
+           (#{creator, jdbcType=VARCHAR}
+           ,#{createtime,jdbcType=TIME}
+           ,#{updator, jdbcType=VARCHAR}
+           ,#{updatetime,jdbcType=TIME}
+           ,#{exclusivefg, jdbcType=VARCHAR}
+           ,#{orgid, jdbcType=VARCHAR}
+           ,#{deletefg, jdbcType=CHAR}
+           ,#{ticketdetailid, jdbcType=VARCHAR}   
+           ,#{applyid, jdbcType=VARCHAR} 
+           ,#{orderdate, jdbcType=VARCHAR}
+           ,#{flight, jdbcType=VARCHAR}
+           ,#{start, jdbcType=VARCHAR}  
+           ,#{reach, jdbcType=VARCHAR}
+           ,#{discountflag, jdbcType=VARCHAR} 
+           ,#{ticketflag, jdbcType=VARCHAR}
+           ,#{sortno, jdbcType=VARCHAR})
     ]]>
     </insert>
 </mapper>

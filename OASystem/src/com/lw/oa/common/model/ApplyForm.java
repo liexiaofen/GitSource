@@ -96,10 +96,18 @@ public class ApplyForm extends CommonBean {
 	private String evectionprovince;
 	// 出差城市
 	private String evectioncity;
+	// 出差地
+	private String evectionaddress;
 	// 出差地1
 	private String evectionaddress1;
 	// 出差地2
 	private String evectionaddress2;
+	// 同行人
+	private String evectionconnects;
+	// 出发自						
+	private String evectionstart;					
+	// 是否利用飞机						
+	private String airplaneflag;
 	// 总工时
 	private String totalhours;
 	// 出差费用
@@ -454,6 +462,38 @@ public class ApplyForm extends CommonBean {
 
 	public void setEvectioncity(String evectioncity) {
 		this.evectioncity = evectioncity;
+	}
+
+	public String getEvectionaddress() {
+		return evectionaddress;
+	}
+
+	public void setEvectionaddress(String evectionaddress) {
+		this.evectionaddress = evectionaddress;
+	}
+
+	public String getEvectionconnects() {
+		return evectionconnects;
+	}
+
+	public void setEvectionconnects(String evectionconnects) {
+		this.evectionconnects = evectionconnects;
+	}
+
+	public String getEvectionstart() {
+		return evectionstart;
+	}
+
+	public void setEvectionstart(String evectionstart) {
+		this.evectionstart = evectionstart;
+	}
+
+	public String getAirplaneflag() {
+		return airplaneflag;
+	}
+
+	public void setAirplaneflag(String airplaneflag) {
+		this.airplaneflag = airplaneflag;
 	}
 
 	public String getEvectionaddress1() {

@@ -37,6 +37,8 @@ public class PC002Controller implements ConstantUtil{
 	private static final String  PAGE_APPLY_DETAIL_A2 = "pc/pc002/pc002002A2Detail";
 	//加班申请详细画面	
 	private static final String  PAGE_APPLY_DETAIL_A3 = "pc/pc002/pc002002A3Detail";
+	//出差申请详细画面	
+	private static final String  PAGE_APPLY_DETAIL_A4 = "pc/pc002/pc002002A4Detail";
 	//休假申请修改画面	
 	private static final String  PAGE_APPLY_UPDATE_A1 = "pc/pc002/pc002003A1Update";
 	//休假取消申请修改画面
@@ -45,6 +47,8 @@ public class PC002Controller implements ConstantUtil{
 	private static final String  PAGE_APPLY_UPDATE_A31 = "pc/pc002/pc002003A3Update1";
 	//加班确认申请修改画面	
 	private static final String  PAGE_APPLY_UPDATE_A32 = "pc/pc002/pc002003A3Update2";
+	//出差申请修改画面
+	private static final String  PAGE_APPLY_UPDATE_A4 = "pc/pc002/pc002003A4Update";
 	@Autowired
 	private IPC002Service pc002Service;
 	/**
@@ -203,6 +207,8 @@ public class PC002Controller implements ConstantUtil{
 			page = PAGE_APPLY_DETAIL_A2;
 		}else if(APPLY_A3.equals(type)){
 			page = PAGE_APPLY_DETAIL_A3;
+		}else if(APPLY_A4.equals(type)){
+			page = PAGE_APPLY_DETAIL_A4;
 		}
 		return page;
 	}
@@ -216,6 +222,8 @@ public class PC002Controller implements ConstantUtil{
 			page = PAGE_APPLY_UPDATE_A31;
 		}else if(APPLY_A3.equals(type) && "2".equals(command.getChecklevel())){
 			page = PAGE_APPLY_UPDATE_A32;
+		}else if(APPLY_A4.equals(type)){
+			page = PAGE_APPLY_UPDATE_A4;
 		}
 		return page;
 	}

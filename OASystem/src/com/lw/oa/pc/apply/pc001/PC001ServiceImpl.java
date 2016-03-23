@@ -16,6 +16,7 @@ import com.lw.oa.common.dao.MybatisDAOImpl;
 import com.lw.oa.common.model.AnnualVctn;
 import com.lw.oa.common.model.ApplyForm;
 import com.lw.oa.common.model.CommonBean;
+import com.lw.oa.common.model.TicketDetail;
 import com.lw.oa.common.util.ConstantUtil;
 import com.lw.oa.common.util.DataUtil;
 import com.lw.oa.common.util.DateUtil;
@@ -99,6 +100,9 @@ public class PC001ServiceImpl implements IPC001Service,ConstantUtil {
 			// 创建履历对象
 			HashMap<String,Object> map  = DataUtil.creatHisMap("[dbo].[his_applyform]", hisid, key, "A001", "0", "0", "", bean, request);
 			mybatisDAOImpl.insert("common.insertHis", map);
+			if(APPLY_A4.equals(command.getApplytype())){
+				insertTicketDetail(key, sysdate, bean, command.getTicketdetail());
+			}
 			mybatisDAOImpl.commit();
 		} catch (Exception e) {
 			mybatisDAOImpl.rollback();
@@ -110,7 +114,18 @@ public class PC001ServiceImpl implements IPC001Service,ConstantUtil {
 		return flag;
 	}
 	
-	
+	public void insertTicketDetail(String applyid, Date sysdate, CommonBean bean, TicketDetail[] ticketdetail){
+		for(TicketDetail detail:ticketdetail){
+			// 获取订票明细id
+			String ticketdetailid = DataUtil.getKey(sysdate);
+			detail.setTicketdetailid(ticketdetailid);
+			//设置applyid
+			detail.setApplyid(applyid);
+			// 设置共通插入字段
+			DataUtil.setInsertCol(detail, bean);	
+			mybatisDAOImpl.insert("common.insertTicketDetail", detail);
+		}
+	}
 	
 	public ApplyForm prepareCommand(PC001Command command) {
 		ApplyForm entity = new ApplyForm();
@@ -137,7 +152,7 @@ public class PC001ServiceImpl implements IPC001Service,ConstantUtil {
 		entity.setVacatereasontype( command.getVacatereasontype());
 		entity.setOtherremark( command.getOtherremark());
 		entity.setApplyreason( command.getApplyreason());
-		if(APPLY_A1.equals(command.getApplytype())||APPLY_A2.equals(command.getApplytype())||APPLY_A3.equals(command.getApplytype())){
+		if(APPLY_A1.equals(command.getApplytype())||APPLY_A2.equals(command.getApplytype())||APPLY_A3.equals(command.getApplytype())||APPLY_A4.equals(command.getApplytype())){
 			entity.setApplystarthm( command.getApplystarthm());
 			entity.setApplyendhm( command.getApplyendhm());		
 			entity.setApplystart( DateUtil.parseDate( command.getApplystart(), DATE_FORMAT_YMD));
@@ -153,12 +168,16 @@ public class PC001ServiceImpl implements IPC001Service,ConstantUtil {
 			entity.setExtraworkendtime( new Timestamp(DateUtil.parseDate(command.getExtraworkend()+STRING_SPACE+command.getExtraworkendhm()+TIME_SS, DATE_FORMAT_YMDHMS).getTime()));
 		}
 		entity.setExtraworkapplytype(command.getExtraworkapplytype());
-		entity.setEvectionworkflag(command.getEvectionworkflag());		
+		entity.setEvectionworkflag(command.getEvectionworkflag());
+		entity.setEvectionaddress(command.getEvectionaddress());
 		entity.setEvectioncountry(command.getEvectioncountry());
 		entity.setEvectionprovince(command.getEvectionprovince());
 		entity.setEvectioncity(command.getEvectioncity());
 		entity.setEvectionaddress1(command.getEvectionaddress1());
-		entity.setEvectionaddress2(command.getEvectionaddress2());					
+		entity.setEvectionaddress2(command.getEvectionaddress2());	
+		entity.setEvectionconnects(command.getEvectionconnects());
+		entity.setEvectionstart(command.getEvectionstart());
+		entity.setAirplaneflag(command.getAirplaneflag());
 		entity.setTotalhours(command.getTotalhours());					
 		entity.setEvectionmoney(new BigDecimal(command.getEvectionmoney()==null ? "0" : command.getEvectionmoney()));						
 		entity.setEvectionallowance(new BigDecimal(command.getEvectionallowance()==null ? "0" : command.getEvectionallowance()));						
