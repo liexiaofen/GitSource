@@ -110,6 +110,7 @@ public class PC002ServiceImpl implements IPC002Service,ConstantUtil {
 			Date sysdate = (Date)mybatisDAOImpl.expandByObj( "common.getDBSysDate", null);
 			// 获取共通更新字段
 			CommonBean bean = DataUtil.getUpdateCol(sysdate, request);
+			CommonBean insertbean = DataUtil.getInsertCol(sysdate, request);
 			// 设置共通更新字段
 			DataUtil.setUpdateCol(entity, bean);
 			entity.setProcessempid(bean.getUpdator());
@@ -122,6 +123,11 @@ public class PC002ServiceImpl implements IPC002Service,ConstantUtil {
 			// 创建履历对象
 			HashMap<String,Object> map  = DataUtil.creatHisMap("[dbo].[his_applyform]", hisid, command.getApplyid(), "A002", "0", "0", command.getRemark(), bean, request);
 			mybatisDAOImpl.insert("common.insertHis", map);			
+			// 出差申请特殊处理
+			if(APPLY_A4.equals(command.getApplytype())){
+				mybatisDAOImpl.delete("pc.pc002.pc002003PDTicketDetail", command.getApplyid());
+				insertTicketDetail(command.getApplyid(), sysdate, insertbean, command.getTicketdetail());
+			}
 			mybatisDAOImpl.commit();
 		} catch (Exception e) {
 			mybatisDAOImpl.rollback();
@@ -132,7 +138,20 @@ public class PC002ServiceImpl implements IPC002Service,ConstantUtil {
 		}
 		return flag;
 	}
-
+	
+	public void insertTicketDetail(String applyid, Date sysdate, CommonBean bean, TicketDetail[] ticketdetail){
+		for(TicketDetail detail:ticketdetail){
+			// 获取订票明细id
+			String ticketdetailid = DataUtil.getKey(sysdate);
+			detail.setTicketdetailid(ticketdetailid);
+			//设置applyid
+			detail.setApplyid(applyid);
+			// 设置共通插入字段
+			DataUtil.setInsertCol(detail, bean);	
+			mybatisDAOImpl.insert("common.insertTicketDetail", detail);
+		}
+	}
+	
 	public String getSqlidByApplytype(ApplyFormCommand command){
 		String sqlid = StringUtils.EMPTY;
 		String applytype = command.getApplytype();
@@ -168,12 +187,12 @@ public class PC002ServiceImpl implements IPC002Service,ConstantUtil {
 			// 设置处理人、状态
 			entity.setProcessempid(bean.getUpdator());
 			entity.setProcesstime(bean.getUpdatetime());			
-			flag = mybatisDAOImpl.update( "pc.pc002.pc002003delete", entity);			
+			flag = mybatisDAOImpl.update( "pc.pc002.pc002003LDApplyform", entity);			
 			// 获取履历id
 			String hisid = DataUtil.getKey(sysdate);
 			// 创建履历对象
 			HashMap<String,Object> map  = DataUtil.creatHisMap("[dbo].[his_applyform]", hisid, command.getApplyid(), command.getOperationcd(), "0", "0", command.getRemark(), bean, request);
-			mybatisDAOImpl.insert("common.insertHis", map);			
+			mybatisDAOImpl.insert("common.insertHis", map);		
 			mybatisDAOImpl.commit();
 		} catch (Exception e) {
 			mybatisDAOImpl.rollback();

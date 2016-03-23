@@ -225,7 +225,7 @@
 			and exclusivefg = #{exclusivefg , jdbcType=VARCHAR}
 		</if>	   
     </update>
-    <update id="pc002003delete" parameterType="applyform">
+    <update id="pc002003LDApplyform" parameterType="applyform">
 	<![CDATA[
         update t_applyform set
            updator = #{updator, jdbcType=VARCHAR}
@@ -241,7 +241,7 @@
 			and exclusivefg = #{exclusivefg , jdbcType=VARCHAR}
 		</if>	   
     </update>
-    <delete id="pc002003deleteTicketDetail" parameterType="java.lang.String">
+    <delete id="pc002003PDTicketDetail" parameterType="java.lang.String">
     	delete from t_ticketdetail where applyid = #{applyid, jdbcType=VARCHAR} and deletefg = '0'    
     </delete>
 </mapper>

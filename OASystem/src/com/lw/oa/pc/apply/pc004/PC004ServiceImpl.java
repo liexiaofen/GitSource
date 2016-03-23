@@ -16,6 +16,7 @@ import com.lw.oa.common.dao.IMybatisDAO;
 import com.lw.oa.common.dao.MybatisDAOImpl;
 import com.lw.oa.common.model.ApplyForm;
 import com.lw.oa.common.model.CommonBean;
+import com.lw.oa.common.model.TicketDetail;
 import com.lw.oa.common.util.ConstantUtil;
 import com.lw.oa.common.util.DataUtil;
 import com.lw.oa.common.util.ResumeUtil;
@@ -69,10 +70,30 @@ public class PC004ServiceImpl implements IPC004Service,ConstantUtil {
 		//获取履历
 		String resume = ResumeUtil.getResumeByPid(command.getApplyid(), "OA_PC001_Operationcd", "[dbo].[his_applyform]");
 		command.setResume(resume);
+		//不同申请类型的特殊处理
+		specialProcess( command);	
 		mybatisDAOImpl.close();
 		return command;
 	}
-
+	public void specialProcess(ApplyFormCommand command){
+		//申请类型为出差申请
+		if(APPLY_A4.equals(command.getApplytype())){
+			@SuppressWarnings("unchecked")
+			List<TicketDetail> ticketdetail = (List<TicketDetail>)mybatisDAOImpl.queryByObj("common.queryTicketDetailByApplyid", command.getApplyid());
+			TicketDetail[] array = new TicketDetail[ticketdetail.size()];
+			for(int i=0; i<ticketdetail.size(); i++){
+				TicketDetail detail = new TicketDetail();
+				detail.setOrderdate(ticketdetail.get(i).getOrderdate());
+				detail.setFlight(ticketdetail.get(i).getFlight());
+				detail.setStart(ticketdetail.get(i).getStart());
+				detail.setReach(ticketdetail.get(i).getReach());
+				detail.setDiscountflag(ticketdetail.get(i).getDiscountflag());
+				detail.setTicketflag(ticketdetail.get(i).getTicketflag());
+				array[i] = detail;
+			}
+			command.setTicketdetail( array);
+		}
+	}
 	@Override
 	public int pc004001file(ApplySearchCommand searchCommand, HttpServletRequest request) {
 		// TODO Auto-generated method stub

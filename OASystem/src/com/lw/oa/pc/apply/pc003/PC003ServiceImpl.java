@@ -3,9 +3,12 @@ package com.lw.oa.pc.apply.pc003;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
+
 import com.lw.oa.common.command.ApplyFormCommand;
 import com.lw.oa.common.command.ApplyResultCommand;
 import com.lw.oa.common.command.ApplySearchCommand;
@@ -14,6 +17,7 @@ import com.lw.oa.common.dao.IMybatisDAO;
 import com.lw.oa.common.dao.MybatisDAOImpl;
 import com.lw.oa.common.model.ApplyForm;
 import com.lw.oa.common.model.CommonBean;
+import com.lw.oa.common.model.TicketDetail;
 import com.lw.oa.common.util.ConstantUtil;
 import com.lw.oa.common.util.DataUtil;
 import com.lw.oa.common.util.ResumeUtil;
@@ -67,10 +71,30 @@ public class PC003ServiceImpl implements IPC003Service,ConstantUtil {
 		//获取履历
 		String resume = ResumeUtil.getResumeByPid(command.getApplyid(), "OA_PC001_Operationcd", "[dbo].[his_applyform]");
 		command.setResume(resume);
+		//不同申请类型的特殊处理
+		specialProcess( command);	
 		mybatisDAOImpl.close();
 		return command;
 	}
-
+	public void specialProcess(ApplyFormCommand command){
+		//申请类型为出差申请
+		if(APPLY_A4.equals(command.getApplytype())){
+			@SuppressWarnings("unchecked")
+			List<TicketDetail> ticketdetail = (List<TicketDetail>)mybatisDAOImpl.queryByObj("common.queryTicketDetailByApplyid", command.getApplyid());
+			TicketDetail[] array = new TicketDetail[ticketdetail.size()];
+			for(int i=0; i<ticketdetail.size(); i++){
+				TicketDetail detail = new TicketDetail();
+				detail.setOrderdate(ticketdetail.get(i).getOrderdate());
+				detail.setFlight(ticketdetail.get(i).getFlight());
+				detail.setStart(ticketdetail.get(i).getStart());
+				detail.setReach(ticketdetail.get(i).getReach());
+				detail.setDiscountflag(ticketdetail.get(i).getDiscountflag());
+				detail.setTicketflag(ticketdetail.get(i).getTicketflag());
+				array[i] = detail;
+			}
+			command.setTicketdetail( array);
+		}
+	}
 	@Override
 	public int pc003003update(ApplyFormCommand command, HttpServletRequest request) {
 		// TODO Auto-generated method stub
@@ -175,6 +199,17 @@ public class PC003ServiceImpl implements IPC003Service,ConstantUtil {
 				status = APPLY_STATUS_5;//总经理已审批
 				operationcd = "A009";
 			}
+		}else if(APPLY_A4.equals(applytype)){
+			if(APPLY_STATUS_1.equals(sts)){
+				status = APPLY_STATUS_2;//经理已审批
+				operationcd = "A003";
+			}else if(APPLY_STATUS_2.equals(sts)){
+				status = APPLY_STATUS_4;//副总已审批
+				operationcd = "A007";
+			}else if(APPLY_STATUS_4.equals(sts)){
+				status = APPLY_STATUS_5;//总经理已审批
+				operationcd = "A009";
+			}
 		}
 		command.setStatus(status);
 		command.setOperationcd(operationcd);
@@ -202,6 +237,14 @@ public class PC003ServiceImpl implements IPC003Service,ConstantUtil {
 			}else if(APPLY_STATUS_2.equals(sts)  && "1".equals(checklevel)){
 				operationcd = "A008";//副总驳回
 			}else if(APPLY_STATUS_2.equals(sts)  && "2".equals(checklevel)){
+				operationcd = "A010";//总经理驳回
+			}
+		}else if(APPLY_A4.equals(applytype)){
+			if(APPLY_STATUS_1.equals(sts)){
+				operationcd = "A004";//经理驳回
+			}else if(APPLY_STATUS_2.equals(sts)){
+				operationcd = "A008";//副总驳回
+			}else if(APPLY_STATUS_4.equals(sts)){
 				operationcd = "A010";//总经理驳回
 			}
 		}

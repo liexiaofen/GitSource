@@ -32,6 +32,9 @@
 				or (
 					t.applytype = 'A3' and ( (t.status = 1 and t.managercheckid = #{empid}) or (t.status = 2 and t.vicepresicheckid = #{empid} and t.checklevel='1') or (t.status = 2 and t.presicheckid = #{empid} and t.checklevel='2') ) 
 				) 
+				or (
+					t.applytype = 'A4' and ( (t.status = 1 and t.managercheckid = #{empid}) or (t.status = 2 and t.vicepresicheckid = #{empid}) or (t.status = 4 and t.presicheckid = #{empid}) ) 
+				) 
 			)
 			union all
 			SELECT 
@@ -65,6 +68,9 @@
 						) 
 						or (
 							t.applytype = 'A3' and ( (t.status = 1 and t.managercheckid = #{empid}) or (t.status = 2 and t.vicepresicheckid = #{empid} and t.checklevel='1') or (t.status = 2 and t.presicheckid = #{empid} and t.checklevel='2') ) 
+						) 
+						or (
+							t.applytype = 'A4' and ( (t.status = 1 and t.managercheckid = #{empid}) or (t.status = 2 and t.vicepresicheckid = #{empid}) or (t.status = 4 and t.presicheckid = #{empid}) ) 
 						) 
 					)
 				)

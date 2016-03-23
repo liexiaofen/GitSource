@@ -11,13 +11,13 @@
 *输出参数: 无
 *机       能: 返回
 *创 建  者: yuliang          
-*创建时间: 2015-12-29
+*创建时间: 2015-09-16
 *更 新  者: 
 *更新时间: 
 */
 function btn_back() {	
 	c_ShowProgressBar(); 
-	$("#detailForm").attr( "action", "pc004002back.do");	
+	$("#detailForm").attr( "action", "pc003002back.do");	
 	$("#detailForm").submit();
 }
 </script>
@@ -30,9 +30,9 @@ function btn_back() {
 	<input name="searchcommand.empid" type="hidden"  value="${command.searchcommand.empid}" />
 	<input name="searchcommand.applyno" type="hidden"  value="${command.searchcommand.applyno}" />
 	<input name="searchcommand.applytype" type="hidden"  value="${command.searchcommand.applytype}" />
-	<input name="searchcommand.status" type="hidden"  value="${command.searchcommand.status}" />
+	<input name="searchcommand.statusalias" type="hidden"  value="${command.searchcommand.statusalias}" />
 	<%/*共通隐藏字段 end*/%>	 
-	<div class="div_navi"><span><img src="<%= request.getContextPath()%>/resources/images/home.png">&nbsp;您当前的位置：申请管理&nbsp;&gt;&nbsp;人事归档&nbsp;&gt;&nbsp;出差申请明细</span></div>
+	<div class="div_navi"><span><img src="<%= request.getContextPath()%>/resources/images/home.png">&nbsp;您当前的位置：申请管理&nbsp;&gt;&nbsp;审核管理&nbsp;&gt;&nbsp;出差申请明细</span></div>
 	
 	<jsp:include page="../../pgcommon/Apply_A4Detail.jsp"></jsp:include>
 	<jsp:include page="../../pgcommon/Apply_ResumeDetail.jsp"></jsp:include>

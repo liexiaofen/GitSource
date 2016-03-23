@@ -138,7 +138,7 @@
 			t.ticketdetailid, t.applyid, t.orderdate, t.flight,        
             t.start, t.reach, t.discountflag, t.ticketflag
         from t_ticketdetail t
-		where t.applyid = #{applyid} 
+		where t.applyid = #{applyid} and t.deletefg = '0'    
 		order by t.sortno
 	]]> 
 	</select>
