@@ -79,7 +79,7 @@
 		</tr>
 		<tr>
 			<td class="td_key" width="8%">
-				<label class="message">预订出差时间</label>
+				<label class="message">预计出差时间</label>
 			</td>
 			<td class="td_value" colspan="3">
 				<input id="applystarttime" name="applystarttime" class="input_txt dis_input" value="${command.applystarttime}" readonly="readonly"/>&nbsp;~

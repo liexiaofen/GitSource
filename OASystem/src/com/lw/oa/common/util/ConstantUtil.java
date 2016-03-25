@@ -105,10 +105,10 @@ public interface ConstantUtil {
 	public static final String VACATEREASON_TYPE_6 = "6";
 	//请假事由其他									
 	public static final String VACATEREASON_TYPE_7 = "7";
-	//出差地加班否
-	public static final String EVECTION_WORKFLAG_0 = "0";
-	//出差地加班是								
-	public static final String EVECTION_WORKFLAG_1 = "1";	
+	//否
+	public static final String FLAG_0 = "0";
+	//是								
+	public static final String FLAG_1 = "1";	
 	//审批流程等级1
 	public static final String CHECKLEVEL_1 = "1";
 	//审批流程等级2							
@@ -127,4 +127,6 @@ public interface ConstantUtil {
 	public static final String TEMPLATE_A2_FILE = "template\\Apply_A2.xlsx";
 	//模板加班申请文件
 	public static final String TEMPLATE_A3_FILE = "template\\Apply_A3.xlsx";
+	//模板出差申请文件
+	public static final String TEMPLATE_A4_FILE = "template\\Apply_A4.xlsx";
 }

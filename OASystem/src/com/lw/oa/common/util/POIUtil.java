@@ -130,6 +130,8 @@ public class POIUtil implements ConstantUtil {
 			TemplateUtil.templateA2write(workbook, obj);
 		}else if(APPLY_A3.equals(obj.getApplytype())){
 			TemplateUtil.templateA3write(workbook, obj);
+		}else if(APPLY_A4.equals(obj.getApplytype())){
+			TemplateUtil.templateA4write(workbook, obj);
 		}
 	}
 	/**
@@ -147,6 +149,8 @@ public class POIUtil implements ConstantUtil {
 			tempFileName = TEMPLATE_A2_FILE;
 		}else if(APPLY_A3.equals(type)){
 			tempFileName = TEMPLATE_A3_FILE;
+		}else if(APPLY_A4.equals(type)){
+			tempFileName = TEMPLATE_A4_FILE;
 		}
 		return tempFileName;
 	}

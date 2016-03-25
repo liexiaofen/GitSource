@@ -9,6 +9,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 
 import com.lw.oa.common.command.ApplyFormCommand;
 import com.lw.oa.common.command.ResumeEntity;
+import com.lw.oa.common.model.TicketDetail;
 
 public class TemplateUtil implements ConstantUtil{
 	/**
@@ -201,6 +202,74 @@ public class TemplateUtil implements ConstantUtil{
 		setA1Resume( sheet, obj);
 	}
 	/**
+	 * 出差申请模板数据写入
+	 * 
+	 * @param workbook
+	 *            工作簿
+	 * @param obj
+	 *            数据集合
+	 */
+	public static void templateA4write( Workbook workbook, ApplyFormCommand obj){
+		Sheet sheet = workbook.getSheetAt(0);
+		// 设置当前日期
+		Row daterow = sheet.getRow(2);
+		Cell datecell = daterow.getCell(18);
+		String sysdate = DateUtil.getSystemTime(DATE_FORMAT_YMDHMS);
+		datecell.setCellValue(sysdate);
+		// 设置申请人
+		Row emprow = sheet.getRow(3);
+		Cell empcell = emprow.getCell(4);
+		empcell.setCellValue(obj.getApplyempname());
+		// 设置申请单号
+		Row applynorow = sheet.getRow(3);
+		Cell applynocell = applynorow.getCell(17);
+		applynocell.setCellValue(obj.getApplyno());
+		// 设置机构
+		Row orgrow = sheet.getRow(4);
+		Cell orgcell = orgrow.getCell(4);
+		orgcell.setCellValue(obj.getOrgcddepposes());
+		// 设置出差目的
+		Row applyreasonrow = sheet.getRow(6);
+		Cell applyreasoncell = applyreasonrow.getCell(4);
+		applyreasoncell.setCellValue(obj.getApplyreason());
+		// 设置出差地	 
+		Row evectionaddressrow = sheet.getRow(7);
+		Cell evectionaddresscell = evectionaddressrow.getCell(4);
+		evectionaddresscell.setCellValue(obj.getEvectionaddress());
+		// 设置出差地1	 
+		Row evectionaddressrow1 = sheet.getRow(7);
+		Cell evectionaddresscell1 = evectionaddressrow1.getCell(9);
+		evectionaddresscell1.setCellValue(obj.getEvectionaddress1());
+		// 设置出差地2	 
+		Row evectionaddressrow2 = sheet.getRow(7);
+		Cell evectionaddresscell2 = evectionaddressrow2.getCell(13);
+		evectionaddresscell2.setCellValue(obj.getEvectionaddress2());
+		// 设置是否利用飞机
+		String airplaneflag = obj.getAirplaneflag();
+		setA4Airportflag(sheet, airplaneflag);
+		// 设置同行人
+		Row evectionconnectsrow = sheet.getRow(8);
+		Cell evectionconnectscell = evectionconnectsrow.getCell(4);
+		evectionconnectscell.setCellValue(obj.getEvectionconnects());
+		// 设置出发自
+		String evectionstart = obj.getEvectionstart();
+		setA4Evectionstart(sheet, evectionstart);
+		// 设置出差时间
+		Row startrow = sheet.getRow(9);
+		Cell startcell = startrow.getCell(4);
+		startcell.setCellValue(obj.getApplystarttime());
+		Row endrow = sheet.getRow(9);
+		Cell endcell = endrow.getCell(11);
+		endcell.setCellValue(obj.getApplyendtime());	
+		// 设置订票明细
+		setA4TicketDetail( sheet, obj);
+		// 设置审核人
+		String status = obj.getStatus();
+		setA4Checkname( sheet,  status,  obj);	
+		// 设置审核履历
+		setA1Resume( sheet, obj);
+	}
+	/**
 	 * 设置A1履历
 	 * 
 	 * @param sheet
@@ -384,10 +453,10 @@ public class TemplateUtil implements ConstantUtil{
 	 */
 	public static void setA3Evectionworkflag(Sheet sheet, String evectionworkflag){
 		Row typerow = sheet.getRow(9);
-		if(EVECTION_WORKFLAG_1.equals(evectionworkflag)){			
+		if(FLAG_1.equals(evectionworkflag)){			
 			Cell typecell = typerow.getCell(9);
 			typecell.setCellValue("●");
-		}else if(EVECTION_WORKFLAG_0.equals(evectionworkflag)){
+		}else if(FLAG_0.equals(evectionworkflag)){
 			Cell typecell = typerow.getCell(12);
 			typecell.setCellValue("●");
 		}
@@ -534,6 +603,154 @@ public class TemplateUtil implements ConstantUtil{
 				Row personfilechecknamerow = sheet.getRow(22);
 				Cell personfilechecknamecell = personfilechecknamerow.getCell(11);
 				personfilechecknamecell.setCellValue(obj.getPersonfilecheckname());
+			}
+		}
+	}
+	/**
+	 * 设置A4是否利用飞机
+	 * 
+	 * @param sheet
+	 *            sheet
+	 * @param type
+	 *            是否利用飞机
+	 */
+	public static void setA4Airportflag(Sheet sheet, String airportflag){
+		Row typerow = sheet.getRow(7);
+		if(FLAG_0.equals(airportflag)){			
+			Cell typecell = typerow.getCell(21);
+			typecell.setCellValue("●");
+		}else if(FLAG_1.equals(airportflag)){
+			Cell typecell = typerow.getCell(23);
+			typecell.setCellValue("●");
+		}
+	}
+	/**
+	 * 设置A4出发自
+	 * 
+	 * @param sheet
+	 *            sheet
+	 * @param type
+	 *            出发自
+	 */
+	public static void setA4Evectionstart(Sheet sheet, String evectionstart){
+		Row typerow = sheet.getRow(8);
+		if(FLAG_0.equals(evectionstart)){			
+			Cell typecell = typerow.getCell(14);
+			typecell.setCellValue("●");
+		}else if(FLAG_1.equals(evectionstart)){
+			Cell typecell = typerow.getCell(17);
+			typecell.setCellValue("●");
+		}
+	}
+	/**
+	 * 设置A4审核人
+	 * 
+	 * @param sheet
+	 *            sheet
+	 * @param status
+	 *            状态
+	 * @param obj
+	 *            数据集合
+	 */
+	public static void setA4Checkname(Sheet sheet, String status, ApplyFormCommand obj){
+		if(APPLY_STATUS_0.equals(status)){
+			Row applyempnamerow = sheet.getRow(22);
+			Cell applyempnamecell = applyempnamerow.getCell(23);
+			applyempnamecell.setCellValue(obj.getApplyempname());
+		}else if(APPLY_STATUS_1.equals(status)){
+			Row applyempnamerow = sheet.getRow(22);
+			Cell applyempnamecell = applyempnamerow.getCell(23);
+			applyempnamecell.setCellValue(obj.getApplyempname());
+		}else if(APPLY_STATUS_2.equals(status)){
+			Row applyempnamerow = sheet.getRow(22);
+			Cell applyempnamecell = applyempnamerow.getCell(23);
+			applyempnamecell.setCellValue(obj.getApplyempname());
+			Row managerchecknamerow = sheet.getRow(22);
+			Cell managerchecknamecell = managerchecknamerow.getCell(20);
+			managerchecknamecell.setCellValue(obj.getManagercheckname());
+		}else if(APPLY_STATUS_4.equals(status)){
+			Row applyempnamerow = sheet.getRow(22);
+			Cell applyempnamecell = applyempnamerow.getCell(23);
+			applyempnamecell.setCellValue(obj.getApplyempname());
+			Row managerchecknamerow = sheet.getRow(22);
+			Cell managerchecknamecell = managerchecknamerow.getCell(20);
+			managerchecknamecell.setCellValue(obj.getManagercheckname());
+			Row vicepresichecknamerow = sheet.getRow(22);
+			Cell vicepresichecknamecell = vicepresichecknamerow.getCell(17);
+			vicepresichecknamecell.setCellValue(obj.getVicepresicheckname());
+		}else if(APPLY_STATUS_5.equals(status)){
+			Row applyempnamerow = sheet.getRow(22);
+			Cell applyempnamecell = applyempnamerow.getCell(23);
+			applyempnamecell.setCellValue(obj.getApplyempname());
+			Row managerchecknamerow = sheet.getRow(22);
+			Cell managerchecknamecell = managerchecknamerow.getCell(20);
+			managerchecknamecell.setCellValue(obj.getManagercheckname());
+			Row vicepresichecknamerow = sheet.getRow(22);
+			Cell vicepresichecknamecell = vicepresichecknamerow.getCell(17);
+			vicepresichecknamecell.setCellValue(obj.getVicepresicheckname());	
+			Row presichecknamerow = sheet.getRow(22);
+			Cell presichecknamecell = presichecknamerow.getCell(14);
+			presichecknamecell.setCellValue(obj.getPresicheckname());
+		}else if(APPLY_STATUS_6.equals(status)||APPLY_STATUS_7.equals(status)){
+			Row applyempnamerow = sheet.getRow(22);
+			Cell applyempnamecell = applyempnamerow.getCell(23);
+			applyempnamecell.setCellValue(obj.getApplyempname());
+			Row managerchecknamerow = sheet.getRow(22);
+			Cell managerchecknamecell = managerchecknamerow.getCell(20);
+			managerchecknamecell.setCellValue(obj.getManagercheckname());			
+			Row vicepresichecknamerow = sheet.getRow(22);
+			Cell vicepresichecknamecell = vicepresichecknamerow.getCell(17);
+			vicepresichecknamecell.setCellValue(obj.getVicepresicheckname());
+			Row presichecknamerow = sheet.getRow(22);
+			Cell presichecknamecell = presichecknamerow.getCell(14);
+			presichecknamecell.setCellValue(obj.getPresicheckname());
+			Row personfilechecknamerow = sheet.getRow(22);
+			Cell personfilechecknamecell = personfilechecknamerow.getCell(10);
+			personfilechecknamecell.setCellValue(obj.getPersonfilecheckname());
+		}
+	}
+	/**
+	 * 设置A4订票明细
+	 * 
+	 * @param sheet
+	 *            sheet
+	 * @param obj
+	 *            数据集合
+	 */
+	public static void setA4TicketDetail( Sheet sheet, ApplyFormCommand obj){
+		int startindex = 12;
+		TicketDetail[] detail = obj.getTicketdetail();
+		if(detail != null){
+			if(detail.length != 0){
+				for(int i=startindex; i<startindex+detail.length; i++){
+					Row row = sheet.getRow(i);
+					// 设置日期
+					Cell cell1 = row.getCell(1);
+					cell1.setCellValue(detail[i-startindex].getOrderdate());
+					// 设置航班
+					Cell cell2 = row.getCell(5);
+					cell2.setCellValue(detail[i-startindex].getFlight());
+					// 设置出发
+					Cell cell3 = row.getCell(8);
+					cell3.setCellValue(detail[i-startindex].getStart());
+					// 设置到达
+					Cell cell4 = row.getCell(12);
+					cell4.setCellValue(detail[i-startindex].getReach());
+					// 设置是否折扣
+					Cell cell5 = row.getCell(16);
+					if(FLAG_0.equals(detail[i-startindex].getDiscountflag())){
+						cell5.setCellValue("全价");
+					}else if(FLAG_1.equals(detail[i-startindex].getDiscountflag())){
+						cell5.setCellValue("折扣");
+					}
+					// 设置是否出票
+					Cell cell6 = row.getCell(19);
+					if(FLAG_0.equals(detail[i-startindex].getTicketflag())){
+						cell6.setCellValue("否");
+					}else if(FLAG_1.equals(detail[i-startindex].getTicketflag())){
+						cell6.setCellValue("是");
+					}
+				}
 			}
 		}
 	}

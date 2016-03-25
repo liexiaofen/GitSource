@@ -78,7 +78,7 @@
 		</tr>		
 		<tr>
 			<td class="td_key" width="8%">
-				<font color="#ff0000">*</font><label class="message">预订出差时间</label>
+				<font color="#ff0000">*</font><label class="message">预计出差时间</label>
 			</td>
 			<td class="td_value" colspan="3">
 				<input id="applystart" name="applystart" class="input_date Wdate" value="${command.applystart}" readonly="readonly" onclick="WdatePicker()" title="required"/>&nbsp;<dict:select id="applystarthm" name="applystarthm" value="${command.applystarthm}" busiDictTypeId="OA_PB001_DailyHM" cssClass="input_select_small" nullLabel="请选择" title="required"></dict:select>&nbsp;~
