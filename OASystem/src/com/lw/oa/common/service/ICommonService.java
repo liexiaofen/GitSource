@@ -1,6 +1,7 @@
 package com.lw.oa.common.service;
 
 import com.lw.oa.common.command.ApplyFormCommand;
+import com.lw.oa.common.command.ApplySearchCommand;
 import com.lw.oa.common.command.ResultCommand;
 
 /**
@@ -8,6 +9,6 @@ import com.lw.oa.common.command.ResultCommand;
  */
 public interface ICommonService {
 	public ResultCommand checkUserAndPwd(String username, String password, String orgcdid);
-	public ApplyFormCommand expandApplyForm(String applyid, String exclusivefg, String applytype);
+	public ApplyFormCommand expandApplyForm(ApplySearchCommand searchCommand);
 	public ApplyFormCommand getMessageCount(String empid);
 }

@@ -18,6 +18,7 @@ import com.lw.oa.common.command.ApplyResultCommand;
 import com.lw.oa.common.command.ApplySearchCommand;
 import com.lw.oa.common.command.RetInfo;
 import com.lw.oa.common.command.SessionEntity;
+import com.lw.oa.common.service.ICommonService;
 import com.lw.oa.common.util.ConstantUtil;
 import com.lw.oa.common.util.MessageUtil;
 import com.lw.oa.mybatis.interceptor.Pager;
@@ -51,6 +52,8 @@ public class PC002Controller implements ConstantUtil{
 	private static final String  PAGE_APPLY_UPDATE_A4 = "pc/pc002/pc002003A4Update";
 	@Autowired
 	private IPC002Service pc002Service;
+	@Autowired
+	private ICommonService commonService;
 	/**
 	 * 申请管理一览画面init
 	 * @param request
@@ -124,7 +127,7 @@ public class PC002Controller implements ConstantUtil{
 	public ModelAndView pc002001view(HttpServletRequest request, ApplySearchCommand searchCommand)
 	{					
 		Map<String,Object> resultMap = new HashMap<String,Object>();
-		ApplyFormCommand command = pc002Service.pc002001view(searchCommand);
+		ApplyFormCommand command = commonService.expandApplyForm(searchCommand);
 		command.setSearchcommand(searchCommand);
 		resultMap.put("command", command);		
 		//设置申请详细画面
@@ -151,7 +154,7 @@ public class PC002Controller implements ConstantUtil{
 	public ModelAndView pc002001edit(HttpServletRequest request, ApplySearchCommand searchCommand)
 	{					
 		Map<String,Object> resultMap = new HashMap<String,Object>();
-		ApplyFormCommand command = pc002Service.pc002001view(searchCommand);
+		ApplyFormCommand command = commonService.expandApplyForm(searchCommand);
 		command.setSearchcommand(searchCommand);
 		resultMap.put("command", command);		
 		//设置申请修改画面

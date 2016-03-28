@@ -5,16 +5,12 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
-
 import com.lw.oa.common.command.ApplyFormCommand;
 import com.lw.oa.common.command.ApplyResultCommand;
 import com.lw.oa.common.command.ApplySearchCommand;
-import com.lw.oa.common.command.ResultCommand;
 import com.lw.oa.common.dao.IMybatisDAO;
 import com.lw.oa.common.dao.MybatisDAOImpl;
 import com.lw.oa.common.model.ApplyForm;
@@ -23,7 +19,6 @@ import com.lw.oa.common.model.TicketDetail;
 import com.lw.oa.common.util.ConstantUtil;
 import com.lw.oa.common.util.DataUtil;
 import com.lw.oa.common.util.DateUtil;
-import com.lw.oa.common.util.ResumeUtil;
 
 /**
  ** @author yuliang
@@ -49,55 +44,6 @@ public class PC002ServiceImpl implements IPC002Service,ConstantUtil {
 		return list;
 	}
 
-	@Override
-	public ApplyFormCommand pc002001view(ApplySearchCommand searchCommand) {
-		// TODO Auto-generated method stub
-		mybatisDAOImpl.openSession();
-		ApplyFormCommand command = (ApplyFormCommand) mybatisDAOImpl.expandByObj(
-				"common.expandApplyForm", searchCommand);
-		// 设置查询条件				
-		HashMap<String,String> map = new HashMap<String, String>();
-		map.put("empid", searchCommand.getEmpid());
-		@SuppressWarnings("unchecked")
-		List<ResultCommand> emporg = (List<ResultCommand>) mybatisDAOImpl.queryByObj("common.zoom.searchOrgsByEmpid", map);
-		command.setEmporg(emporg);
-		// 组织机构拼接处理
-		if(emporg != null){
-			if(emporg.size() != 0){
-				StringBuffer orgcddepposes = new StringBuffer();
-				for(ResultCommand entity:emporg){
-					orgcddepposes.append(entity.getOrgshortname()).append(":").append(entity.getDepiddict()).append(":").append(entity.getPosiddict()).append(",");		
-				}
-				command.setOrgcddepposes(orgcddepposes.substring(0, orgcddepposes.length()-1));
-			}
-		}
-		//获取履历
-		String resume = ResumeUtil.getResumeByPid(command.getApplyid(), "OA_PC001_Operationcd", "[dbo].[his_applyform]");
-		command.setResume(resume);
-		//不同申请类型的特殊处理
-		specialProcess( command);		
-		mybatisDAOImpl.close();
-		return command;
-	}
-	public void specialProcess(ApplyFormCommand command){
-		//申请类型为出差申请
-		if(APPLY_A4.equals(command.getApplytype())){
-			@SuppressWarnings("unchecked")
-			List<TicketDetail> ticketdetail = (List<TicketDetail>)mybatisDAOImpl.queryByObj("common.queryTicketDetailByApplyid", command.getApplyid());
-			TicketDetail[] array = new TicketDetail[ticketdetail.size()];
-			for(int i=0; i<ticketdetail.size(); i++){
-				TicketDetail detail = new TicketDetail();
-				detail.setOrderdate(ticketdetail.get(i).getOrderdate());
-				detail.setFlight(ticketdetail.get(i).getFlight());
-				detail.setStart(ticketdetail.get(i).getStart());
-				detail.setReach(ticketdetail.get(i).getReach());
-				detail.setDiscountflag(ticketdetail.get(i).getDiscountflag());
-				detail.setTicketflag(ticketdetail.get(i).getTicketflag());
-				array[i] = detail;
-			}
-			command.setTicketdetail( array);
-		}
-	}
 	@Override
 	public int pc002003update(ApplyFormCommand command, HttpServletRequest request) {
 		// TODO Auto-generated method stub
@@ -137,8 +83,7 @@ public class PC002ServiceImpl implements IPC002Service,ConstantUtil {
 			mybatisDAOImpl.close();
 		}
 		return flag;
-	}
-	
+	}	
 	public void insertTicketDetail(String applyid, Date sysdate, CommonBean bean, TicketDetail[] ticketdetail){
 		for(TicketDetail detail:ticketdetail){
 			// 获取订票明细id

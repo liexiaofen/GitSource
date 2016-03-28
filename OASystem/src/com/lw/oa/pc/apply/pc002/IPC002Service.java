@@ -12,7 +12,6 @@ import com.lw.oa.common.command.ApplySearchCommand;
  */
 public interface IPC002Service {
 	public List<?> pc002001search(ApplySearchCommand searchCommand);
-	public ApplyFormCommand pc002001view(ApplySearchCommand searchCommand);
 	public int pc002003update(ApplyFormCommand command, HttpServletRequest request);
 	public int pc002003delete(ApplyFormCommand command, HttpServletRequest request);
 }

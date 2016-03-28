@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.lw.oa.common.command.ApplyFormCommand;
+import com.lw.oa.common.command.ApplySearchCommand;
 import com.lw.oa.common.service.ICommonService;
 import com.lw.oa.common.util.ConstantUtil;
 /**
@@ -33,9 +34,11 @@ public class CommonController implements ConstantUtil{
 	{			
 		String applyid = request.getParameter("applyid");	
 		String exclusivefg = request.getParameter("exclusivefg");
-		String applytype = request.getParameter("applytype");
+		ApplySearchCommand searchCommand = new ApplySearchCommand();
+		searchCommand.setApplyid(applyid);
+		searchCommand.setExclusivefg(exclusivefg);
+		ApplyFormCommand command = commonService.expandApplyForm(searchCommand);
 		Map<String,Object> resultMap = new HashMap<String,Object>();
-		ApplyFormCommand command = commonService.expandApplyForm(applyid, exclusivefg, applytype);
 		resultMap.put("command", command);	
 		ModelAndView mav = new ModelAndView( PAGE_APPLY_DOWNLOAD, resultMap);				
 		return mav;

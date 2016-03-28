@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.lw.oa.common.command.ApplyFormCommand;
+import com.lw.oa.common.command.ApplySearchCommand;
 import com.lw.oa.common.command.ResultCommand;
 import com.lw.oa.common.command.ResumeEntity;
 import com.lw.oa.common.dao.IMybatisDAO;
@@ -46,15 +47,13 @@ public class CommonServiceImpl implements ICommonService,ConstantUtil {
 	}
 	
 	@Override
-	public ApplyFormCommand expandApplyForm(String applyid, String exclusivefg, String applytype) {
+	public ApplyFormCommand expandApplyForm(ApplySearchCommand searchCommand) {
 		// TODO Auto-generated method stub
 		mybatisDAOImpl.openSession();
-		HashMap<String,String> map = new HashMap<String, String>();
-		map.put("applyid", applyid);
-		map.put("exclusivefg", exclusivefg);
 		ApplyFormCommand command = (ApplyFormCommand) mybatisDAOImpl.expandByObj(
-				"common.expandApplyForm", map);
-		// 设置查询条件
+				"common.expandApplyForm", searchCommand);
+		// 设置查询条件				
+		HashMap<String,String> map = new HashMap<String, String>();
 		map.put("empid", command.getApplyempid());
 		@SuppressWarnings("unchecked")
 		List<ResultCommand> emporg = (List<ResultCommand>) mybatisDAOImpl.queryByObj("common.zoom.searchOrgsByEmpid", map);
@@ -71,8 +70,8 @@ public class CommonServiceImpl implements ICommonService,ConstantUtil {
 		}
 		//获取履历
 		String resume = ResumeUtil.getResumeByPid(command.getApplyid(), "OA_PC001_Operationcd", "[dbo].[his_applyform]");
-		List<ResumeEntity> list = ResumeUtil.getResumeListByPid(command.getApplyid(), "OA_PC001_Operationcd", "[dbo].[his_applyform]");
 		command.setResume(resume);
+		List<ResumeEntity> list = ResumeUtil.getResumeListByPid(command.getApplyid(), "OA_PC001_Operationcd", "[dbo].[his_applyform]");
 		command.setList(list);
 		//不同申请类型的特殊处理
 		specialProcess( command);

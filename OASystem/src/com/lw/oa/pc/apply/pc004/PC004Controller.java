@@ -19,6 +19,7 @@ import com.lw.oa.common.command.ApplyResultCommand;
 import com.lw.oa.common.command.ApplySearchCommand;
 import com.lw.oa.common.command.RetInfo;
 import com.lw.oa.common.command.SessionEntity;
+import com.lw.oa.common.service.ICommonService;
 import com.lw.oa.common.util.ConstantUtil;
 import com.lw.oa.common.util.MessageUtil;
 import com.lw.oa.mybatis.interceptor.Pager;
@@ -43,7 +44,8 @@ public class PC004Controller implements ConstantUtil {
 	private static final String PAGE_APPLY_DETAIL_A4 = "pc/pc004/pc004002A4Detail";
 	@Autowired
 	private IPC004Service pc004Service;
-
+	@Autowired
+	private ICommonService commonService;
 	/**
 	 * 人事归档一览画面init
 	 * 
@@ -127,7 +129,7 @@ public class PC004Controller implements ConstantUtil {
 	public ModelAndView pc004001view(HttpServletRequest request,
 			ApplySearchCommand searchCommand) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		ApplyFormCommand command = pc004Service.pc004001view(searchCommand);
+		ApplyFormCommand command = commonService.expandApplyForm(searchCommand);
 		command.setSearchcommand(searchCommand);
 		resultMap.put("command", command);
 		// 设置申请详细画面
