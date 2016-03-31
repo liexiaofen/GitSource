@@ -100,5 +100,17 @@ public class ZoomServiceImpl implements IZoomService,ConstantUtil {
 		List<ApplyResultCommand> list = (List<ApplyResultCommand>) mybatisDAOImpl
 				.queryByObj("common.zoom.searchApplyA1List", map);
 		return list;
-	}	
+	}
+	@Override
+	public List<?> searchApplyA4List( String empid, String applyno){
+		// TODO Auto-generated method stub
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("empid", empid);
+		map.put("applyno", applyno);		
+		mybatisDAOImpl.openSession();
+		@SuppressWarnings("unchecked")
+		List<ApplyResultCommand> list = (List<ApplyResultCommand>) mybatisDAOImpl
+				.queryByObj("common.zoom.searchApplyA4List", map);
+		return list;
+	}
 }

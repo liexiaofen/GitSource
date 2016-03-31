@@ -111,6 +111,8 @@ public class PC002ServiceImpl implements IPC002Service,ConstantUtil {
 			sqlid = "pc.pc002.pc002003A3Update2";
 		}else if(APPLY_A4.equals(applytype)){
 			sqlid = "pc.pc002.pc002003A4Update";
+		}else if(APPLY_A5.equals(applytype)){
+			sqlid = "pc.pc002.pc002003A5Update";
 		}
 		return sqlid;
 	}
@@ -175,7 +177,7 @@ public class PC002ServiceImpl implements IPC002Service,ConstantUtil {
 		entity.setVacatereasontype( command.getVacatereasontype());
 		entity.setOtherremark( command.getOtherremark());
 		entity.setApplyreason( command.getApplyreason());
-		if(APPLY_A1.equals(command.getApplytype())||APPLY_A2.equals(command.getApplytype())|| (APPLY_A3.equals(command.getApplytype()) && "1".equals(command.getChecklevel()))||APPLY_A4.equals(command.getApplytype())){
+		if(APPLY_A1.equals(command.getApplytype())||APPLY_A2.equals(command.getApplytype())|| (APPLY_A3.equals(command.getApplytype()) && "1".equals(command.getChecklevel()))||APPLY_A4.equals(command.getApplytype())||APPLY_A5.equals(command.getApplytype())){
 			entity.setApplystarthm( command.getApplystarthm());
 			entity.setApplyendhm( command.getApplyendhm());		
 			entity.setApplystart( DateUtil.parseDate( command.getApplystart(), DATE_FORMAT_YMD));

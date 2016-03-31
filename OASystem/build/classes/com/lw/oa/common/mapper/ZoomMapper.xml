@@ -161,4 +161,37 @@
 			and t.applyno like '%'+#{applyno}+'%'
 		</if>
 	</select>
+	<!-- 根据applyno查询已审批的出差申请单 -->    
+	<select id="searchApplyA4List" resultType="applyResultCommand" parameterType="java.util.Map">
+	<![CDATA[
+		SELECT 
+			convert(char(19), t.processtime, 120) as processtime, t.applyreason, 
+			t.applystarthm, t.applyendhm, convert(char(10), t.applystart, 23) as applystart, convert(char(10), t.applyend, 23) as applyend, 
+			convert(char(19), t.applystarttime, 120) as applystarttime, convert(char(19), t.applyendtime, 120) as applyendtime, t.applyid, 
+			t.applyno, t.exclusivefg, t.applyempid, t1.empname as applyempname, t.evectionaddress,  dict3.busidictname as evectionaddressdict, t.evectionaddress1, t.evectionaddress2, 
+			t.evectionconnects, t.evectionstart, dict4.busidictname as evectionstartdict, t.airplaneflag, dict5.busidictname as airplaneflagdict, 
+			t.processempid, t2.empname as processempname, t.applytype, dict1.busidictname as applytypedict, 
+			t.status, dict2.busidictname as statusdict, t.totalhours, 
+			ROW_NUMBER() OVER(order by t.processtime desc, t.applyno ) as rownum 
+		FROM [dbo].[t_applyform] t 
+		inner join [dbo].[t_empinfo] t1 
+			on t.applyempid = t1.empid and t.deletefg = t1.deletefg
+		inner join [dbo].[t_empinfo] t2 
+			on t.processempid = t2.empid and t.deletefg = t2.deletefg  
+		left join [dbo].[s_busidict] dict1 
+			on t.applytype = dict1.busidictid and dict1.busidicttypeid = 'OA_PC001_ApplyType' 
+		left join [dbo].[s_busidict] dict2 
+			on t.status = dict2.busidictid and dict2.busidicttypeid = 'OA_PC002_Status' 
+		left join [dbo].[s_busidict] dict3 
+			on t.evectionaddress = dict3.busidictid and dict3.busidicttypeid = 'OA_PC001_EVAddress' 
+		left join [dbo].[s_busidict] dict4 
+			on t.evectionstart = dict4.busidictid and dict4.busidicttypeid = 'OA_PC001_EVStart' 
+		left join [dbo].[s_busidict] dict5 
+			on t.airplaneflag = dict5.busidictid and dict5.busidicttypeid = 'OA_COMMON_YesOrNo' 
+		where t.deletefg = '0' and t.applytype = 'A4' and t.status in ( '5', '6', '7') and t.applyempid = #{empid}
+	]]> 
+		<if test="applyno!=null and applyno!=''">
+			and t.applyno like '%'+#{applyno}+'%'
+		</if>
+	</select>
 </mapper>

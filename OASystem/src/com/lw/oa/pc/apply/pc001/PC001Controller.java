@@ -28,6 +28,8 @@ public class PC001Controller implements ConstantUtil{
 	private static final String  PAGE_APPLY_A3 = "pc/pc001/pc001002A3";	
 	//出差申请画面	
 	private static final String  PAGE_APPLY_A4 = "pc/pc001/pc001002A4";	
+	//出差取消申请画面	
+	private static final String  PAGE_APPLY_A5 = "pc/pc001/pc001002A5";
 	@Autowired
 	private IPC001Service pc001Service;
 	/**
@@ -102,6 +104,8 @@ public class PC001Controller implements ConstantUtil{
 			page = PAGE_APPLY_A3;
 		}else if(APPLY_A4.equals(type)){
 			page = PAGE_APPLY_A4;
+		}else if(APPLY_A5.equals(type)){
+			page = PAGE_APPLY_A5;
 		}
 		return page;
 	}

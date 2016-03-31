@@ -151,6 +151,8 @@ public class ApplyFormCommand implements Serializable {
 	private String evectioncity;
 	// 出差地
 	private String evectionaddress;
+	// 出差地业务字典
+	private String evectionaddressdict;
 	// 出差地1
 	private String evectionaddress1;
 	// 出差地2
@@ -159,8 +161,12 @@ public class ApplyFormCommand implements Serializable {
 	private String evectionconnects;
 	// 出发自
 	private String evectionstart;
+	// 出发自业务字典
+	private String evectionstartdict;
 	// 是否利用飞机
 	private String airplaneflag;
+	// 是否利用飞机业务字典
+	private String airplaneflagdict;
 	// 总工时
 	private String totalhours;
 	// 出差费用
@@ -756,6 +762,30 @@ public class ApplyFormCommand implements Serializable {
 
 	public void setEvectionaddress(String evectionaddress) {
 		this.evectionaddress = evectionaddress;
+	}
+
+	public String getEvectionaddressdict() {
+		return evectionaddressdict;
+	}
+
+	public void setEvectionaddressdict(String evectionaddressdict) {
+		this.evectionaddressdict = evectionaddressdict;
+	}
+
+	public String getEvectionstartdict() {
+		return evectionstartdict;
+	}
+
+	public void setEvectionstartdict(String evectionstartdict) {
+		this.evectionstartdict = evectionstartdict;
+	}
+
+	public String getAirplaneflagdict() {
+		return airplaneflagdict;
+	}
+
+	public void setAirplaneflagdict(String airplaneflagdict) {
+		this.airplaneflagdict = airplaneflagdict;
 	}
 
 	public String getEvectionconnects() {

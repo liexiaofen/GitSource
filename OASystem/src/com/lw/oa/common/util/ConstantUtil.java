@@ -121,6 +121,8 @@ public interface ConstantUtil {
 	public static final String APPLY_A3 = "A3";
 	//出差申请
 	public static final String APPLY_A4 = "A4";
+	//出差取消申请
+	public static final String APPLY_A5 = "A5";
 	//模板休假申请文件
 	public static final String TEMPLATE_A1_FILE = "template\\Apply_A1.xlsx";
 	//模板休假取消申请文件

@@ -14,4 +14,5 @@ public interface IZoomService {
 	public List<?> searchDeviceList( String orgcdid,String dailydevicename);
 	public List<?> searchOrgList( String regionid,String orgname);
 	public List<?> searchApplyA1List( String empid, String applyno);
+	public List<?> searchApplyA4List( String empid, String applyno);
 }

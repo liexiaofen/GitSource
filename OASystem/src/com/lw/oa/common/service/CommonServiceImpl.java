@@ -80,9 +80,13 @@ public class CommonServiceImpl implements ICommonService,ConstantUtil {
 	}
 	public void specialProcess(ApplyFormCommand command){
 		//申请类型为出差申请
-		if(APPLY_A4.equals(command.getApplytype())){
+		if(APPLY_A4.equals(command.getApplytype()) || APPLY_A5.equals(command.getApplytype())){
+			String applyid = command.getApplyid();
+			if(APPLY_A5.equals(command.getApplytype())){
+				applyid = command.getSourceid();
+			}
 			@SuppressWarnings("unchecked")
-			List<TicketDetail> ticketdetail = (List<TicketDetail>)mybatisDAOImpl.queryByObj("common.queryTicketDetailByApplyid", command.getApplyid());
+			List<TicketDetail> ticketdetail = (List<TicketDetail>)mybatisDAOImpl.queryByObj("common.queryTicketDetailByApplyid", applyid);
 			TicketDetail[] array = new TicketDetail[ticketdetail.size()];
 			for(int i=0; i<ticketdetail.size(); i++){
 				TicketDetail detail = new TicketDetail();

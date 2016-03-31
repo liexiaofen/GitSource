@@ -143,7 +143,7 @@ public class PC003ServiceImpl implements IPC003Service,ConstantUtil {
 				status = APPLY_STATUS_5;//总经理已审批
 				operationcd = "A009";
 			}
-		}else if(APPLY_A4.equals(applytype)){
+		}else if(APPLY_A4.equals(applytype) || APPLY_A5.equals(applytype)){
 			if(APPLY_STATUS_1.equals(sts)){
 				status = APPLY_STATUS_2;//经理已审批
 				operationcd = "A003";
@@ -183,7 +183,7 @@ public class PC003ServiceImpl implements IPC003Service,ConstantUtil {
 			}else if(APPLY_STATUS_2.equals(sts)  && "2".equals(checklevel)){
 				operationcd = "A010";//总经理驳回
 			}
-		}else if(APPLY_A4.equals(applytype)){
+		}else if(APPLY_A4.equals(applytype) || APPLY_A5.equals(applytype)){
 			if(APPLY_STATUS_1.equals(sts)){
 				operationcd = "A004";//经理驳回
 			}else if(APPLY_STATUS_2.equals(sts)){

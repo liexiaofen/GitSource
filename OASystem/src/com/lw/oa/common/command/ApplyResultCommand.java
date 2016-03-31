@@ -29,6 +29,26 @@ public class ApplyResultCommand implements Serializable {
 	private String applytype;
 	// 申请类型业务字典
 	private String applytypedict;
+	// 申请事由
+	private String applyreason;
+	// 出差地
+	private String evectionaddress;
+	// 出差地业务字典
+	private String evectionaddressdict;
+	// 出差地1
+	private String evectionaddress1;
+	// 出差地2
+	private String evectionaddress2;
+	// 同行人
+	private String evectionconnects;
+	// 出发自
+	private String evectionstart;
+	// 出发自业务字典
+	private String evectionstartdict;
+	// 是否利用飞机
+	private String airplaneflag;
+	// 是否利用飞机业务字典
+	private String airplaneflagdict;
 	// 状态
 	private String status;
 	// 状态
@@ -142,6 +162,86 @@ public class ApplyResultCommand implements Serializable {
 
 	public void setApplytypedict(String applytypedict) {
 		this.applytypedict = applytypedict;
+	}
+
+	public String getApplyreason() {
+		return applyreason;
+	}
+
+	public void setApplyreason(String applyreason) {
+		this.applyreason = applyreason;
+	}
+
+	public String getEvectionaddress() {
+		return evectionaddress;
+	}
+
+	public void setEvectionaddress(String evectionaddress) {
+		this.evectionaddress = evectionaddress;
+	}
+
+	public String getEvectionaddressdict() {
+		return evectionaddressdict;
+	}
+
+	public void setEvectionaddressdict(String evectionaddressdict) {
+		this.evectionaddressdict = evectionaddressdict;
+	}
+
+	public String getEvectionaddress1() {
+		return evectionaddress1;
+	}
+
+	public void setEvectionaddress1(String evectionaddress1) {
+		this.evectionaddress1 = evectionaddress1;
+	}
+
+	public String getEvectionaddress2() {
+		return evectionaddress2;
+	}
+
+	public void setEvectionaddress2(String evectionaddress2) {
+		this.evectionaddress2 = evectionaddress2;
+	}
+
+	public String getEvectionconnects() {
+		return evectionconnects;
+	}
+
+	public void setEvectionconnects(String evectionconnects) {
+		this.evectionconnects = evectionconnects;
+	}
+
+	public String getEvectionstart() {
+		return evectionstart;
+	}
+
+	public void setEvectionstart(String evectionstart) {
+		this.evectionstart = evectionstart;
+	}
+
+	public String getEvectionstartdict() {
+		return evectionstartdict;
+	}
+
+	public void setEvectionstartdict(String evectionstartdict) {
+		this.evectionstartdict = evectionstartdict;
+	}
+
+	public String getAirplaneflag() {
+		return airplaneflag;
+	}
+
+	public void setAirplaneflag(String airplaneflag) {
+		this.airplaneflag = airplaneflag;
+	}
+
+	public String getAirplaneflagdict() {
+		return airplaneflagdict;
+	}
+
+	public void setAirplaneflagdict(String airplaneflagdict) {
+		this.airplaneflagdict = airplaneflagdict;
 	}
 
 	public String getStatus() {
