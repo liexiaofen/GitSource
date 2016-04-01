@@ -270,6 +270,78 @@ public class TemplateUtil implements ConstantUtil{
 		setA1Resume( sheet, obj);
 	}
 	/**
+	 * 出差申请模板数据写入
+	 * 
+	 * @param workbook
+	 *            工作簿
+	 * @param obj
+	 *            数据集合
+	 */
+	public static void templateA5write( Workbook workbook, ApplyFormCommand obj){
+		Sheet sheet = workbook.getSheetAt(0);
+		// 设置当前日期
+		Row daterow = sheet.getRow(2);
+		Cell datecell = daterow.getCell(18);
+		String sysdate = DateUtil.getSystemTime(DATE_FORMAT_YMDHMS);
+		datecell.setCellValue(sysdate);
+		// 设置申请人
+		Row emprow = sheet.getRow(3);
+		Cell empcell = emprow.getCell(4);
+		empcell.setCellValue(obj.getApplyempname());
+		// 设置申请单号
+		Row applynorow = sheet.getRow(3);
+		Cell applynocell = applynorow.getCell(11);
+		applynocell.setCellValue(obj.getApplyno());
+		// 设置休假申请单号
+		Row sourceapplynorow = sheet.getRow(3);
+		Cell sourceapplynocell = sourceapplynorow.getCell(20);
+		sourceapplynocell.setCellValue(obj.getSourceapplyno());
+		// 设置机构
+		Row orgrow = sheet.getRow(4);
+		Cell orgcell = orgrow.getCell(4);
+		orgcell.setCellValue(obj.getOrgcddepposes());
+		// 设置出差目的
+		Row applyreasonrow = sheet.getRow(6);
+		Cell applyreasoncell = applyreasonrow.getCell(4);
+		applyreasoncell.setCellValue(obj.getApplyreason());
+		// 设置出差地	 
+		Row evectionaddressrow = sheet.getRow(7);
+		Cell evectionaddresscell = evectionaddressrow.getCell(4);
+		evectionaddresscell.setCellValue(obj.getEvectionaddressdict());
+		// 设置出差地1	 
+		Row evectionaddressrow1 = sheet.getRow(7);
+		Cell evectionaddresscell1 = evectionaddressrow1.getCell(9);
+		evectionaddresscell1.setCellValue(obj.getEvectionaddress1());
+		// 设置出差地2	 
+		Row evectionaddressrow2 = sheet.getRow(7);
+		Cell evectionaddresscell2 = evectionaddressrow2.getCell(13);
+		evectionaddresscell2.setCellValue(obj.getEvectionaddress2());
+		// 设置是否利用飞机
+		String airplaneflag = obj.getAirplaneflag();
+		setA4Airportflag(sheet, airplaneflag);
+		// 设置同行人
+		Row evectionconnectsrow = sheet.getRow(8);
+		Cell evectionconnectscell = evectionconnectsrow.getCell(4);
+		evectionconnectscell.setCellValue(obj.getEvectionconnects());
+		// 设置出发自
+		String evectionstart = obj.getEvectionstart();
+		setA4Evectionstart(sheet, evectionstart);
+		// 设置出差时间
+		Row startrow = sheet.getRow(9);
+		Cell startcell = startrow.getCell(4);
+		startcell.setCellValue(obj.getApplystarttime());
+		Row endrow = sheet.getRow(9);
+		Cell endcell = endrow.getCell(11);
+		endcell.setCellValue(obj.getApplyendtime());	
+		// 设置订票明细
+		setA4TicketDetail( sheet, obj);
+		// 设置审核人
+		String status = obj.getStatus();
+		setA4Checkname( sheet,  status,  obj);	
+		// 设置审核履历
+		setA1Resume( sheet, obj);
+	}
+	/**
 	 * 设置A1履历
 	 * 
 	 * @param sheet

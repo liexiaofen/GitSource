@@ -131,4 +131,6 @@ public interface ConstantUtil {
 	public static final String TEMPLATE_A3_FILE = "template\\Apply_A3.xlsx";
 	//模板出差申请文件
 	public static final String TEMPLATE_A4_FILE = "template\\Apply_A4.xlsx";
+	//模板出差取消申请文件
+	public static final String TEMPLATE_A5_FILE = "template\\Apply_A5.xlsx";
 }

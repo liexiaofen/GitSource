@@ -22,6 +22,7 @@ import com.lw.oa.common.model.ApplyForm;
 import com.lw.oa.common.model.CommonBean;
 import com.lw.oa.common.model.EventConnect;
 import com.lw.oa.common.model.EventDevice;
+import com.lw.oa.common.model.TicketDetail;
 import com.lw.oa.common.command.RetInfo;
 import com.lw.oa.common.util.CalendarUtil;
 import com.lw.oa.common.util.ConstantUtil;
@@ -125,6 +126,8 @@ public class AjaxServiceImpl implements IAjaxService,ConstantUtil {
 					List<ResumeEntity> resumelist = ResumeUtil.getResumeListByPid(command.getApplyid(), "OA_PC001_Operationcd", "[dbo].[his_applyform]");
 					command.setResume(resume);
 					command.setList(resumelist);
+					//不同申请类型的特殊处理
+					specialProcess( command);
 					// 模板文件名取得
 					String tempFileName = POIUtil.getTemplateFileName(command.getApplytype());
 					String tempPath = request.getSession().getServletContext().getRealPath("/");
@@ -148,6 +151,29 @@ public class AjaxServiceImpl implements IAjaxService,ConstantUtil {
 		}
 	}
 	
+	public void specialProcess(ApplyFormCommand command){
+		//申请类型为出差申请
+		if(APPLY_A4.equals(command.getApplytype()) || APPLY_A5.equals(command.getApplytype())){
+			String applyid = command.getApplyid();
+			if(APPLY_A5.equals(command.getApplytype())){
+				applyid = command.getSourceid();
+			}
+			@SuppressWarnings("unchecked")
+			List<TicketDetail> ticketdetail = (List<TicketDetail>)mybatisDAOImpl.queryByObj("common.queryTicketDetailByApplyid", applyid);
+			TicketDetail[] array = new TicketDetail[ticketdetail.size()];
+			for(int i=0; i<ticketdetail.size(); i++){
+				TicketDetail detail = new TicketDetail();
+				detail.setOrderdate(ticketdetail.get(i).getOrderdate());
+				detail.setFlight(ticketdetail.get(i).getFlight());
+				detail.setStart(ticketdetail.get(i).getStart());
+				detail.setReach(ticketdetail.get(i).getReach());
+				detail.setDiscountflag(ticketdetail.get(i).getDiscountflag());
+				detail.setTicketflag(ticketdetail.get(i).getTicketflag());
+				array[i] = detail;
+			}
+			command.setTicketdetail( array);
+		}
+	}
 	
 	public String getServerDir(String type, String busitypeid){
 		FA004001SearchCommand searchCommand = new FA004001SearchCommand();
