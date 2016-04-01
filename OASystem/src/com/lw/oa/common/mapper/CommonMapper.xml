@@ -46,12 +46,14 @@
 			t.applytype, t.vacatereasontype, dict1.busidictname as vacatereasontypedict, t.otherremark, t.applyreason, convert(char(10), t.applystart, 23) as applystart, convert(char(10), t.applyend, 23) as applyend, 
 			t.applystarthm, t.applyendhm, convert(char(19), t.applystarttime, 120) as applystarttime, convert(char(19), t.applyendtime, 120) as applyendtime, t.extraworkapplytype, 
 			t.evectionworkflag, convert(char(10), t.extraworkstart, 23) as extraworkstart, convert(char(10), t.extraworkend, 23) as extraworkend, t.extraworkstarthm, t.extraworkendhm, 
-			convert(char(19), t.extraworkstarttime, 120) as extraworkstarttime, convert(char(19), t.extraworkendtime, 120) as extraworkendtime, t.evectionaddress, t.evectioncountry, t.evectionprovince, 
+			convert(char(19), t.extraworkstarttime, 120) as extraworkstarttime, convert(char(19), t.extraworkendtime, 120) as extraworkendtime, t.evectionaddress, dict2.busidictname as evectionaddressdict, t.evectioncountry, t.evectionprovince, 
 			t.evectioncity, t.evectionaddress1, t.evectionaddress2, t.evectionconnects, t.evectionstart, t.airplaneflag, t.totalhours, t.evectionmoney, t.evectionallowance, t.totalmoney, t.status, t.checklevel, t.remark,
 			t3.unlegalvctn,t3.unwealvctn,t3.unextraworkvctn,source1.applyno as sourceapplyno
 		FROM [dbo].[t_applyform] t 
 		left join [dbo].[s_busidict] dict1 
 			on t.vacatereasontype = dict1.busidictid and dict1.busidicttypeid = 'OA_PC001_VacReasonType' 
+		left join [dbo].[s_busidict] dict2 
+			on t.evectionaddress = dict2.busidictid and dict2.busidicttypeid = 'OA_PC001_EVAddress' 
 		left join [dbo].[t_empinfo] t1 
 			on t.applyempid = t1.empid and t.deletefg = t1.deletefg
 		left join [dbo].[t_empinfo] t2 
