@@ -47,6 +47,7 @@ public class PB001ServiceImpl implements IPB001Service,ConstantUtil {
 		for(int i=0; i<list.size();i++){
 			if(i == 0){//第一天
 				title.setOne(list.get(i).getLegaldate());
+				title.setStatusofone(list.get(i).getStatus());
 				if(WEEK_ZERO.equals(list.get(i).getDayofweek())){
 					title.setWeekofone(SUNDAY);
 				}else if(WEEK_ONE.equals(list.get(i).getDayofweek())){
@@ -64,6 +65,7 @@ public class PB001ServiceImpl implements IPB001Service,ConstantUtil {
 				}
 			}else if(i == 1){//第二天
 				title.setTwo(list.get(i).getLegaldate());
+				title.setStatusoftwo(list.get(i).getStatus());
 				if(WEEK_ZERO.equals(list.get(i).getDayofweek())){
 					title.setWeekoftwo(SUNDAY);
 				}else if(WEEK_ONE.equals(list.get(i).getDayofweek())){
@@ -81,6 +83,7 @@ public class PB001ServiceImpl implements IPB001Service,ConstantUtil {
 				}
 			}else if(i == 2){//第三天
 				title.setThree(list.get(i).getLegaldate());
+				title.setStatusofthree(list.get(i).getStatus());
 				if(WEEK_ZERO.equals(list.get(i).getDayofweek())){
 					title.setWeekofthree(SUNDAY);
 				}else if(WEEK_ONE.equals(list.get(i).getDayofweek())){
@@ -98,6 +101,7 @@ public class PB001ServiceImpl implements IPB001Service,ConstantUtil {
 				}
 			}else if(i == 3){//第四天
 				title.setFour(list.get(i).getLegaldate());
+				title.setStatusoffour(list.get(i).getStatus());
 				if(WEEK_ZERO.equals(list.get(i).getDayofweek())){
 					title.setWeekoffour(SUNDAY);
 				}else if(WEEK_ONE.equals(list.get(i).getDayofweek())){
@@ -115,6 +119,7 @@ public class PB001ServiceImpl implements IPB001Service,ConstantUtil {
 				}
 			}else if(i == 4){//第五天
 				title.setFive(list.get(i).getLegaldate());
+				title.setStatusoffive(list.get(i).getStatus());
 				if(WEEK_ZERO.equals(list.get(i).getDayofweek())){
 					title.setWeekoffive(SUNDAY);
 				}else if(WEEK_ONE.equals(list.get(i).getDayofweek())){
@@ -132,6 +137,7 @@ public class PB001ServiceImpl implements IPB001Service,ConstantUtil {
 				}
 			}else if(i == 5){//第六天
 				title.setSix(list.get(i).getLegaldate());
+				title.setStatusofsix(list.get(i).getStatus());
 				if(WEEK_ZERO.equals(list.get(i).getDayofweek())){
 					title.setWeekofsix(SUNDAY);
 				}else if(WEEK_ONE.equals(list.get(i).getDayofweek())){
@@ -149,6 +155,7 @@ public class PB001ServiceImpl implements IPB001Service,ConstantUtil {
 				}
 			}else if(i == 6){//第七天
 				title.setSeven(list.get(i).getLegaldate());
+				title.setStatusofseven(list.get(i).getStatus());
 				if(WEEK_ZERO.equals(list.get(i).getDayofweek())){
 					title.setWeekofseven(SUNDAY);
 				}else if(WEEK_ONE.equals(list.get(i).getDayofweek())){

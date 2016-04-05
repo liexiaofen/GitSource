@@ -8,7 +8,7 @@
 	<select id="pb001001searchWeekListByDisplayDT" resultType="pa003001resultCommand" parameterType="pb001001searchCommand">
 	<![CDATA[
 		SELECT 
-			top 7 convert(char(10), legaldate, 23) as legaldate, dayofweek
+			top 7 convert(char(10), legaldate, 23) as legaldate, dayofweek, status
 		from [dbo].[t_nationlegalday] where convert(char(10), legaldate, 23) >= #{displaydate} order by legaldate
 	]]> 			
 	</select>
