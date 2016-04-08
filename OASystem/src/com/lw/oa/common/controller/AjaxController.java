@@ -30,8 +30,7 @@ public class AjaxController {
 	 * @return
 	 */
 	@RequestMapping(value = { "applyFileGenerate.do" },method = RequestMethod.GET)
-	public void applyFileGenerate(HttpServletRequest request,HttpServletResponse response)
-	{	
+	public void applyFileGenerate(HttpServletRequest request,HttpServletResponse response){	
 		String empid = request.getParameter("empid");			
 		int count = ajaxService.fileGenerate( request, empid);
 		JSONObject jsonobj = new JSONObject();	
@@ -57,8 +56,7 @@ public class AjaxController {
 	 * @return
 	 */
 	@RequestMapping(value = { "checkUniqueCardno.do" },method = RequestMethod.GET)
-	public void checkUniqueCardno(HttpServletRequest request,HttpServletResponse response)
-	{	
+	public void checkUniqueCardno(HttpServletRequest request,HttpServletResponse response){
 		String cardno = request.getParameter("cardno");			
 		int count = ajaxService.checkUniqueCardno(cardno);
 		JSONObject jsonobj = new JSONObject();	
@@ -81,8 +79,7 @@ public class AjaxController {
 	 * @return
 	 */
 	@RequestMapping(value = { "getDepsByOrgcdid.do" },method = RequestMethod.GET)
-	public void getDepsByOrgcdid(HttpServletRequest request,HttpServletResponse response)
-	{	
+	public void getDepsByOrgcdid(HttpServletRequest request,HttpServletResponse response){
 		String orgcdid = request.getParameter("orgcdid");			
 		@SuppressWarnings("unchecked")
 		List<DictEntity> list = (List<DictEntity>) ajaxService.getDepsByOrgcdid(orgcdid);
@@ -107,8 +104,7 @@ public class AjaxController {
 	 * @return
 	 */
 	@RequestMapping(value = { "getEmpsByOrgcdDepid.do" },method = RequestMethod.GET)
-	public void getEmpsByOrgcdDepid(HttpServletRequest request,HttpServletResponse response)
-	{	
+	public void getEmpsByOrgcdDepid(HttpServletRequest request,HttpServletResponse response){
 		String orgcdid = request.getParameter("orgcdid");	
 		String depid = request.getParameter("depid");		
 		@SuppressWarnings("unchecked")
@@ -134,8 +130,7 @@ public class AjaxController {
 	 * @return
 	 */
 	@RequestMapping(value = { "checkUniqueUsername.do" },method = RequestMethod.GET)
-	public void checkUniqueUsername(HttpServletRequest request,HttpServletResponse response)
-	{	
+	public void checkUniqueUsername(HttpServletRequest request,HttpServletResponse response){
 		String username = request.getParameter("username");		
 		String empid = request.getParameter("empid");	
 		int count = ajaxService.checkUniqueUsername(username, empid);
@@ -159,8 +154,7 @@ public class AjaxController {
 	 * @return
 	 */
 	@RequestMapping(value = { "checkLegalyear.do" }, method = RequestMethod.GET)
-	public void checkLegalyear(HttpServletRequest request,HttpServletResponse response)
-	{	
+	public void checkLegalyear(HttpServletRequest request,HttpServletResponse response){
 		String legalyear = request.getParameter("legalyear");
 		int count = ajaxService.checkLegalyear(legalyear);
 		Map<String,Object> resultMap = new HashMap<String,Object>();		
@@ -182,8 +176,7 @@ public class AjaxController {
 	 * @return
 	 */
 	@RequestMapping(value = { "checkAnnualVctn.do" }, method = RequestMethod.GET)
-	public void checkAnnualVctn(HttpServletRequest request,HttpServletResponse response)
-	{	
+	public void checkAnnualVctn(HttpServletRequest request,HttpServletResponse response){
 		String year = request.getParameter("year");
 		int count = ajaxService.checkAnnualVctn(year);
 		Map<String,Object> resultMap = new HashMap<String,Object>();		
@@ -205,8 +198,7 @@ public class AjaxController {
 	 * @return
 	 */
 	@RequestMapping(value = { "checkDeviceOrder.do" },method = RequestMethod.GET)
-	public void checkDeviceOrder(HttpServletRequest request,HttpServletResponse response)
-	{	
+	public void checkDeviceOrder(HttpServletRequest request,HttpServletResponse response){
 		String eventdevicesid = request.getParameter("eventdevicesid");
 		String eventstart = request.getParameter("eventstart");
 		String eventend = request.getParameter("eventend");
@@ -237,8 +229,7 @@ public class AjaxController {
 	 * @return
 	 */
 	@RequestMapping(value = { "checkDailyConflict.do" },method = RequestMethod.GET)
-	public void checkDailyConflict(HttpServletRequest request,HttpServletResponse response)
-	{	
+	public void checkDailyConflict(HttpServletRequest request,HttpServletResponse response){
 		String eventconnectsid = request.getParameter("eventconnectsid");
 		String eventstart = request.getParameter("eventstart");	
 		String eventend = request.getParameter("eventend");	

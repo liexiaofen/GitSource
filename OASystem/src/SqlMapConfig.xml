@@ -52,6 +52,11 @@
 		<typeAlias alias="pb001001resultCommand" type="com.lw.oa.pb.daily.pb001.PB001001ResultCommand" />
 		<typeAlias alias="pb001001resultTitleCommand" type="com.lw.oa.pb.daily.pb001.PB001001ResultTitleCommand" />
 		<typeAlias alias="pb001Command" type="com.lw.oa.pb.daily.pb001.PB001Command" />
+		
+		<typeAlias alias="pb002001searchCommand" type="com.lw.oa.pb.daily.pb002.PB002001SearchCommand" />
+		<typeAlias alias="pb002001resultCommand" type="com.lw.oa.pb.daily.pb002.PB002001ResultCommand" />
+		<typeAlias alias="pb002001resultTitleCommand" type="com.lw.oa.pb.daily.pb002.PB002001ResultTitleCommand" />
+		<typeAlias alias="pb002Command" type="com.lw.oa.pb.daily.pb002.PB002Command" />
 	</typeAliases>
 	<plugins>
 		<plugin interceptor="com.lw.oa.mybatis.interceptor.PaginationInterceptor">
@@ -82,6 +87,7 @@
 		<mapper resource="com/lw/oa/pa/master/pa004/PA004Mapper.xml" />
 		<mapper resource="com/lw/oa/pa/master/pa005/PA005Mapper.xml" />
 		<mapper resource="com/lw/oa/pb/daily/pb001/PB001Mapper.xml" />
+		<mapper resource="com/lw/oa/pb/daily/pb002/PB002Mapper.xml" />
 		<mapper resource="com/lw/oa/pc/apply/pc002/PC002Mapper.xml" />
 		<mapper resource="com/lw/oa/pc/apply/pc003/PC003Mapper.xml" />
 		<mapper resource="com/lw/oa/pc/apply/pc004/PC004Mapper.xml" />

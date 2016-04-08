@@ -28,7 +28,7 @@
 	          	<h4 class="M2"><span></span>日程管理</h4>
 	          	<div class="list-item none">
 	            	<a href='<%=request.getContextPath()%>/pb001001init.do' target="mainFrame">日程安排</a>    
-	            	<a href='design.jsp' target="mainFrame">设备空闲</a>	 
+	            	<a href='<%=request.getContextPath()%>/pb002001init.do' target="mainFrame">设备空闲</a>	 
 	           	</div>
 	        </li>
 	        <li>

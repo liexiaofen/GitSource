@@ -161,8 +161,7 @@ public class PA001Controller {
 	 * @return
 	 */
 	@RequestMapping(value = { "pa001002back.do" },method = RequestMethod.POST)
-	public ModelAndView pa001002back(HttpServletRequest request, PA001Command command)
-	{			
+	public ModelAndView pa001002back(HttpServletRequest request, PA001Command command){
 		return pa001001search(request, command.getPa001001searchcommand(), null);
 	}	
 }

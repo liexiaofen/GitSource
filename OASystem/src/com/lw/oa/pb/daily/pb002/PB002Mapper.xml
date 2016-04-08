@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+    "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+    
+<mapper namespace="pb.pb002">
+	<!-- 根据显示日历查询周日历 -->    
+	<select id="pb002001searchWeekListByDisplayDT" resultType="pa003001resultCommand" parameterType="pb002001searchCommand">
+	<![CDATA[
+		SELECT 
+			top 7 convert(char(10), legaldate, 23) as legaldate, dayofweek, status
+		from [dbo].[t_nationlegalday] where convert(char(10), legaldate, 23) >= #{displaydate} order by legaldate
+	]]> 			
+	</select>
+	
+	<!-- 根据日期查询每周日期 -->    
+	<select id="pb002001searchEveryWeekByDate" resultType="pa003001resultCommand" parameterType="java.util.Map">
+	<![CDATA[
+		SELECT 
+			convert(char(10), legaldate, 23) as legaldate
+		from [dbo].[t_nationlegalday] where legalyear = LEFT( #{date}, 4) and dayofweek = (
+			SELECT 
+				t.dayofweek
+			FROM [dbo].[t_nationlegalday] t 
+	 		where convert(char(10), t.legaldate, 23) = #{date}
+		) 
+	]]> and legaldate &gt;= CONVERT(date, #{date}, 23)					
+	 			
+	</select>
+	
+	<!-- 根据日期查询每月日期 -->    
+	<select id="pb002001searchEveryMonthByDate" resultType="pa003001resultCommand" parameterType="java.util.Map">
+	<![CDATA[
+		SELECT 
+			convert(char(10), legaldate, 23) as legaldate
+		from [dbo].[t_nationlegalday] where legalyear = LEFT( #{date}, 4) and dayofmonth = (
+			SELECT 
+				t.dayofmonth
+			FROM [dbo].[t_nationlegalday] t 
+	 		where convert(char(10), t.legaldate, 23) = #{date}
+		) 
+	]]> and legaldate &gt;= CONVERT(date, #{date}, 23)				
+	 			
+	</select>	
+	<!-- 查询设备信息 -->    
+	<select id="pb002001searchListByPage" resultType="pb002001resultCommand" parameterType="pb002001searchCommand">
+	<![CDATA[
+		select V.dailydeviceid,V.dailydevicename,V.orgcdid,ROW_NUMBER() OVER(order by V.dailydevicename) as rownum  from (
+			SELECT 
+				t.dailydeviceid, t.dailydevicename, t.orgcdid, t.deletefg
+			FROM [dbo].[t_dailydeviceinfo] t
+			where t.deletefg = '0'		
+		) V where V.deletefg = '0'
+	]]> 			
+		<if test="orgcdid!=null and orgcdid!=''">
+			and V.orgcdid = #{orgcdid}
+		</if>
+		<if test="dailydevicename!=null and dailydevicename!=''">
+			and V.dailydevicename like '%'+#{dailydevicename}+'%'
+		</if>			
+	</select>
+	
+	<!-- 查询设备空闲信息 -->    
+	<select id="pb002001searchDailyPlanListByIdDate" resultType="pb002Command" parameterType="java.util.Map">
+	<![CDATA[
+		SELECT 
+			t1.dailydeviceid,t1.dailydevicename,V1.daily, V1.eventstarttime, V1.eventendtime, Substring(V1.eventstarttime, 12, 5) eventstarthm, Substring(V1.eventendtime, 12, 5) eventendhm,
+			ROW_NUMBER() OVER(order by t1.dailydevicename,V1.daily desc,V1.eventstarttime) as rownum 
+		FROM [dbo].[t_dailydeviceinfo] t1  
+		left join (
+			select t2.dailydeviceid, convert(char(10), t4.daily, 23) as daily,convert(char(19), t4.eventstarttime, 120) as eventstarttime,
+				convert(char(19), t4.eventendtime, 120) as eventendtime  
+			from [dbo].[t_eventdevice] t2  			
+			inner join [dbo].[t_event] t3 
+				on t2.eventid = t3.eventid and t2.deletefg = t3.deletefg 
+			inner join [dbo].[t_eventtime] t4 
+				on t2.eventid = t4.eventid and t2.deletefg = t4.deletefg 
+			where t3.status != '9' and t2.deletefg = '0' 
+			and convert(char(10), t4.daily, 23) = #{date}
+		) V1
+		on t1.dailydeviceid = V1.dailydeviceid 
+		where t1.deletefg = '0' and (V1.daily = #{date} or V1.daily is null) and t1.dailydeviceid = #{dailydeviceid}
+	]]>
+	</select>
+</mapper>

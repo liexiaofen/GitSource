@@ -36,8 +36,7 @@ public class PA002Controller {
 	 * @return
 	 */
 	@RequestMapping(value = { "pa002001init.do" },method = RequestMethod.GET)
-	public ModelAndView pa002001init(HttpServletRequest request)
-	{						
+	public ModelAndView pa002001init(HttpServletRequest request){
 		return pa002001search(request, new PA002001SearchCommand(), null);
 	}
 	/**
@@ -46,8 +45,7 @@ public class PA002Controller {
 	 * @return
 	 */
 	@RequestMapping(value = { "pa002001search.do" },method = RequestMethod.POST)
-	public ModelAndView pa002001search(HttpServletRequest request, PA002001SearchCommand searchCommand, RetInfo retInfo)
-	{					
+	public ModelAndView pa002001search(HttpServletRequest request, PA002001SearchCommand searchCommand, RetInfo retInfo){
 		@SuppressWarnings("unchecked")
 		List<PA002001ResultCommand> list = (List<PA002001ResultCommand>) pa002Service.pa002001search(searchCommand);
 		RetInfo searchRetInfo = MessageUtil.getMessageNoResult(list.size());
