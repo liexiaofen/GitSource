@@ -16,7 +16,7 @@
 	<script type="text/javascript">
 		var contextPath = "<%=request.getContextPath()%>";
 	</script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery-1.4.4.min.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery-1.12.3.min.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery.numberFormat.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery.validate.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery.singlevalidate.js"></script>

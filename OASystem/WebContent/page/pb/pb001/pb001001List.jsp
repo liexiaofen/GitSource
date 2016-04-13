@@ -70,7 +70,7 @@ function link_nextWeek(obj) {
 *更新时间: 
 */
 function img_insert(obj) {
-	var currentdate = $(obj).parent().find('input[name="currentdate"]').val();
+	var currentdate = $(obj).parent().find('input[name="currentdate"]').eq(0).val();
 	var empid = $(obj).parent().find('input[name="empid"]').val();
 	if(currentdate == ''){
 		alert("当前日期没有日程可以安排！");
@@ -93,7 +93,7 @@ function img_insert(obj) {
 *更新时间: 
 */
 function img_edit( obj){
-	var currentdate = $(obj).parent().parent().find('input[name="currentdate"]').val();
+	var currentdate = $(obj).parent().parent().find('input[name="currentdate"]').eq(0).val();
 	var dailyid = $(obj).parent().find('input[name="dailyid"]').val();
 	$("#editForm").find('input[name="currentdate"]').val(currentdate);
 	$("#editForm").find('input[name="dailyid"]').val(dailyid);
@@ -112,7 +112,11 @@ function img_edit( obj){
 *更新时间: 
 */
 function img_searchMonthDaily( obj){
-	window.location.href="<%= request.getContextPath()%>/page/design.jsp";
+	var empid = $(obj).parent().find('input[name="empid"]').val();
+	$("#monthForm").find('input[name="monthempid"]').val(empid);
+	c_ShowProgressBar(); 
+	$('#monthForm').attr( "action", "pb001001month.do");	
+	$('form[name="monthForm"]').submit();
 }
 
 
@@ -244,35 +248,13 @@ function btn_deviceOrderSearch() {
 	<div class="div_result" id="div_result">  
 		<table id="tresult" class="pg_result">
 		    <tr class="pg_result_head">
-				<td width="13%">&nbsp;姓名&nbsp;</td>
-				<td width="13%" nowrap>
-					<c:if test="${title.statusofone == 1}">&nbsp;<font color="#ff0000">${title.weekofone}&nbsp;${title.one}&nbsp;</font></c:if>
-					<c:if test="${title.statusofone == 0}">&nbsp;${title.weekofone}&nbsp;${title.one}&nbsp;</c:if>
-				</td>				
-				<td width="13%" nowrap>
-					<c:if test="${title.statusoftwo == 1}">&nbsp;<font color="#ff0000">${title.weekoftwo}&nbsp;${title.two}&nbsp;</font></c:if>
-					<c:if test="${title.statusoftwo == 0}">&nbsp;${title.weekoftwo}&nbsp;${title.two}&nbsp;</c:if>
-				</td>		
-				<td width="13%" nowrap>
-					<c:if test="${title.statusofthree == 1}">&nbsp;<font color="#ff0000">${title.weekofthree}&nbsp;${title.three}&nbsp;</font></c:if>
-					<c:if test="${title.statusofthree == 0}">&nbsp;${title.weekofthree}&nbsp;${title.three}&nbsp;</c:if>
-				</td>		
-				<td width="13%" nowrap>
-					<c:if test="${title.statusoffour == 1}">&nbsp;<font color="#ff0000">${title.weekoffour}&nbsp;${title.four}&nbsp;</font></c:if>
-					<c:if test="${title.statusoffour == 0}">&nbsp;${title.weekoffour}&nbsp;${title.four}&nbsp;</c:if>
-				</td>				
-				<td width="13%" nowrap>
-					<c:if test="${title.statusoffive == 1}">&nbsp;<font color="#ff0000">${title.weekoffive}&nbsp;${title.five}&nbsp;</font></c:if>
-					<c:if test="${title.statusoffive == 0}">&nbsp;${title.weekoffive}&nbsp;${title.five}&nbsp;</c:if>
-				</td>			
-				<td width="13%" nowrap>
-					<c:if test="${title.statusofsix == 1}">&nbsp;<font color="#ff0000">${title.weekofsix}&nbsp;${title.six}&nbsp;</font></c:if>
-					<c:if test="${title.statusofsix == 0}">&nbsp;${title.weekofsix}&nbsp;${title.six}&nbsp;</c:if>
-				</td>				
-				<td width="13%" nowrap>
-					<c:if test="${title.statusofseven == 1}">&nbsp;<font color="#ff0000">${title.weekofseven}&nbsp;${title.seven}&nbsp;</font></c:if>
-					<c:if test="${title.statusofseven == 0}">&nbsp;${title.weekofseven}&nbsp;${title.seven}&nbsp;</c:if>
-				</td>
+				<td>&nbsp;姓名&nbsp;</td>
+				<c:forEach items="${title.list}" var="iterator">
+					<td width="13%" nowrap>
+						<c:if test="${iterator.status == 1}">&nbsp;<font color="#ff0000">${iterator.dayofweek}&nbsp;<fmt:formatDate value="${iterator.legaldate}" pattern="yyyy-MM-dd"/>&nbsp;</font></c:if>
+						<c:if test="${iterator.status == 0}">&nbsp;${iterator.dayofweek}&nbsp;<fmt:formatDate value="${iterator.legaldate}" pattern="yyyy-MM-dd"/>&nbsp;</c:if>
+					</td>
+				</c:forEach>
 			</tr>
 		    <tbody id="body_result">
 		    	<c:forEach items="${list}" var="iterator">
@@ -280,6 +262,7 @@ function btn_deviceOrderSearch() {
 		    			<td align="left" nowrap>
 		    				${iterator.empname}<br />
 						    <img src="<%=request.getContextPath()%>/resources/images/monthdaily.png" border="0" class="img_lookup_big" onclick="img_searchMonthDaily(this)" />月预定
+						    <input name="empid" type="hidden"  value="${iterator.empid}" />
 						</td>
 						<td align="left" nowrap>
 							<c:forEach items="${iterator.one}" var="entity">
@@ -289,10 +272,10 @@ function btn_deviceOrderSearch() {
 									<img src="<%=request.getContextPath()%>/resources/images/update.png" class="img_small" onclick="img_edit(this)"></img>
 									<input name="dailyid" type="hidden" value="${entity.dailyid}"/>
 								</c:if><br /></span>  
+								<input name="currentdate" type="hidden"  value="${entity.daily}" />
 							</c:forEach>
 							<c:if test="${iterator.empid == sessionScope.user.empid}">
 								<img src="<%=request.getContextPath()%>/resources/images/write.png" class="img_lookup" onclick="img_insert(this)"></img>
-								<input name="currentdate" type="hidden"  value="${title.one}" />
 								<input name="empid" type="hidden"  value="${iterator.empid}" />
 							</c:if>
 						</td>
@@ -303,11 +286,11 @@ function btn_deviceOrderSearch() {
 								<c:if test="${iterator.empid == sessionScope.user.empid}">
 									<img src="<%=request.getContextPath()%>/resources/images/update.png" class="img_small" onclick="img_edit(this)"></img>
 									<input name="dailyid" type="hidden" value="${entity.dailyid}"/>
-								</c:if><br /></span>  
+								</c:if><br /></span>
+								<input name="currentdate" type="hidden"  value="${entity.daily}" />  
 							</c:forEach>
 							<c:if test="${iterator.empid == sessionScope.user.empid}">
 								<img src="<%=request.getContextPath()%>/resources/images/write.png" class="img_lookup" onclick="img_insert(this)"></img>
-								<input name="currentdate" type="hidden"  value="${title.two}" />
 								<input name="empid" type="hidden"  value="${iterator.empid}" />
 							</c:if>
 						</td>
@@ -319,10 +302,10 @@ function btn_deviceOrderSearch() {
 									<img src="<%=request.getContextPath()%>/resources/images/update.png" class="img_small" onclick="img_edit(this)"></img>
 									<input name="dailyid" type="hidden" value="${entity.dailyid}"/>
 								</c:if><br /></span>
+								<input name="currentdate" type="hidden"  value="${entity.daily}" />
 							</c:forEach>
 							<c:if test="${iterator.empid == sessionScope.user.empid}">
 								<img src="<%=request.getContextPath()%>/resources/images/write.png" class="img_lookup" onclick="img_insert(this)"></img>
-								<input name="currentdate" type="hidden"  value="${title.three}" />	
 								<input name="empid" type="hidden"  value="${iterator.empid}" />
 							</c:if>
 						</td>
@@ -333,11 +316,11 @@ function btn_deviceOrderSearch() {
 								<c:if test="${iterator.empid == sessionScope.user.empid}">
 									<img src="<%=request.getContextPath()%>/resources/images/update.png" class="img_small" onclick="img_edit(this)"></img>
 									<input name="dailyid" type="hidden" value="${entity.dailyid}"/>
-								</c:if><br /></span> 
+								</c:if><br /></span>
+								<input name="currentdate" type="hidden"  value="${entity.daily}" />
 							</c:forEach>
 							<c:if test="${iterator.empid == sessionScope.user.empid}">
 								<img src="<%=request.getContextPath()%>/resources/images/write.png" class="img_lookup" onclick="img_insert(this)"></img>
-								<input name="currentdate" type="hidden"  value="${title.four}" />
 								<input name="empid" type="hidden"  value="${iterator.empid}" />		
 							</c:if>									
 						</td>
@@ -349,10 +332,10 @@ function btn_deviceOrderSearch() {
 									<img src="<%=request.getContextPath()%>/resources/images/update.png" class="img_small" onclick="img_edit(this)"></img>
 									<input name="dailyid" type="hidden" value="${entity.dailyid}"/>
 								</c:if><br /></span>
+								<input name="currentdate" type="hidden"  value="${entity.daily}" />
 							</c:forEach>
 							<c:if test="${iterator.empid == sessionScope.user.empid}">
 								<img src="<%=request.getContextPath()%>/resources/images/write.png" class="img_lookup" onclick="img_insert(this)"></img>
-								<input name="currentdate" type="hidden"  value="${title.five}" />		
 								<input name="empid" type="hidden"  value="${iterator.empid}" />				
 							</c:if>				
 						</td>
@@ -364,10 +347,10 @@ function btn_deviceOrderSearch() {
 									<img src="<%=request.getContextPath()%>/resources/images/update.png" class="img_small" onclick="img_edit(this)"></img>
 									<input name="dailyid" type="hidden" value="${entity.dailyid}"/>
 								</c:if><br /></span> 
+								<input name="currentdate" type="hidden"  value="${entity.daily}" />
 							</c:forEach>
 							<c:if test="${iterator.empid == sessionScope.user.empid}">
 								<img src="<%=request.getContextPath()%>/resources/images/write.png" class="img_lookup" onclick="img_insert(this)"></img>
-								<input name="currentdate" type="hidden"  value="${title.six}" />
 								<input name="empid" type="hidden"  value="${iterator.empid}" />
 							</c:if>
 						</td>
@@ -378,11 +361,11 @@ function btn_deviceOrderSearch() {
 								<c:if test="${iterator.empid == sessionScope.user.empid}">
 									<img src="<%=request.getContextPath()%>/resources/images/update.png" class="img_small" onclick="img_edit(this)"></img>
 									<input name="dailyid" type="hidden" value="${entity.dailyid}"/>
-								</c:if><br /></span>  
+								</c:if><br /></span> 
+								<input name="currentdate" type="hidden"  value="${entity.daily}" /> 
 							</c:forEach>
 							<c:if test="${iterator.empid == sessionScope.user.empid}">
 								<img src="<%=request.getContextPath()%>/resources/images/write.png" class="img_lookup" onclick="img_insert(this)"></img>
-								<input name="currentdate" type="hidden"  value="${title.seven}" />
 								<input name="empid" type="hidden"  value="${iterator.empid}" />
 							</c:if>
 						</td>
@@ -422,7 +405,7 @@ function btn_deviceOrderSearch() {
 	<!--End Page Infor-->
 </form>
 <%-- 编辑表单开始  --%>
-<form action="pb00100edit.do" id="editForm" name="editForm" method="post">
+<form action="pb001001edit.do" id="editForm" name="editForm" method="post">
 	<%/*共通隐藏字段 start*/%>
 	<input name="orgcdid" type="hidden"  value="${searchCommand.orgcdid}" />
 	<input name="depid" type="hidden"  value="${searchCommand.depid}" />
@@ -448,5 +431,18 @@ function btn_deviceOrderSearch() {
 	<input name=currentdate type="hidden"  />
 </form>
 <%-- 登录表单结束  --%>
+<%-- 月预定表单开始  --%>
+<form action="pb001001month.do" id="monthForm" name="monthForm" method="post">
+	<%/*共通隐藏字段 start*/%>
+	<input name="orgcdid" type="hidden"  value="${searchCommand.orgcdid}" />
+	<input name="depid" type="hidden"  value="${searchCommand.depid}" />
+	<input name="empid" type="hidden"  value="${sessionScope.user.empid}" />
+	<input name="empname" type="hidden"  value="${searchCommand.empname}" />
+	<input name="displaydate" type="hidden"  value="${searchCommand.displaydate}" />
+	<input name="displaycycle" type="hidden"  value="${searchCommand.displaycycle}" />
+	<%/*共通隐藏字段 end*/%>	
+	<input name="monthempid" type="hidden"  />
+</form>
+<%-- 月预定表单结束  --%>
 </body>
 </html>

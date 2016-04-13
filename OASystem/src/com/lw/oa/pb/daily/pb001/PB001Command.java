@@ -12,6 +12,8 @@ public class PB001Command implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private PB001001SearchCommand pb001001searchcommand;
 	private String rownum;
+	// JSON对象
+	private String jsonstr;
 	// 创建日
 	private String createtime;
 	// 更新日
@@ -81,6 +83,14 @@ public class PB001Command implements Serializable {
 
 	public void setRownum(String rownum) {
 		this.rownum = rownum;
+	}
+
+	public String getJsonstr() {
+		return jsonstr;
+	}
+
+	public void setJsonstr(String jsonstr) {
+		this.jsonstr = jsonstr;
 	}
 
 	public String getCreatetime() {

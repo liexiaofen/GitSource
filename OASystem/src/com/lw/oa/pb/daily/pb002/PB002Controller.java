@@ -3,17 +3,12 @@ package com.lw.oa.pb.daily.pb002;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.lw.oa.common.command.SessionEntity;
 import com.lw.oa.common.command.RetInfo;
 import com.lw.oa.common.util.CalendarUtil;
 import com.lw.oa.common.util.ConstantUtil;
@@ -31,13 +26,6 @@ public class PB002Controller implements ConstantUtil {
 	//private static final String  PAGE_INIT = "pb/pb002/pb002001List";
 	//查询画面	
 	private static final String  PAGE_SEARCH = "pb/pb002/pb002001List";
-	//修改画面	
-	private static final String  PAGE_UPDATE = "pb/pb002/pb002002Update";
-	//登录画面	
-	private static final String  PAGE_INSERT = "pb/pb002/pb002003Insert";	
-	//详细画面模式窗口	
-	private static final String  PAGE_DETAIL = "pb/pb002/pb002004Detail";
-	
 	@Autowired
 	private IPB002Service pb002Service;
 	

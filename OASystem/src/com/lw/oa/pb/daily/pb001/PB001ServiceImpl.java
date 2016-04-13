@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.lw.oa.common.command.ResultCommand;
 import com.lw.oa.common.dao.IMybatisDAO;
 import com.lw.oa.common.dao.MybatisDAOImpl;
@@ -20,6 +23,7 @@ import com.lw.oa.common.model.Event;
 import com.lw.oa.common.model.EventConnect;
 import com.lw.oa.common.model.EventDevice;
 import com.lw.oa.common.model.EventTime;
+import com.lw.oa.common.model.NationLegalday;
 import com.lw.oa.common.util.CalendarUtil;
 import com.lw.oa.common.util.ConstantUtil;
 import com.lw.oa.common.util.DataUtil;
@@ -44,135 +48,15 @@ public class PB001ServiceImpl implements IPB001Service,ConstantUtil {
 		@SuppressWarnings("unchecked")
 		List<PA003001ResultCommand> list = (List<PA003001ResultCommand>)mybatisDAOImpl.queryByObj("pb.pb001.pb001001searchWeekListByDisplayDT", searchCommand);
 		PB001001ResultTitleCommand title = new PB001001ResultTitleCommand();
+		List<NationLegalday> listweek = new ArrayList<NationLegalday>();
 		for(int i=0; i<list.size();i++){
-			if(i == 0){//第一天
-				title.setOne(list.get(i).getLegaldate());
-				title.setStatusofone(list.get(i).getStatus());
-				if(WEEK_ZERO.equals(list.get(i).getDayofweek())){
-					title.setWeekofone(SUNDAY);
-				}else if(WEEK_ONE.equals(list.get(i).getDayofweek())){
-					title.setWeekofone(MONDAY);
-				}else if(WEEK_TWO.equals(list.get(i).getDayofweek())){
-					title.setWeekofone(TUESDAY);
-				}else if(WEEK_THREE.equals(list.get(i).getDayofweek())){
-					title.setWeekofone(WEDNESDAY);
-				}else if(WEEK_FOUR.equals(list.get(i).getDayofweek())){
-					title.setWeekofone(THURSDAY);
-				}else if(WEEK_FIVE.equals(list.get(i).getDayofweek())){
-					title.setWeekofone(FRIDAY);
-				}else if(WEEK_SIX.equals(list.get(i).getDayofweek())){
-					title.setWeekofone(SATURDAY);
-				}
-			}else if(i == 1){//第二天
-				title.setTwo(list.get(i).getLegaldate());
-				title.setStatusoftwo(list.get(i).getStatus());
-				if(WEEK_ZERO.equals(list.get(i).getDayofweek())){
-					title.setWeekoftwo(SUNDAY);
-				}else if(WEEK_ONE.equals(list.get(i).getDayofweek())){
-					title.setWeekoftwo(MONDAY);
-				}else if(WEEK_TWO.equals(list.get(i).getDayofweek())){
-					title.setWeekoftwo(TUESDAY);
-				}else if(WEEK_THREE.equals(list.get(i).getDayofweek())){
-					title.setWeekoftwo(WEDNESDAY);
-				}else if(WEEK_FOUR.equals(list.get(i).getDayofweek())){
-					title.setWeekoftwo(THURSDAY);
-				}else if(WEEK_FIVE.equals(list.get(i).getDayofweek())){
-					title.setWeekoftwo(FRIDAY);
-				}else if(WEEK_SIX.equals(list.get(i).getDayofweek())){
-					title.setWeekoftwo(SATURDAY);
-				}
-			}else if(i == 2){//第三天
-				title.setThree(list.get(i).getLegaldate());
-				title.setStatusofthree(list.get(i).getStatus());
-				if(WEEK_ZERO.equals(list.get(i).getDayofweek())){
-					title.setWeekofthree(SUNDAY);
-				}else if(WEEK_ONE.equals(list.get(i).getDayofweek())){
-					title.setWeekofthree(MONDAY);
-				}else if(WEEK_TWO.equals(list.get(i).getDayofweek())){
-					title.setWeekofthree(TUESDAY);
-				}else if(WEEK_THREE.equals(list.get(i).getDayofweek())){
-					title.setWeekofthree(WEDNESDAY);
-				}else if(WEEK_FOUR.equals(list.get(i).getDayofweek())){
-					title.setWeekofthree(THURSDAY);
-				}else if(WEEK_FIVE.equals(list.get(i).getDayofweek())){
-					title.setWeekofthree(FRIDAY);
-				}else if(WEEK_SIX.equals(list.get(i).getDayofweek())){
-					title.setWeekofthree(SATURDAY);
-				}
-			}else if(i == 3){//第四天
-				title.setFour(list.get(i).getLegaldate());
-				title.setStatusoffour(list.get(i).getStatus());
-				if(WEEK_ZERO.equals(list.get(i).getDayofweek())){
-					title.setWeekoffour(SUNDAY);
-				}else if(WEEK_ONE.equals(list.get(i).getDayofweek())){
-					title.setWeekoffour(MONDAY);
-				}else if(WEEK_TWO.equals(list.get(i).getDayofweek())){
-					title.setWeekoffour(TUESDAY);
-				}else if(WEEK_THREE.equals(list.get(i).getDayofweek())){
-					title.setWeekoffour(WEDNESDAY);
-				}else if(WEEK_FOUR.equals(list.get(i).getDayofweek())){
-					title.setWeekoffour(THURSDAY);
-				}else if(WEEK_FIVE.equals(list.get(i).getDayofweek())){
-					title.setWeekoffour(FRIDAY);
-				}else if(WEEK_SIX.equals(list.get(i).getDayofweek())){
-					title.setWeekoffour(SATURDAY);
-				}
-			}else if(i == 4){//第五天
-				title.setFive(list.get(i).getLegaldate());
-				title.setStatusoffive(list.get(i).getStatus());
-				if(WEEK_ZERO.equals(list.get(i).getDayofweek())){
-					title.setWeekoffive(SUNDAY);
-				}else if(WEEK_ONE.equals(list.get(i).getDayofweek())){
-					title.setWeekoffive(MONDAY);
-				}else if(WEEK_TWO.equals(list.get(i).getDayofweek())){
-					title.setWeekoffive(TUESDAY);
-				}else if(WEEK_THREE.equals(list.get(i).getDayofweek())){
-					title.setWeekoffive(WEDNESDAY);
-				}else if(WEEK_FOUR.equals(list.get(i).getDayofweek())){
-					title.setWeekoffive(THURSDAY);
-				}else if(WEEK_FIVE.equals(list.get(i).getDayofweek())){
-					title.setWeekoffive(FRIDAY);
-				}else if(WEEK_SIX.equals(list.get(i).getDayofweek())){
-					title.setWeekoffive(SATURDAY);
-				}
-			}else if(i == 5){//第六天
-				title.setSix(list.get(i).getLegaldate());
-				title.setStatusofsix(list.get(i).getStatus());
-				if(WEEK_ZERO.equals(list.get(i).getDayofweek())){
-					title.setWeekofsix(SUNDAY);
-				}else if(WEEK_ONE.equals(list.get(i).getDayofweek())){
-					title.setWeekofsix(MONDAY);
-				}else if(WEEK_TWO.equals(list.get(i).getDayofweek())){
-					title.setWeekofsix(TUESDAY);
-				}else if(WEEK_THREE.equals(list.get(i).getDayofweek())){
-					title.setWeekofsix(WEDNESDAY);
-				}else if(WEEK_FOUR.equals(list.get(i).getDayofweek())){
-					title.setWeekofsix(THURSDAY);
-				}else if(WEEK_FIVE.equals(list.get(i).getDayofweek())){
-					title.setWeekofsix(FRIDAY);
-				}else if(WEEK_SIX.equals(list.get(i).getDayofweek())){
-					title.setWeekofsix(SATURDAY);
-				}
-			}else if(i == 6){//第七天
-				title.setSeven(list.get(i).getLegaldate());
-				title.setStatusofseven(list.get(i).getStatus());
-				if(WEEK_ZERO.equals(list.get(i).getDayofweek())){
-					title.setWeekofseven(SUNDAY);
-				}else if(WEEK_ONE.equals(list.get(i).getDayofweek())){
-					title.setWeekofseven(MONDAY);
-				}else if(WEEK_TWO.equals(list.get(i).getDayofweek())){
-					title.setWeekofseven(TUESDAY);
-				}else if(WEEK_THREE.equals(list.get(i).getDayofweek())){
-					title.setWeekofseven(WEDNESDAY);
-				}else if(WEEK_FOUR.equals(list.get(i).getDayofweek())){
-					title.setWeekofseven(THURSDAY);
-				}else if(WEEK_FIVE.equals(list.get(i).getDayofweek())){
-					title.setWeekofseven(FRIDAY);
-				}else if(WEEK_SIX.equals(list.get(i).getDayofweek())){
-					title.setWeekofseven(SATURDAY);
-				}
-			}			
+			NationLegalday entity = new NationLegalday();
+			entity.setLegaldate(DateUtil.parseDate(list.get(i).getLegaldate(), DATE_FORMAT_YMD));
+			entity.setDayofweek(list.get(i).getDayofweek());
+			entity.setStatus(list.get(i).getStatus());
+			listweek.add(entity);				
 		}
+		title.setList(listweek);
 		return title;	
 	}
 	
@@ -182,55 +66,63 @@ public class PB001ServiceImpl implements IPB001Service,ConstantUtil {
 		@SuppressWarnings("unchecked")
 		List<PB001001ResultCommand> list = (List<PB001001ResultCommand>) mybatisDAOImpl
 				.queryByObj("pb.pb001.pb001001searchListByPage", searchCommand);		
-		for(PB001001ResultCommand entity:list){
+		for(int i=0; i<list.size(); i++){
+			PB001001ResultCommand entity = list.get(i);
 			String empid = entity.getEmpid();
 			HashMap<String, String> map = new HashMap<String, String>();
 			map.put("empid", empid);
+			int j = 0;
 			//第一天
-			if(!StringUtils.isEmpty(title.getOne())){				
-				map.put("date", title.getOne());
+			if(!StringUtils.isEmpty(DateUtil.formatDate( title.list.get(j).getLegaldate(), DATE_FORMAT_YMD))){				
+				map.put("date", DateUtil.formatDate( title.list.get(j).getLegaldate(), DATE_FORMAT_YMD));
 				@SuppressWarnings("unchecked")
 				List<PB001Command> one = (List<PB001Command>) mybatisDAOImpl.queryByObj("pb.pb001.pb001001searchDailyPlanListByIdDate", map);
 				entity.setOne(one);
 			}
+			j++;
 			//第二天
-			if(!StringUtils.isEmpty(title.getTwo())){
-				map.put("date", title.getTwo());
+			if(!StringUtils.isEmpty(DateUtil.formatDate( title.list.get(j).getLegaldate(), DATE_FORMAT_YMD))){				
+				map.put("date", DateUtil.formatDate( title.list.get(j).getLegaldate(), DATE_FORMAT_YMD));
 				@SuppressWarnings("unchecked")
 				List<PB001Command> two = (List<PB001Command>) mybatisDAOImpl.queryByObj("pb.pb001.pb001001searchDailyPlanListByIdDate", map);
 				entity.setTwo(two);
 			}
+			j++;
 			//第三天
-			if(!StringUtils.isEmpty(title.getThree())){
-				map.put("date", title.getThree());
+			if(!StringUtils.isEmpty(DateUtil.formatDate( title.list.get(j).getLegaldate(), DATE_FORMAT_YMD))){				
+				map.put("date", DateUtil.formatDate( title.list.get(j).getLegaldate(), DATE_FORMAT_YMD));
 				@SuppressWarnings("unchecked")
 				List<PB001Command> three = (List<PB001Command>) mybatisDAOImpl.queryByObj("pb.pb001.pb001001searchDailyPlanListByIdDate", map);
 				entity.setThree(three);
 			}
+			j++;
 			//第四天
-			if(!StringUtils.isEmpty(title.getFour())){
-				map.put("date", title.getFour());
+			if(!StringUtils.isEmpty(DateUtil.formatDate( title.list.get(j).getLegaldate(), DATE_FORMAT_YMD))){				
+				map.put("date", DateUtil.formatDate( title.list.get(j).getLegaldate(), DATE_FORMAT_YMD));
 				@SuppressWarnings("unchecked")
 				List<PB001Command> four = (List<PB001Command>) mybatisDAOImpl.queryByObj("pb.pb001.pb001001searchDailyPlanListByIdDate", map);
 				entity.setFour(four);
 			}
+			j++;
 			//第五天
-			if(!StringUtils.isEmpty(title.getFive())){
-				map.put("date", title.getFive());
+			if(!StringUtils.isEmpty(DateUtil.formatDate( title.list.get(j).getLegaldate(), DATE_FORMAT_YMD))){				
+				map.put("date", DateUtil.formatDate( title.list.get(j).getLegaldate(), DATE_FORMAT_YMD));
 				@SuppressWarnings("unchecked")
 				List<PB001Command> five = (List<PB001Command>) mybatisDAOImpl.queryByObj("pb.pb001.pb001001searchDailyPlanListByIdDate", map);
 				entity.setFive(five);
 			}
+			j++;
 			//第六天
-			if(!StringUtils.isEmpty(title.getSix())){
-				map.put("date", title.getSix());
+			if(!StringUtils.isEmpty(DateUtil.formatDate( title.list.get(j).getLegaldate(), DATE_FORMAT_YMD))){				
+				map.put("date", DateUtil.formatDate( title.list.get(j).getLegaldate(), DATE_FORMAT_YMD));
 				@SuppressWarnings("unchecked")
 				List<PB001Command> six = (List<PB001Command>) mybatisDAOImpl.queryByObj("pb.pb001.pb001001searchDailyPlanListByIdDate", map);
 				entity.setSix(six);
 			}
+			j++;
 			//第七天
-			if(!StringUtils.isEmpty(title.getSeven())){
-				map.put("date", title.getSeven());
+			if(!StringUtils.isEmpty(DateUtil.formatDate( title.list.get(j).getLegaldate(), DATE_FORMAT_YMD))){				
+				map.put("date", DateUtil.formatDate( title.list.get(j).getLegaldate(), DATE_FORMAT_YMD));
 				@SuppressWarnings("unchecked")
 				List<PB001Command> seven = (List<PB001Command>) mybatisDAOImpl.queryByObj("pb.pb001.pb001001searchDailyPlanListByIdDate", map);
 				entity.setSeven(seven);
@@ -276,6 +168,34 @@ public class PB001ServiceImpl implements IPB001Service,ConstantUtil {
 				}
 				command.setEventdevicesid(eventdevicesid.substring(0, eventdevicesid.length()-1));
 				command.setEventdevices(eventdevices.substring(0, eventdevices.length()-1));
+			}
+		}
+		return command;
+	}
+
+	@Override
+	public PB001Command pb001001month(PB001001SearchCommand searchCommand) {
+		// TODO Auto-generated method stub
+		HashMap<String,String> map = new HashMap<String, String>();
+		map.put("monthempid", searchCommand.getMonthempid());	
+		map.put("date", searchCommand.getDisplaydate().substring(0, 4));	
+		mybatisDAOImpl.openSession();
+		@SuppressWarnings("unchecked")
+		List<PB001Command> list = (List<PB001Command>) mybatisDAOImpl.queryByObj(
+				"pb.pb001.pb001001queryById", map);
+		PB001Command command = new PB001Command();
+		if(list != null){ 
+			if(list.size() != 0){
+				//将list转化成jsonarray
+				JSONArray jsonarray = new JSONArray();	
+				for(PB001Command entity:list){
+					JSONObject jsonobj = new JSONObject();
+					jsonobj.put("title", entity.getTitle());
+					jsonobj.put("start", entity.getDailystarttime());
+					jsonobj.put("end", entity.getDailyendtime());
+					jsonarray.add(jsonobj);
+				}
+				command.setJsonstr(JSON.toJSONString( jsonarray));
 			}
 		}
 		return command;

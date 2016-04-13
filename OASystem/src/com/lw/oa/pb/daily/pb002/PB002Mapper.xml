@@ -8,8 +8,11 @@
 	<select id="pb002001searchWeekListByDisplayDT" resultType="pa003001resultCommand" parameterType="pb002001searchCommand">
 	<![CDATA[
 		SELECT 
-			top 7 convert(char(10), legaldate, 23) as legaldate, dayofweek, status
-		from [dbo].[t_nationlegalday] where convert(char(10), legaldate, 23) >= #{displaydate} order by legaldate
+			top 7 convert(char(10), t.legaldate, 23) as legaldate, dict2.busidictname as dayofweek, t.status
+		from [dbo].[t_nationlegalday] t
+		left join [dbo].[s_busidict] dict2 
+			on t.dayofweek = dict2.busidictid and dict2.busidicttypeid = 'OA_COMMON_Week' 
+		where convert(char(10), t.legaldate, 23) >= #{displaydate} order by t.legaldate
 	]]> 			
 	</select>
 	

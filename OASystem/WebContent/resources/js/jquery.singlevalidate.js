@@ -237,7 +237,7 @@
 					}						
 				}				
 				if(v==opt.required && requiredflg){
-					var tagname = $(n).attr("tagName").toLowerCase();
+					var tagname = n.tagName.toLowerCase();
 					var tagtype = $(n).attr("type");					
 					if (tagname=="input" && tagtype=="radio") {
 						var name = $(n).attr("name");

@@ -16,6 +16,8 @@ public class PB001001SearchCommand extends Pager<PB001001ResultCommand> {
 	private String depid;
 	// 员工id
 	private String empid;
+	// 月预定员工id
+	private String monthempid;
 	//日程id
 	private String dailyid;
 	// 员工姓名
@@ -41,6 +43,14 @@ public class PB001001SearchCommand extends Pager<PB001001ResultCommand> {
 
 	public void setDepid(String depid) {
 		this.depid = depid;
+	}
+
+	public String getMonthempid() {
+		return monthempid;
+	}
+
+	public void setMonthempid(String monthempid) {
+		this.monthempid = monthempid;
 	}
 
 	public String getEmpid() {

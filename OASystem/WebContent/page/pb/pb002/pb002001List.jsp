@@ -233,35 +233,13 @@ function btn_deviceOrderSearch() {
 	<div class="div_result" id="div_result">  
 		<table id="tresult" class="pg_result">
 		    <tr class="pg_result_head">
-				<td width="13%">&nbsp;设备名称&nbsp;</td>
-				<td width="13%" nowrap>
-					<c:if test="${title.statusofone == 1}">&nbsp;<font color="#ff0000">${title.weekofone}&nbsp;${title.one}&nbsp;</font></c:if>
-					<c:if test="${title.statusofone == 0}">&nbsp;${title.weekofone}&nbsp;${title.one}&nbsp;</c:if>
-				</td>				
-				<td width="13%" nowrap>
-					<c:if test="${title.statusoftwo == 1}">&nbsp;<font color="#ff0000">${title.weekoftwo}&nbsp;${title.two}&nbsp;</font></c:if>
-					<c:if test="${title.statusoftwo == 0}">&nbsp;${title.weekoftwo}&nbsp;${title.two}&nbsp;</c:if>
-				</td>		
-				<td width="13%" nowrap>
-					<c:if test="${title.statusofthree == 1}">&nbsp;<font color="#ff0000">${title.weekofthree}&nbsp;${title.three}&nbsp;</font></c:if>
-					<c:if test="${title.statusofthree == 0}">&nbsp;${title.weekofthree}&nbsp;${title.three}&nbsp;</c:if>
-				</td>		
-				<td width="13%" nowrap>
-					<c:if test="${title.statusoffour == 1}">&nbsp;<font color="#ff0000">${title.weekoffour}&nbsp;${title.four}&nbsp;</font></c:if>
-					<c:if test="${title.statusoffour == 0}">&nbsp;${title.weekoffour}&nbsp;${title.four}&nbsp;</c:if>
-				</td>				
-				<td width="13%" nowrap>
-					<c:if test="${title.statusoffive == 1}">&nbsp;<font color="#ff0000">${title.weekoffive}&nbsp;${title.five}&nbsp;</font></c:if>
-					<c:if test="${title.statusoffive == 0}">&nbsp;${title.weekoffive}&nbsp;${title.five}&nbsp;</c:if>
-				</td>			
-				<td width="13%" nowrap>
-					<c:if test="${title.statusofsix == 1}">&nbsp;<font color="#ff0000">${title.weekofsix}&nbsp;${title.six}&nbsp;</font></c:if>
-					<c:if test="${title.statusofsix == 0}">&nbsp;${title.weekofsix}&nbsp;${title.six}&nbsp;</c:if>
-				</td>				
-				<td width="13%" nowrap>
-					<c:if test="${title.statusofseven == 1}">&nbsp;<font color="#ff0000">${title.weekofseven}&nbsp;${title.seven}&nbsp;</font></c:if>
-					<c:if test="${title.statusofseven == 0}">&nbsp;${title.weekofseven}&nbsp;${title.seven}&nbsp;</c:if>
-				</td>
+				<td>&nbsp;设备名称&nbsp;</td>
+				<c:forEach items="${title.list}" var="iterator">
+					<td width="13%" nowrap>
+						<c:if test="${iterator.status == 1}">&nbsp;<font color="#ff0000">${iterator.dayofweek}&nbsp;<fmt:formatDate value="${iterator.legaldate}" pattern="yyyy-MM-dd"/>&nbsp;</font></c:if>
+						<c:if test="${iterator.status == 0}">&nbsp;${iterator.dayofweek}&nbsp;<fmt:formatDate value="${iterator.legaldate}" pattern="yyyy-MM-dd"/>&nbsp;</c:if>
+					</td>
+				</c:forEach>
 			</tr>
 		    <tbody id="body_result">
 		    	<c:forEach items="${list}" var="iterator">

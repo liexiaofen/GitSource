@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>OA</title>
-<script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery-1.12.3.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/menu.js"></script>
 <link  rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/css/menu.css"/>
 </head>
