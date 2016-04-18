@@ -38,7 +38,7 @@ public class PB001Controller implements ConstantUtil {
 	//详细画面模式窗口	
 	private static final String  PAGE_DETAIL = "pb/pb001/pb001004Detail";
 	//月预定画面	
-	private static final String  PAGE_MONTH = "pb/pb001/pb001001MonthList";
+	private static final String  PAGE_MONTH = "pb/pb001/pb001001MonthList1";
 	
 	@Autowired
 	private IPB001Service pb001Service;

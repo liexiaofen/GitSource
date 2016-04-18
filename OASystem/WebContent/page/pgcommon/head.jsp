@@ -22,7 +22,7 @@
 	<link  rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/css/tab_style.css"/>
 	<link  rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/css/autovalidate.css"/>
 	<link  rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/css/simpletooltip.css"/>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery-1.12.3.min.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery-1.4.2.min.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery.numberFormat.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery.validate.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery.singlevalidate.js"></script>

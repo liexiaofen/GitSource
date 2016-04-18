@@ -17,18 +17,32 @@ public class PB001001ResultCommand implements Serializable {
 	private String empname;
 	// 第一天
 	private List<PB001Command> one;
+	// 第一天
+	private String dateofone;
 	// 第二天
 	private List<PB001Command> two;
+	// 第二天
+	private String dateoftwo;
 	// 第三天
 	private List<PB001Command> three;
+	// 第三天
+	private String dateofthree;
 	// 第四天
 	private List<PB001Command> four;
+	// 第四天
+	private String dateoffour;
 	// 第五天
 	private List<PB001Command> five;
+	// 第五天
+	private String dateoffive;
 	// 第六天
 	private List<PB001Command> six;
+	// 第六天
+	private String dateofsix;
 	// 第七天
 	private List<PB001Command> seven;
+	// 第七天
+	private String dateofseven;
 
 	public String getEmpid() {
 		return empid;
@@ -100,6 +114,62 @@ public class PB001001ResultCommand implements Serializable {
 
 	public void setSeven(List<PB001Command> seven) {
 		this.seven = seven;
+	}
+
+	public String getDateofone() {
+		return dateofone;
+	}
+
+	public void setDateofone(String dateofone) {
+		this.dateofone = dateofone;
+	}
+
+	public String getDateoftwo() {
+		return dateoftwo;
+	}
+
+	public void setDateoftwo(String dateoftwo) {
+		this.dateoftwo = dateoftwo;
+	}
+
+	public String getDateofthree() {
+		return dateofthree;
+	}
+
+	public void setDateofthree(String dateofthree) {
+		this.dateofthree = dateofthree;
+	}
+
+	public String getDateoffour() {
+		return dateoffour;
+	}
+
+	public void setDateoffour(String dateoffour) {
+		this.dateoffour = dateoffour;
+	}
+
+	public String getDateoffive() {
+		return dateoffive;
+	}
+
+	public void setDateoffive(String dateoffive) {
+		this.dateoffive = dateoffive;
+	}
+
+	public String getDateofsix() {
+		return dateofsix;
+	}
+
+	public void setDateofsix(String dateofsix) {
+		this.dateofsix = dateofsix;
+	}
+
+	public String getDateofseven() {
+		return dateofseven;
+	}
+
+	public void setDateofseven(String dateofseven) {
+		this.dateofseven = dateofseven;
 	}
 
 

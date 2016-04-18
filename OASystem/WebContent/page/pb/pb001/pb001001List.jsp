@@ -271,9 +271,9 @@ function btn_deviceOrderSearch() {
 								<c:if test="${iterator.empid == sessionScope.user.empid}">
 									<img src="<%=request.getContextPath()%>/resources/images/update.png" class="img_small" onclick="img_edit(this)"></img>
 									<input name="dailyid" type="hidden" value="${entity.dailyid}"/>
-								</c:if><br /></span>  
-								<input name="currentdate" type="hidden"  value="${entity.daily}" />
+								</c:if><br /></span>  								
 							</c:forEach>
+							<input name="currentdate" type="hidden"  value="${iterator.dateofone}" />
 							<c:if test="${iterator.empid == sessionScope.user.empid}">
 								<img src="<%=request.getContextPath()%>/resources/images/write.png" class="img_lookup" onclick="img_insert(this)"></img>
 								<input name="empid" type="hidden"  value="${iterator.empid}" />
@@ -286,9 +286,9 @@ function btn_deviceOrderSearch() {
 								<c:if test="${iterator.empid == sessionScope.user.empid}">
 									<img src="<%=request.getContextPath()%>/resources/images/update.png" class="img_small" onclick="img_edit(this)"></img>
 									<input name="dailyid" type="hidden" value="${entity.dailyid}"/>
-								</c:if><br /></span>
-								<input name="currentdate" type="hidden"  value="${entity.daily}" />  
+								</c:if><br /></span>  								
 							</c:forEach>
+							<input name="currentdate" type="hidden"  value="${iterator.dateoftwo}" />
 							<c:if test="${iterator.empid == sessionScope.user.empid}">
 								<img src="<%=request.getContextPath()%>/resources/images/write.png" class="img_lookup" onclick="img_insert(this)"></img>
 								<input name="empid" type="hidden"  value="${iterator.empid}" />
@@ -301,9 +301,9 @@ function btn_deviceOrderSearch() {
 								<c:if test="${iterator.empid == sessionScope.user.empid}">
 									<img src="<%=request.getContextPath()%>/resources/images/update.png" class="img_small" onclick="img_edit(this)"></img>
 									<input name="dailyid" type="hidden" value="${entity.dailyid}"/>
-								</c:if><br /></span>
-								<input name="currentdate" type="hidden"  value="${entity.daily}" />
+								</c:if><br /></span>  								
 							</c:forEach>
+							<input name="currentdate" type="hidden"  value="${iterator.dateofthree}" />
 							<c:if test="${iterator.empid == sessionScope.user.empid}">
 								<img src="<%=request.getContextPath()%>/resources/images/write.png" class="img_lookup" onclick="img_insert(this)"></img>
 								<input name="empid" type="hidden"  value="${iterator.empid}" />
@@ -316,9 +316,9 @@ function btn_deviceOrderSearch() {
 								<c:if test="${iterator.empid == sessionScope.user.empid}">
 									<img src="<%=request.getContextPath()%>/resources/images/update.png" class="img_small" onclick="img_edit(this)"></img>
 									<input name="dailyid" type="hidden" value="${entity.dailyid}"/>
-								</c:if><br /></span>
-								<input name="currentdate" type="hidden"  value="${entity.daily}" />
+								</c:if><br /></span>  								
 							</c:forEach>
+							<input name="currentdate" type="hidden"  value="${iterator.dateoffour}" />
 							<c:if test="${iterator.empid == sessionScope.user.empid}">
 								<img src="<%=request.getContextPath()%>/resources/images/write.png" class="img_lookup" onclick="img_insert(this)"></img>
 								<input name="empid" type="hidden"  value="${iterator.empid}" />		
@@ -331,9 +331,9 @@ function btn_deviceOrderSearch() {
 								<c:if test="${iterator.empid == sessionScope.user.empid}">
 									<img src="<%=request.getContextPath()%>/resources/images/update.png" class="img_small" onclick="img_edit(this)"></img>
 									<input name="dailyid" type="hidden" value="${entity.dailyid}"/>
-								</c:if><br /></span>
-								<input name="currentdate" type="hidden"  value="${entity.daily}" />
+								</c:if><br /></span>  								
 							</c:forEach>
+							<input name="currentdate" type="hidden"  value="${iterator.dateoffive}" />
 							<c:if test="${iterator.empid == sessionScope.user.empid}">
 								<img src="<%=request.getContextPath()%>/resources/images/write.png" class="img_lookup" onclick="img_insert(this)"></img>
 								<input name="empid" type="hidden"  value="${iterator.empid}" />				
@@ -346,9 +346,9 @@ function btn_deviceOrderSearch() {
 								<c:if test="${iterator.empid == sessionScope.user.empid}">
 									<img src="<%=request.getContextPath()%>/resources/images/update.png" class="img_small" onclick="img_edit(this)"></img>
 									<input name="dailyid" type="hidden" value="${entity.dailyid}"/>
-								</c:if><br /></span> 
-								<input name="currentdate" type="hidden"  value="${entity.daily}" />
+								</c:if><br /></span>  								
 							</c:forEach>
+							<input name="currentdate" type="hidden"  value="${iterator.dateofsix}" />
 							<c:if test="${iterator.empid == sessionScope.user.empid}">
 								<img src="<%=request.getContextPath()%>/resources/images/write.png" class="img_lookup" onclick="img_insert(this)"></img>
 								<input name="empid" type="hidden"  value="${iterator.empid}" />
@@ -361,9 +361,9 @@ function btn_deviceOrderSearch() {
 								<c:if test="${iterator.empid == sessionScope.user.empid}">
 									<img src="<%=request.getContextPath()%>/resources/images/update.png" class="img_small" onclick="img_edit(this)"></img>
 									<input name="dailyid" type="hidden" value="${entity.dailyid}"/>
-								</c:if><br /></span> 
-								<input name="currentdate" type="hidden"  value="${entity.daily}" /> 
+								</c:if><br /></span>  								
 							</c:forEach>
+							<input name="currentdate" type="hidden"  value="${iterator.dateofseven}" />
 							<c:if test="${iterator.empid == sessionScope.user.empid}">
 								<img src="<%=request.getContextPath()%>/resources/images/write.png" class="img_lookup" onclick="img_insert(this)"></img>
 								<input name="empid" type="hidden"  value="${iterator.empid}" />

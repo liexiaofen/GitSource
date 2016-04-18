@@ -78,6 +78,7 @@ public class PB001ServiceImpl implements IPB001Service,ConstantUtil {
 				@SuppressWarnings("unchecked")
 				List<PB001Command> one = (List<PB001Command>) mybatisDAOImpl.queryByObj("pb.pb001.pb001001searchDailyPlanListByIdDate", map);
 				entity.setOne(one);
+				entity.setDateofone( DateUtil.formatDate( title.list.get(j).getLegaldate(), DATE_FORMAT_YMD));
 			}
 			j++;
 			//第二天
@@ -86,6 +87,7 @@ public class PB001ServiceImpl implements IPB001Service,ConstantUtil {
 				@SuppressWarnings("unchecked")
 				List<PB001Command> two = (List<PB001Command>) mybatisDAOImpl.queryByObj("pb.pb001.pb001001searchDailyPlanListByIdDate", map);
 				entity.setTwo(two);
+				entity.setDateoftwo( DateUtil.formatDate( title.list.get(j).getLegaldate(), DATE_FORMAT_YMD));
 			}
 			j++;
 			//第三天
@@ -94,6 +96,7 @@ public class PB001ServiceImpl implements IPB001Service,ConstantUtil {
 				@SuppressWarnings("unchecked")
 				List<PB001Command> three = (List<PB001Command>) mybatisDAOImpl.queryByObj("pb.pb001.pb001001searchDailyPlanListByIdDate", map);
 				entity.setThree(three);
+				entity.setDateofthree( DateUtil.formatDate( title.list.get(j).getLegaldate(), DATE_FORMAT_YMD));
 			}
 			j++;
 			//第四天
@@ -102,6 +105,7 @@ public class PB001ServiceImpl implements IPB001Service,ConstantUtil {
 				@SuppressWarnings("unchecked")
 				List<PB001Command> four = (List<PB001Command>) mybatisDAOImpl.queryByObj("pb.pb001.pb001001searchDailyPlanListByIdDate", map);
 				entity.setFour(four);
+				entity.setDateoffour( DateUtil.formatDate( title.list.get(j).getLegaldate(), DATE_FORMAT_YMD));
 			}
 			j++;
 			//第五天
@@ -110,6 +114,7 @@ public class PB001ServiceImpl implements IPB001Service,ConstantUtil {
 				@SuppressWarnings("unchecked")
 				List<PB001Command> five = (List<PB001Command>) mybatisDAOImpl.queryByObj("pb.pb001.pb001001searchDailyPlanListByIdDate", map);
 				entity.setFive(five);
+				entity.setDateoffive( DateUtil.formatDate( title.list.get(j).getLegaldate(), DATE_FORMAT_YMD));
 			}
 			j++;
 			//第六天
@@ -118,6 +123,7 @@ public class PB001ServiceImpl implements IPB001Service,ConstantUtil {
 				@SuppressWarnings("unchecked")
 				List<PB001Command> six = (List<PB001Command>) mybatisDAOImpl.queryByObj("pb.pb001.pb001001searchDailyPlanListByIdDate", map);
 				entity.setSix(six);
+				entity.setDateofsix( DateUtil.formatDate( title.list.get(j).getLegaldate(), DATE_FORMAT_YMD));
 			}
 			j++;
 			//第七天
@@ -126,6 +132,7 @@ public class PB001ServiceImpl implements IPB001Service,ConstantUtil {
 				@SuppressWarnings("unchecked")
 				List<PB001Command> seven = (List<PB001Command>) mybatisDAOImpl.queryByObj("pb.pb001.pb001001searchDailyPlanListByIdDate", map);
 				entity.setSeven(seven);
+				entity.setDateofseven( DateUtil.formatDate( title.list.get(j).getLegaldate(), DATE_FORMAT_YMD));
 			}
 		}
 		return list;
@@ -190,9 +197,20 @@ public class PB001ServiceImpl implements IPB001Service,ConstantUtil {
 				JSONArray jsonarray = new JSONArray();	
 				for(PB001Command entity:list){
 					JSONObject jsonobj = new JSONObject();
+					jsonobj.put("sid", 1);
 					jsonobj.put("title", entity.getTitle());
 					jsonobj.put("start", entity.getDailystarttime());
 					jsonobj.put("end", entity.getDailyendtime());
+					jsonobj.put("uid", entity.getTitle());
+					jsonobj.put("fullname", entity.getOriginatename());
+					jsonobj.put("confname", entity.getTitle());
+					jsonobj.put("confshortname", entity.getTitle());
+					jsonobj.put("confcolor", "#5386ac");
+					jsonobj.put("confid", entity.getTitle());
+					jsonobj.put("allDay", false);
+					jsonobj.put("topic", entity.getTitle());
+					jsonobj.put("description", entity.getComment());
+					jsonobj.put("id", 1);
 					jsonarray.add(jsonobj);
 				}
 				command.setJsonstr(JSON.toJSONString( jsonarray));
