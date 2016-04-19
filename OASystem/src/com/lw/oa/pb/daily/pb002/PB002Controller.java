@@ -26,6 +26,8 @@ public class PB002Controller implements ConstantUtil {
 	//private static final String  PAGE_INIT = "pb/pb002/pb002001List";
 	//查询画面	
 	private static final String  PAGE_SEARCH = "pb/pb002/pb002001List";
+	//月预定画面	
+	private static final String  PAGE_MONTH = "pb/pb002/pb002001MonthList";
 	@Autowired
 	private IPB002Service pb002Service;
 	
@@ -110,4 +112,29 @@ public class PB002Controller implements ConstantUtil {
 		ModelAndView mav = new ModelAndView( PAGE_SEARCH, resultMap);	
 		return mav;
 	}
+	/**
+	 *  设备空闲一览画面月预定
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = { "pb002001month.do" },method = RequestMethod.POST)
+	public ModelAndView pb002001month(HttpServletRequest request, PB002001SearchCommand searchCommand)
+	{					
+		Map<String,Object> resultMap = new HashMap<String,Object>();			
+		PB002Command command = pb002Service.pb002001month(searchCommand);
+		command.setPb002001searchcommand(searchCommand);
+		resultMap.put("command", command);
+		ModelAndView mav = new ModelAndView( PAGE_MONTH, resultMap);	
+		return mav;
 	}
+	/**
+	 * 月预定画面返回
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = { "pb002002back.do" },method = RequestMethod.POST)
+	public ModelAndView pb001002back(HttpServletRequest request, PB002Command command)
+	{			
+		return pb002001search(request, command.getPb002001searchcommand(), null);
+	}
+}

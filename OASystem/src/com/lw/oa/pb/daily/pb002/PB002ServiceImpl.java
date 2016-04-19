@@ -3,8 +3,13 @@ package com.lw.oa.pb.daily.pb002;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.lw.oa.common.dao.IMybatisDAO;
 import com.lw.oa.common.dao.MybatisDAOImpl;
 import com.lw.oa.common.model.NationLegalday;
@@ -112,5 +117,42 @@ public class PB002ServiceImpl implements IPB002Service,ConstantUtil {
 		}
 		return list;
 	}		
-	
+	@Override
+	public PB002Command pb002001month(PB002001SearchCommand searchCommand) {
+		// TODO Auto-generated method stub
+		HashMap<String,String> map = new HashMap<String, String>();
+		map.put("monthdailydeviceid", searchCommand.getMonthdailydeviceid());	
+		map.put("date", searchCommand.getDisplaydate().substring(0, 4));	
+		mybatisDAOImpl.openSession();
+		@SuppressWarnings("unchecked")
+		List<PB002Command> list = (List<PB002Command>) mybatisDAOImpl.queryByObj(
+				"pb.pb002.pb002001queryById", map);
+		PB002Command command = new PB002Command();
+		if(list != null){ 
+			if(list.size() != 0){
+				//将list转化成jsonarray
+				JSONArray jsonarray = new JSONArray();	
+				for(PB002Command entity:list){
+					JSONObject jsonobj = new JSONObject();
+					jsonobj.put("sid", 1);
+					jsonobj.put("title", entity.getDailydevicename());
+					jsonobj.put("start", entity.getEventstarttime());
+					jsonobj.put("end", entity.getEventendtime());
+					jsonobj.put("uid", entity.getDailydevicename());
+					jsonobj.put("fullname", entity.getDailydevicename());
+					jsonobj.put("confname", entity.getDailydevicename());
+					jsonobj.put("confshortname", entity.getDailydevicename());
+					jsonobj.put("confcolor", "#5386ac");
+					jsonobj.put("confid", entity.getDailydevicename());
+					jsonobj.put("allDay", false);
+					jsonobj.put("topic", entity.getDailydevicename());
+					jsonobj.put("description", entity.getDailydevicename());
+					jsonobj.put("id", 1);
+					jsonarray.add(jsonobj);
+				}
+				command.setJsonstr(JSON.toJSONString( jsonarray));
+			}
+		}
+		return command;
+	}
 }

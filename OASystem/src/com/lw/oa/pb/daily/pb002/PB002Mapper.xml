@@ -85,4 +85,26 @@
 		where t1.deletefg = '0' and (V1.daily = #{date} or V1.daily is null) and t1.dailydeviceid = #{dailydeviceid}
 	]]>
 	</select>
+	<!-- 查询某设备月信息 -->    
+	<select id="pb002001queryById" resultType="pb002Command" parameterType="java.util.Map">
+	<![CDATA[
+		SELECT 
+			t1.dailydeviceid,t1.dailydevicename,V1.daily, V1.eventstarttime, V1.eventendtime, Substring(V1.eventstarttime, 12, 5) eventstarthm, Substring(V1.eventendtime, 12, 5) eventendhm,
+			ROW_NUMBER() OVER(order by t1.dailydevicename,V1.daily desc,V1.eventstarttime) as rownum 
+		FROM [dbo].[t_dailydeviceinfo] t1  
+		left join (
+			select t2.dailydeviceid, convert(char(10), t4.daily, 23) as daily,convert(char(19), t4.eventstarttime, 120) as eventstarttime,
+				convert(char(19), t4.eventendtime, 120) as eventendtime  
+			from [dbo].[t_eventdevice] t2  			
+			inner join [dbo].[t_event] t3 
+				on t2.eventid = t3.eventid and t2.deletefg = t3.deletefg 
+			inner join [dbo].[t_eventtime] t4 
+				on t2.eventid = t4.eventid and t2.deletefg = t4.deletefg 
+			where t3.status != '9' and t2.deletefg = '0' 
+			and convert(char(10), t4.daily, 23) like '%'+#{date}+'%'
+		) V1
+		on t1.dailydeviceid = V1.dailydeviceid 
+		where t1.deletefg = '0' and (V1.daily like '%'+#{date}+'%' or V1.daily is null) and t1.dailydeviceid = #{monthdailydeviceid}
+	]]>		
+	</select>
 </mapper>

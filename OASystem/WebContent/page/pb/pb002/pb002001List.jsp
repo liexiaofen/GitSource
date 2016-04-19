@@ -102,17 +102,21 @@ function img_edit( obj){
 	$('form[name="editForm"]').submit();
 }
 /*	
-*名       称: img_searchMonthDaily( obj)
+*名       称: img_searchMonthDevice( obj)
 *输入参数: obj
 *输出参数: 无
-*机       能: 查看月日程
+*机       能: 查看月预定设备
 *创 建  者: yuliang          
-*创建时间: 2015-11-20
+*创建时间: 2016-04-19
 *更 新  者: 
 *更新时间: 
 */
-function img_searchMonthDaily( obj){
-	window.location.href="<%= request.getContextPath()%>/page/design.jsp";
+function img_searchMonthDevice( obj){
+	var dailydeviceid = $(obj).parent().find('input[name="dailydeviceid"]').val();
+	$("#monthForm").find('input[name="monthdailydeviceid"]').val(dailydeviceid);
+	c_ShowProgressBar(); 
+	$('#monthForm').attr( "action", "pb002001month.do");	
+	$('form[name="monthForm"]').submit();
 }
 
 
@@ -246,7 +250,8 @@ function btn_deviceOrderSearch() {
 		    		<tr class="pg_result_content">
 		    			<td align="left" nowrap>
 		    				${iterator.dailydevicename}<br />
-						    <img src="<%=request.getContextPath()%>/resources/images/monthdaily.png" border="0" class="img_lookup_big" onclick="img_searchMonthDaily(this)" />月预定
+						    <img src="<%=request.getContextPath()%>/resources/images/monthdaily.png" border="0" class="img_lookup_big" onclick="img_searchMonthDevice(this)" />月预定						    
+						    <input name="dailydeviceid" type="hidden"  value="${iterator.dailydeviceid}" />
 						</td>
 						<td align="left" nowrap>
 							<c:forEach items="${iterator.one}" var="entity">
@@ -315,5 +320,21 @@ function btn_deviceOrderSearch() {
 	</c:if>
 	<!--End Page Infor-->
 </form>
+<%-- 月预定表单开始  --%>
+<form action="pb002001month.do" id="monthForm" name="monthForm" method="post">
+	<%/*共通隐藏字段 start*/%>
+	<input name="orgcdid" type="hidden"  value="${searchCommand.orgcdid}" />
+	<input name="dailydevicename" type="hidden"  value="${searchCommand.dailydevicename}" />
+	<input name="displaydate" type="hidden"  value="${searchCommand.displaydate}" />
+	<input name="pageSize" type="hidden" value="${page.pageSize}"/>
+	<input name="curPage" type="hidden" value="${page.curPage}"/>
+	<input name="totalPage" type="hidden" value="${page.totalPage}"/>
+	<input name="firstPage" type="hidden" value="${page.firstPage}"/>
+	<input name="lastPage" type="hidden" value="${page.lastPage}"/>
+	<input name="totalRecord" type="hidden" value="${page.totalRecord}"/>
+	<%/*共通隐藏字段 end*/%>
+	<input name="monthdailydeviceid" type="hidden"  />
+</form>
+<%-- 月预定表单结束  --%>
 </body>
 </html>

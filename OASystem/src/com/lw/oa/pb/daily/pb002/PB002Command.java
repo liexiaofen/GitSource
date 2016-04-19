@@ -12,6 +12,8 @@ public class PB002Command implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private PB002001SearchCommand pb002001searchcommand;
 	private String rownum;
+	// JSON对象
+	private String jsonstr;
 	// 事件id
 	private String eventid;	
 	// 事件类型
@@ -43,6 +45,14 @@ public class PB002Command implements Serializable {
 
 	public void setRownum(String rownum) {
 		this.rownum = rownum;
+	}
+
+	public String getJsonstr() {
+		return jsonstr;
+	}
+
+	public void setJsonstr(String jsonstr) {
+		this.jsonstr = jsonstr;
 	}
 
 	public PB002001SearchCommand getPb002001searchcommand() {
