@@ -20,8 +20,7 @@
 		            <a href='<%=request.getContextPath()%>/pa003001init.do' target="mainFrame">法定日信息</a>
 		            <a href='<%=request.getContextPath()%>/pa004001init.do' target="mainFrame">机构信息</a>
 		            <a href='<%=request.getContextPath()%>/pa005001init.do' target="mainFrame">年假信息</a>
-		            <a href='design.jsp' target="mainFrame">用户群信息</a>
-					<a href='design.jsp' target="mainFrame">密码修改</a>	
+					<a href='<%=request.getContextPath()%>/pa006001init.do' target="mainFrame">密码修改</a>	
 	          	</div>
 	        </li>
 	        <li>

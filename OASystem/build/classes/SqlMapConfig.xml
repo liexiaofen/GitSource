@@ -48,6 +48,8 @@
 		<typeAlias alias="pa005001resultCommand" type="com.lw.oa.pa.master.pa005.PA005001ResultCommand" />
 		<typeAlias alias="pa005Command" type="com.lw.oa.pa.master.pa005.PA005Command" />
 		
+		<typeAlias alias="pa006Command" type="com.lw.oa.pa.master.pa006.PA006Command" />
+		
 		<typeAlias alias="pb001001searchCommand" type="com.lw.oa.pb.daily.pb001.PB001001SearchCommand" />
 		<typeAlias alias="pb001001resultCommand" type="com.lw.oa.pb.daily.pb001.PB001001ResultCommand" />
 		<typeAlias alias="pb001001resultTitleCommand" type="com.lw.oa.pb.daily.pb001.PB001001ResultTitleCommand" />
@@ -86,6 +88,7 @@
 		<mapper resource="com/lw/oa/pa/master/pa003/PA003Mapper.xml" />
 		<mapper resource="com/lw/oa/pa/master/pa004/PA004Mapper.xml" />
 		<mapper resource="com/lw/oa/pa/master/pa005/PA005Mapper.xml" />
+		<mapper resource="com/lw/oa/pa/master/pa006/PA006Mapper.xml" />
 		<mapper resource="com/lw/oa/pb/daily/pb001/PB001Mapper.xml" />
 		<mapper resource="com/lw/oa/pb/daily/pb002/PB002Mapper.xml" />
 		<mapper resource="com/lw/oa/pc/apply/pc002/PC002Mapper.xml" />

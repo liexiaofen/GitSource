@@ -35,7 +35,7 @@ public class CommonServiceImpl implements ICommonService,ConstantUtil {
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("username", username);
 		try {
-			map.put("password", CryptUtil.base64Encode(password));
+			map.put("password", CryptUtil.encryptBASE64( password));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

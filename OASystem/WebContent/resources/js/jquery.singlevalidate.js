@@ -25,7 +25,8 @@
 	  		chinaidcard:"chinaidcard",
 	  		chinese:"chinese",
 	  		birthday:"birthday",
-	  		page:"page"	  		
+	  		page:"page",
+	  		password:"password"
 		};
 	  	var validateignore = $(n).attr("validateignore");
 	  	if (validateignore == "true") {
@@ -217,7 +218,13 @@
 						flg = false;
 						messageid = "MSG_COMM_0021";
 					}
-				}				
+				}	
+				if(v==opt.password){
+					if (!$.validate.checkPassword(n)){
+						flg = false;
+						messageid = "MSG_COMM_0021";
+					}
+				}
 				if(v==opt.chinaidcard){
 					if (!$.validate.checkChinaIDcard(n)){
 						flg = false;

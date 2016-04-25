@@ -308,7 +308,7 @@ public class PA001ServiceImpl implements IPA001Service,ConstantUtil {
 		entity.setStatus(command.getStatus());
 		entity.setUsername(command.getUsername());
 		try {
-			entity.setPassword(CryptUtil.base64Encode(command.getPassword()));
+			entity.setPassword(CryptUtil.encryptBASE64( command.getPassword()));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
