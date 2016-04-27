@@ -32,8 +32,8 @@ public class SessionFilter implements Filter {
 		// 登陆url
 		String loginUrl = httpRequest.getContextPath() + "/index.jsp";
 		String url = httpRequest.getRequestURI();		
-		if (url.indexOf("common/login/init.do") != -1 || url.indexOf("common/login/login.do") != -1 
-				|| session.getAttribute("user") != null) {			
+		if ( (url.indexOf("common/login/login.do")!=-1 && session.getAttribute("user")==null && request.getParameter("username") != null) 
+				|| session.getAttribute("user")!=null) {			
 			chain.doFilter(request, response);
 		} else {
 			// 超时处理，ajax请求超时设置超时状态，页面请求超时则返回提示并重定向

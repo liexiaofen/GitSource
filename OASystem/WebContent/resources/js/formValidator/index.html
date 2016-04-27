@@ -53,16 +53,16 @@
 				<div>
 					<span>Radio Groupe : <br /></span>
 					<span>radio 1: </span>
-					<input class="validate[required] radio" type="radio" name="data[User][preferedColor]"  id="radio1"  value="5">
+					<input id="radio1" name="data[User][preferedColor]" type="radio" class="validate[required] radio" value="5" />
 					<span>radio 2: </span>
-					<input class="validate[required] radio" type="radio" name="data[User][preferedColor]"  id="radio2"  value="3"/>
+					<input class="validate[required] radio" type="radio" name="data[User][preferedColor]"  id="radio2"  value="3" />
 					<span>radio 3: </span>
-					<input class="validate[required] radio" type="radio" name="data[User][preferedColor]"  id="radio3"  value="9"/>
+					<input class="validate[required] radio" type="radio" name="data[User][preferedColor]"  id="radio3"  value="9" />
 				</div>
 				<div>
 					<span>Minimum 2 checkbox : <br /></span>
 				
-					<input class="validate[minCheckbox[2]] checkbox" type="checkbox"  name="data[User3][preferedColor]" id="data[User3][preferedColor]" value="5">
+					<input id="data[User3][preferedColor]" name="data[User3][preferedColor]"  type="checkbox" class="validate[minCheckbox[2]] checkbox" value="5" />
 					
 					<input class="validate[minCheckbox[2]] checkbox" type="checkbox" name="data[User3][preferedColor]" id="maxcheck2"  value="3"/>
 				
@@ -83,7 +83,7 @@
 				</label>
 				<label>
 					<span>Favorite sport 2:</span>
-				<select name="sport2" id="sport2" multiple class="validate[required]"  id="sport2"  >
+				<select id="sport2" name="sport2" multiple="multiple" class="validate[required]"  id="sport2"  >
 					<option value="">Choose a sport</option>
 					<option value="option1">Tennis</option>
 					<option value="option2">Football</option>
@@ -126,7 +126,7 @@
 				<legend>Comments</legend>
 				<label>
 					<span>Comments : </span>
-					<textarea value="ced@hotmail.com" class="validate[required,length[6,300]] text-input" name="comments" id="comments" /> </textarea>
+					<textarea name="comments" id="comments"  class="validate[required,length[6,300]] text-input">ced@hotmail.com</textarea>
 				</label>
 
 			</fieldset>
@@ -136,11 +136,9 @@
 				<label>
 					<span class="checkbox">I accept terms of use : </span>
 					<input class="validate[required] checkbox" type="checkbox"  id="agree"  name="agree"/>
+					<input class="submit" type="submit" value="Validate & Send the form!" />
 				</label>
 			</fieldset>
-<input class="submit" type="submit" value="Validate & Send the form!"/>
-<hr/>
-</form>
-		
+		</form>		
 	</body>
 </html>
