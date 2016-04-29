@@ -133,4 +133,9 @@ public interface ConstantUtil {
 	public static final String TEMPLATE_A4_FILE = "template\\Apply_A4.xlsx";
 	//模板出差取消申请文件
 	public static final String TEMPLATE_A5_FILE = "template\\Apply_A5.xlsx";
+	//分隔符逗号
+	public static final String SEPERATORS_COMMA = ",";
+	//符号单引号
+	public static final String SYMBOL_SINGLEQUOTES = "'";
+	
 }

@@ -61,7 +61,11 @@
 		) V where V.deletefg = '0'
 	]]> 			
 		<if test="orgcdid!=null and orgcdid!=''">
-			and V.empid in (select empid from t_emporg where orgcdid = #{orgcdid})
+			and V.empid in ( select empid from t_emporg where orgcdid in 
+								<foreach item="item" index="index" collection="orgcdids" open="(" separator="," close=")">
+				                        ${item}
+				                </foreach>						
+							)
 		</if>
 		<if test="depid!=null and depid!=''">
 			and V.empid in (select empid from t_emporg where depid = #{depid})

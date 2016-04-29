@@ -3,27 +3,37 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.lw.oa.common.command.ApplyFormCommand;
 import com.lw.oa.common.command.DictEntity;
 import com.lw.oa.common.command.RetInfo;
+import com.lw.oa.common.command.SessionEntity;
 import com.lw.oa.common.service.IAjaxService;
+import com.lw.oa.common.service.ICommonService;
+import com.lw.oa.common.util.ConstantUtil;
 
 /**
  * *@author yuliang
  */
 @Controller
 @RequestMapping("/common/ajax/")
-public class AjaxController {
+public class AjaxController implements ConstantUtil{
 	@Autowired
 	private IAjaxService ajaxService;
+	@Autowired
+	private ICommonService commonService;
 	/**
 	 * 申请单服务器目录生成
 	 * @param request
@@ -43,6 +53,31 @@ public class AjaxController {
 		}else{
 			jsonobj.put("flag", false);
 		}
+		try {
+			response.getWriter().write(JSON.toJSONString(jsonobj));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * 获取消息条数
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = { "getMessageCount.do" },method = RequestMethod.GET)
+	public void getMessageCount(HttpServletRequest request,HttpServletResponse response){
+		String empid = STRING_EMPTY;
+		//从session中获取当前用户id
+		HttpSession session = request.getSession();
+		if(session.getAttribute("user") != null){
+			SessionEntity sessionEntity = (SessionEntity)session.getAttribute("user");
+			empid = sessionEntity.getEmpid();
+		}
+		ApplyFormCommand command = commonService.getMessageCount(empid);
+		int count = new Integer(command.getUncheckcount()) + new Integer(command.getUnpersonfilecheckcount());
+		JSONObject jsonobj = new JSONObject();	
+		jsonobj.put("count", count);
 		try {
 			response.getWriter().write(JSON.toJSONString(jsonobj));
 		} catch (IOException e) {

@@ -28,6 +28,7 @@ import com.lw.oa.common.util.CalendarUtil;
 import com.lw.oa.common.util.ConstantUtil;
 import com.lw.oa.common.util.DataUtil;
 import com.lw.oa.common.util.DateUtil;
+import com.lw.oa.common.util.StringUtil;
 import com.lw.oa.pa.master.pa003.PA003001ResultCommand;
 /**
  ** @author yuliang
@@ -62,6 +63,10 @@ public class PB001ServiceImpl implements IPB001Service,ConstantUtil {
 	
 	@Override
 	public List<?> pb001001search(PB001001SearchCommand searchCommand, PB001001ResultTitleCommand title) {
+		//in条件处理
+		String orgcdid = searchCommand.getOrgcdid();
+		String[] array = StringUtil.split(SEPERATORS_COMMA, orgcdid);
+		searchCommand.setOrgcdids(array);
 		// TODO Auto-generated method stub
 		@SuppressWarnings("unchecked")
 		List<PB001001ResultCommand> list = (List<PB001001ResultCommand>) mybatisDAOImpl

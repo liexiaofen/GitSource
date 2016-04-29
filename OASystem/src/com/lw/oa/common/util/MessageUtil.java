@@ -37,7 +37,7 @@ public class MessageUtil {
 		return retInfo;
 	}
 	/**
-	 * 取得排他报错消息输出到前台
+	 * 取得用户名密码报错消息输出到前台
 	 * 
 	 * @param count
 	 * 
@@ -47,5 +47,17 @@ public class MessageUtil {
 		RetInfo retInfo =  new RetInfo();		
 		retInfo.setCode("ERROR_COMM_0038");	
 		return retInfo;
-	}	
+	}
+	/**
+	 * 设置错误消息输出到前台
+	 * 
+	 * @param count
+	 * 
+	 * @return RetInfo
+	 */
+	public static RetInfo setMessageError(String code){
+		RetInfo retInfo =  new RetInfo();		
+		retInfo.setCode(code);	
+		return retInfo;
+	}
 }

@@ -252,6 +252,9 @@ public class StringUtil {
 	}
 
 	public static String[] split(String seperators, String list) {
+		if (list == null){
+			return null;
+		}
 		return split(seperators, list, false);
 	}
 

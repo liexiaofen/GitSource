@@ -197,7 +197,7 @@ function btn_deviceOrderSearch() {
 			<tr>
 				<td class="td_key" width="8%" nowrap><label class="message">机构</label></td>
 				<td class="td_value" width="26%">
-					<dict:select1 id="orgcdid" name="orgcdid" value="${searchCommand.orgcdid}" sqlid="select orgcdid as busidictid,orgshortname as busidictname  from s_organize where deletefg = '0' order by sortno" cssClass="input_select" nullLabel="全部"></dict:select1>
+					<dict:select1 id="orgcdid" name="orgcdid" value="${searchCommand.orgcdid}" sqlid="select t2.orgcdid as busidictid,t2.orgshortname as busidictname  from t_emporg t1 inner join s_organize t2 on t1.orgcdid = t2.orgcdid where t1.deletefg = '0' and t1.empid = '${sessionScope.user.empid}' order by t2.sortno" cssClass="input_select" nullLabel="全部"></dict:select1>
 				</td>
 				<td class="td_key" width="8%" nowrap><label class="message">部门</label></td>					
 				<td class="td_value">
@@ -215,10 +215,6 @@ function btn_deviceOrderSearch() {
 					<input id="displaydate" name="displaydate" class="input_date Wdate" readonly="readonly" value="${searchCommand.displaydate}" onclick="WdatePicker()" title="required"/>
 					<a href="#" onclick="javascript:link_nextWeek(this);return false;" style="text-decoration: none;"><span>&gt;&gt;</span></a>
 				</td>
-		        <td class="td_key" width="8%" nowrap><label class="message">显示周期</label></td>
-		        <td class="td_value">
-		        	<dict:select id="displaycycle" name="displaycycle" value="${searchCommand.displaycycle}" busiDictTypeId="OA_PB001_DisplayCycle" cssClass="input_select"></dict:select>
-		        </td>
 			</tr>	 
 			<tr>
 				<td colspan="6" align="right">					
@@ -412,7 +408,6 @@ function btn_deviceOrderSearch() {
 	<input name="empid" type="hidden"  value="${sessionScope.user.empid}" />
 	<input name="empname" type="hidden"  value="${searchCommand.empname}" />
 	<input name="displaydate" type="hidden"  value="${searchCommand.displaydate}" />
-	<input name="displaycycle" type="hidden"  value="${searchCommand.displaycycle}" />
 	<%/*共通隐藏字段 end*/%>	
 	<input name=dailyid type="hidden"  />
 	<input name=currentdate type="hidden"  />
@@ -426,7 +421,6 @@ function btn_deviceOrderSearch() {
 	<input name="empid" type="hidden"  value="${sessionScope.user.empid}" />
 	<input name="empname" type="hidden"  value="${searchCommand.empname}" />
 	<input name="displaydate" type="hidden"  value="${searchCommand.displaydate}" />
-	<input name="displaycycle" type="hidden"  value="${searchCommand.displaycycle}" />
 	<%/*共通隐藏字段 end*/%>	
 	<input name=currentdate type="hidden"  />
 </form>
@@ -439,7 +433,6 @@ function btn_deviceOrderSearch() {
 	<input name="empid" type="hidden"  value="${sessionScope.user.empid}" />
 	<input name="empname" type="hidden"  value="${searchCommand.empname}" />
 	<input name="displaydate" type="hidden"  value="${searchCommand.displaydate}" />
-	<input name="displaycycle" type="hidden"  value="${searchCommand.displaycycle}" />
 	<%/*共通隐藏字段 end*/%>	
 	<input name="monthempid" type="hidden"  />
 </form>

@@ -16,7 +16,9 @@
 			and t.empname like '%'+#{empname}+'%'
 		</if>
 		<if test="orgcdid!=null and orgcdid!=''">
-			and t.empid in (select empid from t_emporg where orgcdid = #{orgcdid})
+			and t.empid in (select empid from t_emporg where orgcdid in <foreach item="item" index="index" collection="orgcdids" open="(" separator="," close=")">
+				                        ${item}
+				                </foreach>)
 		</if>
 		<if test="depid!=null and depid!=''">
 			and t.empid in (select empid from t_emporg where depid = #{depid})
@@ -67,7 +69,9 @@
 			and t1.dailydevicename like '%'+#{devicename}+'%'
 		</if>
 		<if test="orgcdid!=null and orgcdid!=''">
-			and t1.orgcdid = #{orgcdid}
+			and t1.orgcdid in <foreach item="item" index="index" collection="orgcdids" open="(" separator="," close=")">
+				                        ${item}
+				                </foreach>
 		</if>				
 	</select>
 	<!-- Modal查询日程设备信息 -->    
@@ -85,7 +89,9 @@
 			and t.dailydevicename like '%'+#{dailydevicename}+'%'
 		</if>
 		<if test="orgcdid!=null and orgcdid!=''">
-			and t.orgcdid = #{orgcdid}
+			and t.orgcdid in <foreach item="item" index="index" collection="orgcdids" open="(" separator="," close=")">
+				                        ${item}
+				                </foreach>
 		</if>		
 	</select>	
 	<!-- Modal查询机构信息 -->    

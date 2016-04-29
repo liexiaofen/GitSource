@@ -120,7 +120,7 @@ $(function() {
 			<tr>
 				<td class="td_key" width="8%" nowrap><label class="message">机构</label></td>
 				<td class="td_value" width="26%">
-					<dict:select1 id="orgcdid" name="orgcdid" sqlid="select orgcdid as busidictid,orgshortname as busidictname  from s_organize where deletefg = '0' order by sortno" value="${orgcdid}" cssClass="input_select" nullLabel="全部"></dict:select1>
+					<dict:select1 id="orgcdid" name="orgcdid" sqlid="select orgcdid as busidictid,orgshortname as busidictname  from s_organize where deletefg = '0' and regionid = (select regionid from s_organize where orgcdid = '${sessionScope.user.orgcdid}') order by sortno" value="${orgcdid}" cssClass="input_select" nullLabel="全部"></dict:select1>
 				</td>
 				<td class="td_key" width="8%" nowrap><label class="message">部门</label></td>					
 				<td class="td_value" width="26%">
@@ -161,8 +161,9 @@ $(function() {
 		    <tr class="pg_result_head">
 		    	<td width="3%"><input type="checkbox" name="checkAll" id="checkAll" value='abc'/></td>
 		    	<td width="3%">&nbsp;序号&nbsp;</td>		
-		    	<td>&nbsp;姓名&nbsp;</td>		
-				<td>&nbsp;机构&nbsp;部门&nbsp;职称&nbsp;</td>			
+		    	<td>&nbsp;姓名&nbsp;</td>
+		    	<td width="50%">&nbsp;&nbsp;</td>		
+				<!--<td>&nbsp;机构&nbsp;部门&nbsp;职称&nbsp;</td>-->			
 			</tr>
 		    <tbody id="body_result">
 		    	<c:forEach items="${list}" var="iterator">
@@ -174,12 +175,13 @@ $(function() {
 		    			</td>
 		    			<% num++;%>
 		    			<td align="center" nowrap><%=num %></td>		
-		    			<td align="left" nowrap>${iterator.empname}</td>				
-						<td align="left" nowrap>
+		    			<td align="left" nowrap>${iterator.empname}</td>
+		    			<td width="50%"></td>					
+						<!--<td align="left" nowrap>
 							<c:forEach items="${iterator.list}" var="entity">
 								${entity.orgshortname}&nbsp;${entity.depiddict}&nbsp;${entity.posiddict}<br/>
 							</c:forEach>
-						</td>			
+						</td>-->						
 		    		</tr>
 		    	</c:forEach>	
 		    </tbody>

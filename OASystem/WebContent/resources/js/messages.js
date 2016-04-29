@@ -101,6 +101,7 @@ Message.ERROR_COMM_0036="输入的证件号码中，出生日期超出有效范�
 Message.ERROR_COMM_0037="网络连接出错！";
 Message.ERROR_COMM_0038="用户名或密码不正确！";
 Message.ERROR_COMM_0039="会话过期，请重新登录！";
+Message.ERROR_COMM_0040="选择的机构不存在该用户，请重新选择！";
 Message.ERROR_PA001_0001="该用户名已经存在，请重新输入！";
 Message.ERROR_PA003_0001="该年度的日历已经生成，请重新输入！";
 Message.ERROR_PA005_0001="该年度的年假已经生成，请重新输入！";

@@ -3,13 +3,18 @@ package com.lw.oa.pb.daily.pb002;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
 import com.lw.oa.common.command.RetInfo;
+import com.lw.oa.common.command.SessionEntity;
 import com.lw.oa.common.util.CalendarUtil;
 import com.lw.oa.common.util.ConstantUtil;
 import com.lw.oa.common.util.DateUtil;
@@ -40,9 +45,17 @@ public class PB002Controller implements ConstantUtil {
 	public ModelAndView pb002001init(HttpServletRequest request)
 	{				
 		//初始化时间
-		String sysdate = DateUtil.getSystemTime(DATE_FORMAT_YMD);		
+		String sysdate = DateUtil.getSystemTime(DATE_FORMAT_YMD);	
+		String orgcdid = STRING_EMPTY;
 		PB002001SearchCommand searchCommand = new PB002001SearchCommand();
 		searchCommand.setDisplaydate(sysdate);
+		//从session中获取当前用户id对应的orgcdid
+		HttpSession session = request.getSession();
+		if(session.getAttribute("user") != null){
+			SessionEntity sessionEntity = (SessionEntity)session.getAttribute("user");
+			orgcdid = sessionEntity.getOrgcdid();
+		}
+		searchCommand.setOrgcdid(SYMBOL_SINGLEQUOTES+orgcdid+SYMBOL_SINGLEQUOTES);	
 		return pb002001search(request, searchCommand, null);
 	}
 	/**

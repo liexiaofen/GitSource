@@ -12,6 +12,8 @@ public class PB002001SearchCommand extends Pager<PB002001ResultCommand> {
 	private static final long serialVersionUID = 1L;
 	// 机构id
 	private String orgcdid;
+	// 机构ids
+	private String[] orgcdids;
 	// 月预定日程设备id
 	private String monthdailydeviceid;
 	// 日程设备名称
@@ -27,6 +29,14 @@ public class PB002001SearchCommand extends Pager<PB002001ResultCommand> {
 
 	public void setOrgcdid(String orgcdid) {
 		this.orgcdid = orgcdid;
+	}
+
+	public String[] getOrgcdids() {
+		return orgcdids;
+	}
+
+	public void setOrgcdids(String[] orgcdids) {
+		this.orgcdids = orgcdids;
 	}
 
 	public String getMonthdailydeviceid() {

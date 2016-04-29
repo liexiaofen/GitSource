@@ -91,10 +91,18 @@ public class LoginController implements ConstantUtil{
 		}
 		String orgcdid = request.getParameter("orgcdid");
 		String save = request.getParameter("save");				
-		ResultCommand command = commonService.checkUserAndPwd(username, password, orgcdid);
+		ResultCommand command = commonService.checkUserAndPwd(username, password, null);
 		//用户名或者密码错误
 		if(command == null){
 			RetInfo retInfo = MessageUtil.getMessageErrorUserPwd();
+			resultMap.put("retInfo", retInfo);
+			mav = new ModelAndView( PAGE_INIT, resultMap);
+			return mav;
+		}
+		//用户所在机构验证
+		ResultCommand command1 = commonService.checkUserAndPwd(username, password, orgcdid);
+		if(command1 == null){
+			RetInfo retInfo = MessageUtil.setMessageError("ERROR_COMM_0040");
 			resultMap.put("retInfo", retInfo);
 			mav = new ModelAndView( PAGE_INIT, resultMap);
 			return mav;

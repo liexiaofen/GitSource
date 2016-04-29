@@ -169,6 +169,7 @@ public class DictSelectSqlTag extends TagSupport {
 		if (!StringUtils.isEmpty(this.getNullLabel())) {
 			sb.append("<option value=\"\">"+this.getNullLabel()+"</option>");
 		}
+		
 		for (DictEntity command : list) {
 			if (command.getBusidictid().equals(this.getValue())) {
 				sb.append("<option value=\"" + command.getBusidictid()

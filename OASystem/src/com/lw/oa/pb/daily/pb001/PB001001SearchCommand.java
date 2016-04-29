@@ -12,6 +12,8 @@ public class PB001001SearchCommand extends Pager<PB001001ResultCommand> {
 	private static final long serialVersionUID = 1L;
 	// 机构id
 	private String orgcdid;
+	// 机构ids
+	private String[] orgcdids;
 	// 部门id
 	private String depid;
 	// 员工id
@@ -35,6 +37,14 @@ public class PB001001SearchCommand extends Pager<PB001001ResultCommand> {
 
 	public void setOrgcdid(String orgcdid) {
 		this.orgcdid = orgcdid;
+	}
+
+	public String[] getOrgcdids() {
+		return orgcdids;
+	}
+
+	public void setOrgcdids(String[] orgcdids) {
+		this.orgcdids = orgcdids;
 	}
 
 	public String getDepid() {

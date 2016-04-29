@@ -28,7 +28,7 @@
 			</td>
 			<td class="td_key" width="10%">机构</td>
 			<td class="td_value" width="15%">
-				<dict:select1 id="managerorgcdid" name="managerorgcdid" sqlid="select t2.orgcdid as busidictid,t2.orgshortname as busidictname  from t_emporg t1 inner join s_organize t2 on t1.orgcdid = t2.orgcdid where t1.deletefg = '0' and t1.empid = '${command.applyempid}' order by t2.sortno" cssClass="input_select" onChange="change_refreshDepEmp(this, 'managerdepid', 'managercheckid', 3)"></dict:select1>
+				<dict:select2 id="managerorgcdid" name="managerorgcdid" sqlid="select t2.orgcdid as busidictid,t2.orgshortname as busidictname  from t_emporg t1 inner join s_organize t2 on t1.orgcdid = t2.orgcdid where t1.deletefg = '0' and t1.empid = '${command.applyempid}' order by t2.sortno" cssClass="input_select" onChange="change_refreshDepEmp(this, 'managerdepid', 'managercheckid', 3)"></dict:select2>
 			</td>
 			<td class="td_key" width="10%"><label class="message">部门</label></td>
 			<td class="td_value" >
@@ -47,7 +47,7 @@
 			</td>
 			<td class="td_key" width="10%">机构</td>
 			<td class="td_value" width="15%">
-				<dict:select1 id="personnelorgcdid" name="personnelorgcdid" sqlid="select t2.orgcdid as busidictid,t2.orgshortname as busidictname  from t_emporg t1 inner join s_organize t2 on t1.orgcdid = t2.orgcdid where t1.deletefg = '0' and t1.empid = '${command.applyempid}' order by t2.sortno" cssClass="input_select" onChange="change_refreshDepEmp(this, 'personneldepid', 'personnelcheckid', 1)"></dict:select1>
+				<dict:select2 id="personnelorgcdid" name="personnelorgcdid" sqlid="select t2.orgcdid as busidictid,t2.orgshortname as busidictname  from t_emporg t1 inner join s_organize t2 on t1.orgcdid = t2.orgcdid where t1.deletefg = '0' and t1.empid = '${command.applyempid}' order by t2.sortno" cssClass="input_select" onChange="change_refreshDepEmp(this, 'personneldepid', 'personnelcheckid', 1)"></dict:select2>
 			</td>
 			<td class="td_key" width="10%"><label class="message">部门</label></td>
 			<td class="td_value">
@@ -66,7 +66,7 @@
 			</td>
 			<td class="td_key" width="10%">机构</td>
 			<td class="td_value" width="15%">
-				<dict:select1 id="vicepresiorgcdid" name="vicepresiorgcdid" sqlid="select t2.orgcdid as busidictid,t2.orgshortname as busidictname  from t_emporg t1 inner join s_organize t2 on t1.orgcdid = t2.orgcdid where t1.deletefg = '0' and t1.empid = '${command.applyempid}' order by t2.sortno" cssClass="input_select" onChange="change_refreshDepEmp(this, 'vicepresidepid', 'vicepresicheckid', 0)"></dict:select1>
+				<dict:select2 id="vicepresiorgcdid" name="vicepresiorgcdid" sqlid="select t2.orgcdid as busidictid,t2.orgshortname as busidictname  from t_emporg t1 inner join s_organize t2 on t1.orgcdid = t2.orgcdid where t1.deletefg = '0' and t1.empid = '${command.applyempid}' order by t2.sortno" cssClass="input_select" onChange="change_refreshDepEmp(this, 'vicepresidepid', 'vicepresicheckid', 0)"></dict:select2>
 			</td>
 			<td class="td_key" width="10%"><label class="message">部门</label></td>
 			<td class="td_value" >
@@ -85,7 +85,7 @@
 			</td>
 			<td class="td_key" width="10%">机构</td>
 			<td class="td_value" width="15%">
-				<dict:select1 id="presiorgcdid" name="presiorgcdid" sqlid="select t2.orgcdid as busidictid,t2.orgshortname as busidictname  from t_emporg t1 inner join s_organize t2 on t1.orgcdid = t2.orgcdid where t1.deletefg = '0' and t1.empid = '${command.applyempid}' order by t2.sortno" cssClass="input_select" onChange="change_refreshDepEmp(this, 'presidepid', 'presicheckid', 0)"></dict:select1>
+				<dict:select2 id="presiorgcdid" name="presiorgcdid" sqlid="select t2.orgcdid as busidictid,t2.orgshortname as busidictname  from t_emporg t1 inner join s_organize t2 on t1.orgcdid = t2.orgcdid where t1.deletefg = '0' and t1.empid = '${command.applyempid}' order by t2.sortno" cssClass="input_select" onChange="change_refreshDepEmp(this, 'presidepid', 'presicheckid', 0)"></dict:select2>
 			</td>
 			<td class="td_key" width="10%"><label class="message">部门</label></td>
 			<td class="td_value">
@@ -104,7 +104,7 @@
 			</td>
 			<td class="td_key" width="10%">机构</td>
 			<td class="td_value" width="15%">
-				<dict:select1 id="personfileorgcdid" name="personfileorgcdid" sqlid="select t2.orgcdid as busidictid,t2.orgshortname as busidictname  from t_emporg t1 inner join s_organize t2 on t1.orgcdid = t2.orgcdid where t1.deletefg = '0' and t1.empid = '${command.applyempid}' order by t2.sortno" cssClass="input_select" onChange="change_refreshDepEmp(this, 'personfiledepid', 'personfilecheckid', 1)"></dict:select1>
+				<dict:select2 id="personfileorgcdid" name="personfileorgcdid" sqlid="select t2.orgcdid as busidictid,t2.orgshortname as busidictname  from t_emporg t1 inner join s_organize t2 on t1.orgcdid = t2.orgcdid where t1.deletefg = '0' and t1.empid = '${command.applyempid}' order by t2.sortno" cssClass="input_select" onChange="change_refreshDepEmp(this, 'personfiledepid', 'personfilecheckid', 1)"></dict:select2>
 			</td>
 			<td class="td_key" width="10%"><label class="message">部门</label></td>
 			<td class="td_value">

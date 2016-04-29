@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import com.lw.oa.common.command.ApplyResultCommand;
 import com.lw.oa.common.command.DeviceOrderSearchCommand;
 import com.lw.oa.common.command.ResultCommand;
 import com.lw.oa.common.command.RetInfo;
+import com.lw.oa.common.command.SessionEntity;
 import com.lw.oa.common.service.IZoomService;
 import com.lw.oa.common.util.ConstantUtil;
 import com.lw.oa.common.util.DateUtil;
@@ -54,7 +56,14 @@ public class ZoomController implements ConstantUtil {
 	 */
 	@RequestMapping(value = { "searchDeviceList.do" }, method = RequestMethod.GET)
 	public ModelAndView searchDeviceList(HttpServletRequest request) {
-		String orgcdid = request.getParameter("orgcdid");
+		String orgcdid = STRING_EMPTY;
+		//从session中获取当前用户id对应的orgcdid
+		HttpSession session = request.getSession();
+		if(session.getAttribute("user") != null){
+			SessionEntity sessionEntity = (SessionEntity)session.getAttribute("user");
+			orgcdid = sessionEntity.getOrgcdid();
+		}
+		orgcdid = SYMBOL_SINGLEQUOTES+orgcdid+SYMBOL_SINGLEQUOTES;
 		String dailydevicename = request.getParameter("dailydevicename");
 		@SuppressWarnings("unchecked")
 		List<ResultCommand> list = (List<ResultCommand>) zoomService
@@ -140,7 +149,14 @@ public class ZoomController implements ConstantUtil {
 	 */
 	@RequestMapping(value = { "searchEmpList.do" }, method = RequestMethod.GET)
 	public ModelAndView searchEmpList(HttpServletRequest request) {
-		String orgcdid = request.getParameter("orgcdid");
+		String orgcdid = STRING_EMPTY;
+		//从session中获取当前用户id对应的orgcdid
+		HttpSession session = request.getSession();
+		if(session.getAttribute("user") != null){
+			SessionEntity sessionEntity = (SessionEntity)session.getAttribute("user");
+			orgcdid = sessionEntity.getOrgcdid();
+		}
+		orgcdid = SYMBOL_SINGLEQUOTES+orgcdid+SYMBOL_SINGLEQUOTES;
 		String depid = request.getParameter("depid");
 		String empname = request.getParameter("empname");
 		@SuppressWarnings("unchecked")
@@ -191,6 +207,7 @@ public class ZoomController implements ConstantUtil {
 	@RequestMapping(value = { "searchDeviceOrderList.do" }, method = RequestMethod.GET)
 	public ModelAndView searchDeviceOrderList(HttpServletRequest request) {
 		String daily = request.getParameter("daily");
+		String orgcdid = STRING_EMPTY;
 		DeviceOrderSearchCommand searchCommand = new DeviceOrderSearchCommand();
 		if (!StringUtils.isEmpty(daily)) {
 			searchCommand.setDisplaydate(daily);
@@ -200,6 +217,13 @@ public class ZoomController implements ConstantUtil {
 			String displaydate = sysdate;
 			searchCommand.setDisplaydate(displaydate);
 		}
+		//从session中获取当前用户id对应的orgcdid
+		HttpSession session = request.getSession();
+		if(session.getAttribute("user") != null){
+			SessionEntity sessionEntity = (SessionEntity)session.getAttribute("user");
+			orgcdid = sessionEntity.getOrgcdid();
+		}
+		searchCommand.setOrgcdid(SYMBOL_SINGLEQUOTES+orgcdid+SYMBOL_SINGLEQUOTES);	
 		@SuppressWarnings("unchecked")
 		List<ResultCommand> list = (List<ResultCommand>) zoomService
 				.searchDeviceOrderList(searchCommand);

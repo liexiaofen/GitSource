@@ -15,6 +15,7 @@ import com.lw.oa.common.dao.MybatisDAOImpl;
 import com.lw.oa.common.model.NationLegalday;
 import com.lw.oa.common.util.ConstantUtil;
 import com.lw.oa.common.util.DateUtil;
+import com.lw.oa.common.util.StringUtil;
 import com.lw.oa.pa.master.pa003.PA003001ResultCommand;
 /**
  ** @author yuliang
@@ -50,6 +51,10 @@ public class PB002ServiceImpl implements IPB002Service,ConstantUtil {
 	@Override
 	public List<?> pb002001search(PB002001SearchCommand searchCommand, PB002001ResultTitleCommand title) {
 		// TODO Auto-generated method stub
+		//in条件处理
+		String orgcdid = searchCommand.getOrgcdid();
+		String[] array = StringUtil.split(SEPERATORS_COMMA, orgcdid);
+		searchCommand.setOrgcdids(array);
 		@SuppressWarnings("unchecked")
 		List<PB002001ResultCommand> list = (List<PB002001ResultCommand>) mybatisDAOImpl
 				.queryByObj("pb.pb002.pb002001searchListByPage", searchCommand);		

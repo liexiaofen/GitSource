@@ -27,7 +27,6 @@ public class CommonServiceImpl implements ICommonService,ConstantUtil {
 		// TODO Auto-generated constructor stub
 		mybatisDAOImpl = new MybatisDAOImpl();
 	}
-
 	@Override
 	public ResultCommand checkUserAndPwd(String username, String password, String orgcdid){
 		// TODO Auto-generated method stub
@@ -44,8 +43,7 @@ public class CommonServiceImpl implements ICommonService,ConstantUtil {
 		ResultCommand command = (ResultCommand) mybatisDAOImpl.expandByObj(
 				"common.expandEmpByUserPwd", map);		
 		return command;
-	}
-	
+	}	
 	@Override
 	public ApplyFormCommand expandApplyForm(ApplySearchCommand searchCommand) {
 		// TODO Auto-generated method stub

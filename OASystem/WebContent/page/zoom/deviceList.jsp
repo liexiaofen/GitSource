@@ -121,7 +121,7 @@ $(function() {
 			<tr>
 				<td class="td_key" width="8%" nowrap><label class="message">机构</label></td>
 				<td class="td_value" width="42%">
-					<dict:select1 id="orgcdid" name="orgcdid" sqlid="select orgcdid as busidictid,orgshortname as busidictname  from s_organize where deletefg = '0' order by sortno" value="${orgcdid}" cssClass="input_select" nullLabel="全部"></dict:select1>
+					<dict:select1 id="orgcdid" name="orgcdid" sqlid="select orgcdid as busidictid,orgshortname as busidictname  from s_organize where deletefg = '0' and regionid = (select regionid from s_organize where orgcdid = '${sessionScope.user.orgcdid}') order by sortno" value="${orgcdid}" cssClass="input_select" nullLabel="全部"></dict:select1>
 				</td>
 				<td class="td_key" width="8%" nowrap><label class="message">设备名称</label></td>
 				<td class="td_value" >

@@ -87,7 +87,7 @@ function btn_back() {
 					<font color="#ff0000">*</font><label class="message">机构</label>
 				</td>
 				<td class="td_value" width="26%">
-					<dict:select1 id="orgcdid" name="orgcdid" value="${command.orgcdid}" sqlid="select orgcdid as busidictid,orgshortname as busidictname  from s_organize where deletefg = '0' order by sortno" cssClass="input_select" nullLabel="请选择" title="required"></dict:select1>
+					<dict:select2 id="orgcdid" name="orgcdid" value="${command.orgcdid}" sqlid="select orgcdid as busidictid,orgshortname as busidictname  from s_organize where deletefg = '0' order by sortno" cssClass="input_select" nullLabel="请选择" title="required"></dict:select2>
 				</td>
 				<td class="td_key" width="8%">
 					<font color="#ff0000">*</font><label class="message">设备名称</label>

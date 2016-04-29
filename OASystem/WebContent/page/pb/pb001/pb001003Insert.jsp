@@ -242,7 +242,6 @@ function btn_clear(obj) {
 	<input name="pb001001searchcommand.empid" type="hidden"  value="${command.pb001001searchcommand.empid}" />
 	<input name="pb001001searchcommand.empname" type="hidden"  value="${command.pb001001searchcommand.empname}" />
 	<input name="pb001001searchcommand.displaydate" type="hidden"  value="${command.pb001001searchcommand.displaydate}" />
-	<input name="pb001001searchcommand.displaycycle" type="hidden"  value="${command.pb001001searchcommand.displaycycle}" />
 	<%/*共通隐藏字段 end*/%>	 
 	<div class="div_navi"><span><img src="<%= request.getContextPath()%>/resources/images/home.png">&nbsp;您当前的位置：日程管理&nbsp;&gt;&nbsp;日程安排&nbsp;&gt;&nbsp;日程安排填写</span></div>
 	<div class="div_search_title">
