@@ -8,8 +8,10 @@
 	<select id="searchEmpList" resultType="resultCommand" parameterType="java.util.Map">
 	<![CDATA[
 		SELECT 
-			t.empid, t.empname, ROW_NUMBER() OVER(order by t.entrytime) as rownum 
-		FROM [dbo].[t_empinfo] t
+			t.empid, t.empname, ROW_NUMBER() OVER(order by emporg.depid, emporg.posid, t.entrytime) as rownum 
+		FROM [dbo].[t_empinfo] t 
+		inner join (select empid, min(posid) posid, min(depid) as depid from t_emporg where deletefg = '0' group by empid) emporg 
+			on t.empid = emporg.empid
 		where t.deletefg = '0' and t.status = '0' 
 	]]> 
 		<if test="empname!=null and empname!=''">
