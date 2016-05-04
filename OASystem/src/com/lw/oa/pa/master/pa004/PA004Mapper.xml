@@ -9,7 +9,7 @@
 	<![CDATA[
 		SELECT 
 			convert(char(19), t.updatetime, 120) as updatetime,t.exclusivefg,t.orgcdid,t.orgname,t.orgshortname,t.regionid, dict1.busidictname as regioniddict,
-			t.address,t.tel,t.fax,t.zipcode,convert(char(10), t.effectivedate, 23) as effectivedate,ROW_NUMBER() OVER(order by t.regionid,t.updatetime desc) as rownum 
+			t.address,t.tel,t.fax,t.zipcode,convert(char(10), t.effectivedate, 23) as effectivedate,ROW_NUMBER() OVER(order by t.sortno,t.updatetime desc) as rownum 
 		FROM [dbo].[s_organize] t 
 		left join [dbo].[s_busidict] dict1 
 			on t.regionid = dict1.busidictid and dict1.busidicttypeid = 'OA_COMMON_Region' 
