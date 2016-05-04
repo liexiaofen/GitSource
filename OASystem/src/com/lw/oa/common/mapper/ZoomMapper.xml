@@ -105,7 +105,7 @@
 		FROM [dbo].[s_organize] t 
 		left join [dbo].[s_busidict] dict1 
 			on t.regionid = dict1.busidictid and dict1.busidicttypeid = 'OA_COMMON_Region' 
-		where t.deletefg = '0' 
+		where t.deletefg = '0'  order by t.sortno
 	]]> 
 		<if test="regionid!=null and regionid!=''">
 			and t.regionid = #{regionid}
