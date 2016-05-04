@@ -20,28 +20,31 @@ function btn_save() {
 		return;
 	}
 	//检查身份证的唯一性
-	var flg = false;
-	$.ajax({
-		async: false,
-		data:"",
-		type:"GET",
-		dataType: 'json',
-		url:'<%= request.getContextPath()%>/common/ajax/checkUniqueCardno.do?flg='+escape(new Date())+'&cardno='+escape($("#cardno").val()),
-		success:function(data){
-			if(data.flag == true){
-				var msgid = data.msgid;
-				alert(Message.getString(msgid)); 
+	var flg = true;
+	var cardno = $("#cardno").val();
+	if(cardno != ""){
+		$.ajax({
+			async: false,
+			data:"",
+			type:"GET",
+			dataType: 'json',
+			url:'<%= request.getContextPath()%>/common/ajax/checkUniqueCardno.do?flg='+escape(new Date())+'&cardno='+escape(cardno),
+			success:function(data){
+				if(data.flag == true){
+					var msgid = data.msgid;
+					alert(Message.getString(msgid)); 
+					flg = false;
+				}else{
+					flg = true;
+				}			
+			},
+			error:function(data){
+				alert(Message.getString("ERROR_COMM_0037")); 
 				flg = false;
-			}else{
-				flg = true;
-			}			
-		},
-		error:function(data){
-			alert(Message.getString("ERROR_COMM_0037")); 
-			flg = false;
-			return;
-		}		
-	});
+				return;
+			}		
+		});
+	}
 	if(!flg){
 		return;
 	}
@@ -243,9 +246,9 @@ function btn_clear(obj) {
 					<input id="email" name="email" class="input_txt" maxlength="30"  title="required,email" />
 				</td>
 				<td class="td_key" width="8%">
-					<font color="#ff0000">*</font><label class="message">身份证号</label></td>
+					<label class="message">身份证号</label></td>
 				<td class="td_value">
-					<input id="cardno" name="cardno" class="input_txt" maxlength="18"  title="required,chinaidcard" />
+					<input id="cardno" name="cardno" class="input_txt" maxlength="18"  title="chinaidcard" />
 				</td>								
 			</tr>
 			<tr>

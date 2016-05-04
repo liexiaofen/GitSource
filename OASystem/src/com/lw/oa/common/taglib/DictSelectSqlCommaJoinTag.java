@@ -185,8 +185,7 @@ public class DictSelectSqlCommaJoinTag extends TagSupport implements ConstantUti
 		
 		for (DictEntity command : list) {
 			if ((SYMBOL_SINGLEQUOTES+command.getBusidictid()+SYMBOL_SINGLEQUOTES).equals(this.getValue())) {
-				sb.append("<option value=\"" + command.getBusidictid()
-						+ "\" selected=\"selected\">");
+				sb.append("<option value=\""+SYMBOL_SINGLEQUOTES+command.getBusidictid()+SYMBOL_SINGLEQUOTES+"\" selected=\"selected\">");
 			} else {
 				sb.append("<option value=\""+SYMBOL_SINGLEQUOTES+command.getBusidictid()+SYMBOL_SINGLEQUOTES+"\">");
 			}
