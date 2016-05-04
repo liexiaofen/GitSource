@@ -37,6 +37,8 @@ public class LoginController implements ConstantUtil{
 	private static final String  PAGE_TOP = "top";	
 	//用户名
 	private static final String  LOGIN_USERNAME = "username";	
+	//机构
+	private static final String  LOGIN_ORGCDID = "orgcdid";	
 	//复选框
 	private static final String  LOGIN_CHECKED = "checked";	
 	@Autowired
@@ -51,12 +53,21 @@ public class LoginController implements ConstantUtil{
 	{	
 		Cookie[] cookies = request.getCookies();
 		String username = STRING_EMPTY;
+		String orgcdid = STRING_EMPTY;
 		String checked = STRING_EMPTY;
 		if(cookies != null&& cookies.length > 0){
 			for(Cookie cookie:cookies){
 				if(LOGIN_USERNAME.equals(cookie.getName())){
 					try {
 						username = URLDecoder.decode(cookie.getValue(), CHARATER_ENCODING);
+					} catch (UnsupportedEncodingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				if(LOGIN_ORGCDID.equals(cookie.getName())){
+					try {
+						orgcdid = URLDecoder.decode(cookie.getValue(), CHARATER_ENCODING);
 					} catch (UnsupportedEncodingException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -69,6 +80,7 @@ public class LoginController implements ConstantUtil{
 		}
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		resultMap.put("username", username);
+		resultMap.put("orgcdid", orgcdid);
 		resultMap.put("checked", checked);
 		ModelAndView mav = new ModelAndView(PAGE_INIT,resultMap);	
 		return mav;
@@ -108,7 +120,7 @@ public class LoginController implements ConstantUtil{
 			return mav;
 		}
 		//是否将cookie保存到客户端硬盘上
-		saveCookie(username, save, response);
+		saveCookie(username, orgcdid, save, response);
 		HttpSession session = request.getSession();
 		SessionEntity sessionEntity = new SessionEntity();
 		sessionEntity.setOrgcdid(orgcdid);
@@ -141,8 +153,9 @@ public class LoginController implements ConstantUtil{
 		ModelAndView mav = new ModelAndView(PAGE_TOP, resultMap);
 		return mav;
 	}
-	private void saveCookie( String username, String save, HttpServletResponse response){
+	private void saveCookie( String username, String orgcdid, String save, HttpServletResponse response){
 		Cookie usernameCookie = null;
+		Cookie orgcdidCookie = null;
 		Cookie checkedCookie = null;
 		//创建保存用户名的cookie
 		if(username != null && !STRING_EMPTY.equals(username.trim())){
@@ -154,10 +167,23 @@ public class LoginController implements ConstantUtil{
 				e.printStackTrace();
 			}			
 		}
+		//创建保存orgcdid的cookie
+		if(orgcdid != null && !STRING_EMPTY.equals(orgcdid.trim())){
+			try {
+				orgcdidCookie = new Cookie("orgcdid", URLEncoder.encode(orgcdid, CHARATER_ENCODING));
+				orgcdidCookie.setPath("/");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}			
+		}
 		//复选框选中，在客户端浏览器保存cookie 7天
 		if(save != null){
 			if(usernameCookie != null){
 				usernameCookie.setMaxAge(7*24*60*60);
+			}
+			if(orgcdidCookie != null){
+				orgcdidCookie.setMaxAge(7*24*60*60);
 			}
 			checkedCookie = new Cookie("checked", "checked");
 			checkedCookie.setMaxAge(7*24*60*60);
@@ -165,7 +191,10 @@ public class LoginController implements ConstantUtil{
 		}else{
 			if(usernameCookie != null){
 				usernameCookie.setMaxAge(0);
-			}		
+			}	
+			if(orgcdidCookie != null){
+				orgcdidCookie.setMaxAge(0);
+			}
 			checkedCookie = new Cookie("checked", "");
 			checkedCookie.setMaxAge(0);
 			checkedCookie.setPath("/");
@@ -173,6 +202,10 @@ public class LoginController implements ConstantUtil{
 		//加入cookie到response
 		if(usernameCookie != null){
 			response.addCookie(usernameCookie);
+		}	
+		//加入cookie到response
+		if(orgcdidCookie != null){
+			response.addCookie(orgcdidCookie);
 		}	
 		if(checkedCookie != null){
 			response.addCookie(checkedCookie);

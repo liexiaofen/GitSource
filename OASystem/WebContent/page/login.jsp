@@ -81,7 +81,7 @@ function btn_login() {
 						<tr>
 							<td><label class="message">机&nbsp;&nbsp;&nbsp;构</label></td>
 							<td>
-								<dict:select2 id="orgcdid" name="orgcdid" cssClass="input_select" value="${searchCommand.orgcdid}" sqlid="select orgcdid as busidictid,orgshortname as busidictname  from s_organize where deletefg = '0' order by sortno" nullLabel="全部" title="required"></dict:select2>
+								<dict:select2 id="orgcdid" name="orgcdid" cssClass="input_select" value="${orgcdid}" sqlid="select orgcdid as busidictid,orgshortname as busidictname  from s_organize where deletefg = '0' order by sortno" nullLabel="全部" title="required"></dict:select2>
 							</td>
 						</tr>
 						<tr>
