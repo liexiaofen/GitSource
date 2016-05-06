@@ -196,7 +196,7 @@ $(document).ready(function() {
 						<td align="left" nowrap class="divtop">
 							<a href="#" onclick="javascript:link_view(this);return false;">${iterator.empname}</a>
 							<input name="empid" type="hidden"  value="${iterator.empid}" />
-							<div id="divtop" style="background-color:moccasin; border: solid 1px #5386ac; position:absolute; display:none; width:250px; height:200px; text-align: left;">
+							<div id="divtop" style="background-color:moccasin; border: solid 1px #5386ac; position:absolute; display:none; width:250px; height:220px; text-align: left;">
 							<c:forEach items="${iterator.listOrg}" var="entity">${entity.orgshortname}&nbsp;${entity.depiddict}&nbsp;${entity.posiddict}<br/></c:forEach>
 							</div>
 						</td>						
