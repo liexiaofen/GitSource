@@ -8,9 +8,9 @@
 	<select id="searchEmpList" resultType="resultCommand" parameterType="java.util.Map">
 	<![CDATA[
 		SELECT 
-			t.empid, t.empname, ROW_NUMBER() OVER(order by emporg.depid, emporg.posid, t.entrytime) as rownum 
+			t.empid, t.empname, ROW_NUMBER() OVER(order by emporg.posid, emporg.depid, t.entrytime) as rownum 
 		FROM [dbo].[t_empinfo] t 
-		inner join (select empid, cast( min(depid) as int) as depid, min(posid) posid from t_emporg where deletefg = '0' group by empid) emporg 
+		inner join (select empid, cast( min(depid) as int) as depid, cast( min(posid) as int) as posid from t_emporg where deletefg = '0' group by empid) emporg 
 			on t.empid = emporg.empid
 		where t.deletefg = '0' and t.status = '0' 
 	]]> 

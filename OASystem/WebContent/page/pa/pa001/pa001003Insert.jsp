@@ -115,7 +115,7 @@ function btn_orgListSearch() {
 			var str = ret[1].split(",");
 			var text = '';
 			for(var i=0; i<str.length; i++){
-				text += str[i] + '<br/>';
+				text += str[i] + '\r\n';
 			}
 			$("#orgcddepposes").html(text);
 		}

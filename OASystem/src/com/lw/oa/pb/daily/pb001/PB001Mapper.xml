@@ -48,7 +48,7 @@
 	<!-- 查询员工信息 -->    
 	<select id="pb001001searchListByPage" resultType="pb001001resultCommand" parameterType="pb001001searchCommand">
 	<![CDATA[
-		select V.empid,V.empname,ROW_NUMBER() OVER(order by V.flag, emporg.depid, emporg.posid, V.entrytime) as rownum  from (
+		select V.empid,V.empname,ROW_NUMBER() OVER(order by V.flag, emporg.posid, emporg.depid, V.entrytime) as rownum  from (
 			SELECT 
 				t.empid, t.empname, t.entrytime, t.deletefg, 0 as flag
 			FROM [dbo].[t_empinfo] t
@@ -58,7 +58,7 @@
 				t.empid, t.empname, t.entrytime, t.deletefg, 1 as flag
 			FROM [dbo].[t_empinfo] t
 			where t.deletefg = '0' and t.empid != #{empid} 
-		) V inner join (select empid, cast( min(depid) as int) as depid, min(posid) posid from t_emporg where deletefg = '0' group by empid) emporg 
+		) V inner join (select empid, cast( min(depid) as int) as depid, cast( min(posid) as int) as posid from t_emporg where deletefg = '0' group by empid) emporg 
 		on V.empid = emporg.empid 
 		where V.deletefg = '0'
 	]]> 			

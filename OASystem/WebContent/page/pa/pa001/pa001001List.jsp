@@ -75,6 +75,36 @@ function btn_reset() {
 		$(n).val('');
 	});
 }
+$(document).ready(function() {
+	$("#body_result").find(".divtop").each(function( i, n){
+		$(n).click(function (event){ 
+			$('#divtop').slideUp('slow');
+			//取消事件冒泡    
+			event.stopPropagation();    
+			//设置弹出层的位置    
+			var offset = $(event.target).offset();    
+			$(n).find('#divtop').css({ top: offset.top+$(event.target).height()+"px", left: offset.left});    
+			  //按钮的toggle,如果div是可见的,点击按钮切换为隐藏的;如果是隐藏的,切换为可见的。    
+			$(n).find('#divtop').toggle('slow'); 
+		});		
+	});  
+	
+	$("#body_result").find(".divtop").each(function( i, n){
+		$(n).mouseout(function (event){ 
+			$(n).find('#divtop').fadeOut(1000);
+			//$('#divtop').slideUp('slow');
+		});		
+	});/*
+	//点击空白处或者自身隐藏弹出层，下面分别为滑动和淡出效果。    
+    $(document).click(function (event){ 
+    	$('#divtop').slideUp('slow');
+    	//$(this).fadeOut(1000);
+    });*/
+	/*
+    $('#divtop').click(function (event){
+    	$(this).fadeOut(1000);
+    });*/
+});
 </script>
 </head>
 <body>
@@ -147,7 +177,7 @@ function btn_reset() {
 		    <tr class="pg_result_head">
 		    	<td width="3%">&nbsp;序号&nbsp;</td>
 				<td width="6%">&nbsp;姓名&nbsp;</td>
-				<td>&nbsp;机构&nbsp;部门&nbsp;职称&nbsp;</td>	
+				<!-- <td>&nbsp;机构&nbsp;部门&nbsp;职称&nbsp;</td> -->	
 				<td width="7%">&nbsp;分机&nbsp;</td>		
 				<td width="7%">&nbsp;直线&nbsp;</td>	
 				<td width="8%">&nbsp;SKYPE號&nbsp;</td>	
@@ -163,15 +193,13 @@ function btn_reset() {
 		    		<tr class="pg_result_content">
 		    			<% num++;%>
 		    			<td align="center" nowrap><%=num %></td>
-						<td align="left" nowrap>
+						<td align="left" nowrap class="divtop">
 							<a href="#" onclick="javascript:link_view(this);return false;">${iterator.empname}</a>
 							<input name="empid" type="hidden"  value="${iterator.empid}" />
-						</td>
-						<td align="left" nowrap>
-							<c:forEach items="${iterator.listOrg}" var="entity">
-								${entity.orgshortname}&nbsp;${entity.depiddict}&nbsp;${entity.posiddict}<br/>
-							</c:forEach>
-						</td>
+							<div id="divtop" style="background-color:moccasin; border: solid 1px #5386ac; position:absolute; display:none; width:250px; height:200px; text-align: left;">
+							<c:forEach items="${iterator.listOrg}" var="entity">${entity.orgshortname}&nbsp;${entity.depiddict}&nbsp;${entity.posiddict}<br/></c:forEach>
+							</div>
+						</td>						
 						<td align="left" nowrap>${iterator.extension}</td>	
 						<td align="left" nowrap>${iterator.straightline}</td>	
 						<td align="left" nowrap>${iterator.skypenum}</td>
@@ -180,8 +208,9 @@ function btn_reset() {
 						<td align="left" nowrap><c:out value="${iterator.email}" /></td>						
 						<td align="center" nowrap>${iterator.sexdict}</td>
 						<td align="center" nowrap>${iterator.statusdict}</td>
-						<td align="center" nowrap>${iterator.updatetime}</td>
+						<td align="center" nowrap>${iterator.updatetime}</td>						
 		    		</tr>
+		    		 
 		    	</c:forEach>	
 		    </tbody>
 		</table>

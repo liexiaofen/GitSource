@@ -104,7 +104,7 @@ function btn_orgListSearch() {
 			var str = ret[1].split(",");
 			var text = '';
 			for(var i=0; i<str.length; i++){
-				text += str[i] + '<br/>';
+				text += str[i] + '\r\n';
 			}
 			$("#orgcddepposes").html(text);
 		}
@@ -156,12 +156,13 @@ function btn_clear(obj) {
 		$(n).val('');
 	});
 }
+
 $(document).ready(function(){	
 	var str = '<c:out value="${command.orgcddepposes}"></c:out>';
 	var arr = str.split(",");
 	var text = '';
 	for(var i=0; i<arr.length; i++){
-		text += arr[i] + '<br/>';
+		text += arr[i] + '\r\n';
 	}
 	$("#orgcddepposes").html(text);
 });
