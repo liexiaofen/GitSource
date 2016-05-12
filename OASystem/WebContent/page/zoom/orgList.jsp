@@ -162,7 +162,7 @@ $(function() {
 				<td width="15%">&nbsp;机构简称&nbsp;</td>
 				<td width="8%">&nbsp;区域&nbsp;</td>
 				<td width="8%">&nbsp;部门&nbsp;</td>
-				<td width="8%">&nbsp;职称&nbsp;</td>
+				<td width="8%">&nbsp;职位&nbsp;</td>
 			</tr>
 		    <tbody id="body_result">
 		    	<c:forEach items="${list}" var="iterator">

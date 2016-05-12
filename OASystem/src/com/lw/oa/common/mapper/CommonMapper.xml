@@ -225,6 +225,7 @@
            ,[empname]
            ,[empenname]
            ,[empno]
+           ,[posname]
            ,[workage]
            ,[email]
            ,[domestictel]
@@ -254,6 +255,7 @@
            ,#{empname, jdbcType=VARCHAR}
            ,#{empenname, jdbcType=VARCHAR}
            ,#{empno, jdbcType=VARCHAR}
+           ,#{posname, jdbcType=VARCHAR}
            ,#{workage, jdbcType=VARCHAR}           
            ,#{email, jdbcType=VARCHAR}
            ,#{domestictel, jdbcType=VARCHAR}

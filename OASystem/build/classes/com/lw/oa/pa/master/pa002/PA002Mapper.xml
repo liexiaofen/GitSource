@@ -9,7 +9,7 @@
 	<![CDATA[
 		SELECT 
 			convert(char(19), t.updatetime, 120) as updatetime,t.dailydeviceid,t.exclusivefg,t.orgcdid,org.orgname,org.orgshortname,t.dailydevicename,
-			t.comment,ROW_NUMBER() OVER(order by t.orgcdid,t.updatetime desc) as rownum 
+			t.comment,ROW_NUMBER() OVER(order by org.sortno,t.updatetime desc) as rownum 
 		FROM [dbo].[t_dailydeviceinfo] t 
 		left join [dbo].[s_organize] org 
 			on t.orgcdid = org.orgcdid 

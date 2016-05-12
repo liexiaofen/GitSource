@@ -14,7 +14,7 @@
 	http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd">
 	
 	<!-- 查找使用@component的类将其注册为bean -->
-	<context:component-scan base-package="com.lw.oa"/>
+	<context:component-scan base-package="com.lw.oa,com.lw.system"/>
 	
 	<!-- 启用spring mvc 注解，将请求参数绑定到控制器的方法参数上进行验证，信息转换  -->
 	<mvc:annotation-driven />

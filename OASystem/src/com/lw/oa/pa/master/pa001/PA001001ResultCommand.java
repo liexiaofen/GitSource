@@ -24,7 +24,9 @@ public class PA001001ResultCommand implements Serializable {
 	// 员工姓名
 	private String empname;
 	// 员工号
-	private String empno;
+	private String empno;	
+	// 职称名称
+	private String posname;
 	// 邮件
 	private String email;
 	// 国内电话
@@ -117,6 +119,15 @@ public class PA001001ResultCommand implements Serializable {
 	public void setEmpno(String empno) {
 		this.empno = empno;
 	}
+
+	public String getPosname() {
+		return posname;
+	}
+
+	public void setPosname(String posname) {
+		this.posname = posname;
+	}
+
 
 	public String getEmail() {
 		return email;

@@ -53,7 +53,7 @@
 					<a href='design.jsp' target="mainFrame">菜单信息</a>
 					<a href='design.jsp' target="mainFrame">角色信息</a>
 					<a href='design.jsp' target="mainFrame">权限绑定</a>
-					<a href='design.jsp' target="mainFrame">业务字典信息</a>          	
+					<a href='<%=request.getContextPath()%>/fa004001init.do' target="mainFrame">业务字典信息</a>          	
 				</div>
 			</li>
         </ul>

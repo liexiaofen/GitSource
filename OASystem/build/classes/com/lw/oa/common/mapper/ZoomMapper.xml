@@ -8,8 +8,10 @@
 	<select id="searchEmpList" resultType="resultCommand" parameterType="java.util.Map">
 	<![CDATA[
 		SELECT 
-			t.empid, t.empname, ROW_NUMBER() OVER(order by t.entrytime) as rownum 
-		FROM [dbo].[t_empinfo] t
+			t.empid, t.empname, ROW_NUMBER() OVER(order by emporg.posid, emporg.depid, t.entrytime) as rownum 
+		FROM [dbo].[t_empinfo] t 
+		inner join (select empid, cast( min(depid) as int) as depid, cast( min(posid) as int) as posid from t_emporg where deletefg = '0' group by empid) emporg 
+			on t.empid = emporg.empid
 		where t.deletefg = '0' and t.status = '0' 
 	]]> 
 		<if test="empname!=null and empname!=''">
@@ -103,14 +105,15 @@
 		FROM [dbo].[s_organize] t 
 		left join [dbo].[s_busidict] dict1 
 			on t.regionid = dict1.busidictid and dict1.busidicttypeid = 'OA_COMMON_Region' 
-		where t.deletefg = '0' 
+		where t.deletefg = '0'  
 	]]> 
 		<if test="regionid!=null and regionid!=''">
 			and t.regionid = #{regionid}
 		</if>
 		<if test="orgname!=null and orgname!=''">
 			and t.orgname = #{orgname}
-		</if>		
+		</if> 
+		order by t.sortno		
 	</select>
 	<!-- 根据empid查询组织机构 -->    
 	<select id="searchOrgsByEmpid" resultType="resultCommand" parameterType="java.util.Map">

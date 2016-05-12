@@ -4,6 +4,21 @@
     "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
     
 <mapper namespace="fa.fa004">
+	<!-- 查询业务字典一览信息 -->    
+	<select id="fa004001searchListByPage" resultType="fa004001resultCommand" parameterType="fa004001searchCommand">
+	<![CDATA[
+		SELECT 
+ 			t.busidicttypeid, t.busidicttypename,
+			ROW_NUMBER() OVER(order by t.busidicttypeid, t.busidicttypename ) as rownum 
+		FROM [dbo].[s_busidicttype] t where 1=1 
+	]]> 
+		<if test="busidicttypeid!=null and busidicttypeid!=''">
+			and t.busidicttypeid like '%'+#{busidicttypeid}+'%'
+		</if>
+		<if test="busidicttypename!=null and busidicttypename!=''">
+			and t.busidicttypename like '%'+#{busidicttypename}+'%'
+		</if>	
+	</select>
 	<!-- 根据业务字典类型id查询业务字典 -->    
 	<select id="fa004001searchDictById" resultType="fa004001resultCommand" parameterType="fa004001searchCommand">
 	<![CDATA[

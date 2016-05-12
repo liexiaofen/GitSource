@@ -287,9 +287,13 @@ function btn_clear(obj) {
 				<td class="td_key" width="8%">
 					<font color="#ff0000">*</font><label class="message">工龄</label>
 				</td>
-				<td class="td_value" colspan="5">
+				<td class="td_value">
 					<input id="workage" name="workage" class="input_txt input_num2" value="${command.workage}" maxlength="2"  title="required,intege1" />
 				</td>			
+				<td class="td_key" width="8%"><label class="message">职位</label></td>
+				<td class="td_value" colspan="3">
+					<input id="posname" name="posname" class="input_bigger1" value="${command.posname}" maxlength="20"  />
+				</td>
 			</tr>
 			<tr>
 				<td class="td_key" width="8%">

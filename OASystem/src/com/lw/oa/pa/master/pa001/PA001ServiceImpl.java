@@ -293,6 +293,7 @@ public class PA001ServiceImpl implements IPA001Service,ConstantUtil {
 		entity.setEmpname(command.getEmpname());
 		entity.setEmpenname(command.getEmpenname());
 		entity.setEmpno(command.getEmpno());
+		entity.setPosname(command.getPosname());
 		entity.setWorkage(command.getWorkage());
 		entity.setEmail(command.getEmail());
 		entity.setDomestictel(command.getDomestictel());

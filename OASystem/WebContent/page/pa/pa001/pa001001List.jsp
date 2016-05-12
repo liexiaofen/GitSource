@@ -177,13 +177,14 @@ $(document).ready(function() {
 		    <tr class="pg_result_head">
 		    	<td width="3%">&nbsp;序号&nbsp;</td>
 				<td width="6%">&nbsp;姓名&nbsp;</td>
+				<td width="8%">&nbsp;职位&nbsp;</td>
 				<!-- <td>&nbsp;机构&nbsp;部门&nbsp;职称&nbsp;</td> -->	
 				<td width="7%">&nbsp;分机&nbsp;</td>		
 				<td width="7%">&nbsp;直线&nbsp;</td>	
 				<td width="8%">&nbsp;SKYPE號&nbsp;</td>	
 				<td width="8%">&nbsp;国际电话&nbsp;</td>
 				<td width="8%">&nbsp;国内电话&nbsp;</td>
-				<td width="10%">&nbsp;email&nbsp;</td>
+				<td width="8%">&nbsp;email&nbsp;</td>
 				<td width="5%">&nbsp;性别&nbsp;</td>	
 				<td width="5%">&nbsp;在职状况&nbsp;</td>			
 				<td>&nbsp;更新时间&nbsp;</td>
@@ -200,6 +201,7 @@ $(document).ready(function() {
 							<c:forEach items="${iterator.listOrg}" var="entity">${entity.orgshortname}&nbsp;${entity.depiddict}&nbsp;${entity.posiddict}<br/></c:forEach>
 							</div>
 						</td>						
+						<td align="left" nowrap>${iterator.posname}</td>	
 						<td align="left" nowrap>${iterator.extension}</td>	
 						<td align="left" nowrap>${iterator.straightline}</td>	
 						<td align="left" nowrap>${iterator.skypenum}</td>

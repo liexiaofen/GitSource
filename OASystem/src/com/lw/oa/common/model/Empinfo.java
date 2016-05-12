@@ -13,11 +13,9 @@ public class Empinfo extends CommonBean {
 	// 员工id
 	private String empid;
 	// 角色id
-	private String roleid;
-	// 部门id
-	private String depid;
-	// 职称id
-	private String posid;
+	private String roleid;	
+	// 职称名称
+	private String posname;	
 	// 员工姓名
 	private String empname;
 	// 员工英文名
@@ -73,6 +71,14 @@ public class Empinfo extends CommonBean {
 
 	public void setEmpenname(String empenname) {
 		this.empenname = empenname;
+	}
+
+	public String getPosname() {
+		return posname;
+	}
+
+	public void setPosname(String posname) {
+		this.posname = posname;
 	}
 
 	public void setRoleid(String roleid) {
@@ -185,22 +191,6 @@ public class Empinfo extends CommonBean {
 
 	public void setSex(String sex) {
 		this.sex = sex;
-	}
-
-	public String getDepid() {
-		return this.depid;
-	}
-
-	public void setDepid(String depid) {
-		this.depid = depid;
-	}
-
-	public String getPosid() {
-		return this.posid;
-	}
-
-	public void setPosid(String posid) {
-		this.posid = posid;
 	}
 
 	public String getStatus() {

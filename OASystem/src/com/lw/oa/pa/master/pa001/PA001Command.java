@@ -34,6 +34,8 @@ public class PA001Command implements Serializable {
 	private String empenname;
 	// 员工号
 	private String empno;
+	// 职称名称
+	private String posname;
 	// 工龄
 	private String workage;
 	// 邮件
@@ -195,6 +197,14 @@ public class PA001Command implements Serializable {
 
 	public String getStraightline() {
 		return straightline;
+	}	
+
+	public String getPosname() {
+		return posname;
+	}
+
+	public void setPosname(String posname) {
+		this.posname = posname;
 	}
 
 	public void setStraightline(String straightline) {

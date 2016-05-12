@@ -10,10 +10,15 @@
 	<![CDATA[
 		SELECT 
 			convert(char(19), t.updatetime, 120) as updatetime,t.empid,t.exclusivefg,
-			t.empname,t.empenname,t.empno,t.email,t.domestictel,t.internttel,t.extension,t.straightline,t.skypenum,
+			t.empname,t.empenname,t.empno,case when t.posname != '' then t.posname else dict2.busidictname end as posname,
+			t.email,t.domestictel,t.internttel,t.extension,t.straightline,t.skypenum,
 			t.cardno,convert(char(10), t.entrytime, 23) as entrytime, t.sex, dict3.busidictname as sexdict, t.status, dict4.busidictname as statusdict, t.username,
-			ROW_NUMBER() OVER(order by t.entrytime) as rownum 
+			ROW_NUMBER() OVER(order by emporg.posid, emporg.depid, t.entrytime) as rownum 
 		FROM [dbo].[t_empinfo] t 
+		inner join (select empid, cast( min(depid) as int) as depid, cast( min(posid) as int) as posid from t_emporg where deletefg = '0' group by empid) emporg 
+			on t.empid = emporg.empid 
+		left join [dbo].[s_busidict] dict2 
+			on emporg.posid = dict2.busidictid and dict2.busidicttypeid = 'OA_COMMON_Position'  
 		left join [dbo].[s_busidict] dict3 
 			on t.sex = dict3.busidictid and dict3.busidicttypeid = 'OA_COMMON_Gender'  
 		left join [dbo].[s_busidict] dict4 
@@ -43,7 +48,7 @@
 	<select id="pa001001expandById" resultType="pa001Command" parameterType="pa001001searchCommand">
 	<![CDATA[
 		SELECT 
-			t.empid,t.exclusivefg,t.empname,t.empenname,t.empno,t.workage,t.email,t.domestictel,
+			t.empid,t.exclusivefg,t.empname,t.empenname,t.empno,t.posname,t.workage,t.email,t.domestictel,
 			t.internttel,t.extension,t.straightline,t.skypenum,t.cardno,convert(char(10), t.entrytime, 23) as entrytime,
 			t.sex,t.status,t.username, t.password
 		FROM [dbo].[t_empinfo] t where t.deletefg = '0' 
@@ -68,6 +73,7 @@
            ,empname = #{empname, jdbcType=VARCHAR}
            ,empenname = #{empenname, jdbcType=VARCHAR}           
            ,empno = #{empno, jdbcType=VARCHAR}
+           ,posname = #{posname, jdbcType=VARCHAR}
            ,workage = #{workage, jdbcType=VARCHAR}           
            ,email = #{email, jdbcType=VARCHAR}
            ,domestictel = #{domestictel, jdbcType=VARCHAR}

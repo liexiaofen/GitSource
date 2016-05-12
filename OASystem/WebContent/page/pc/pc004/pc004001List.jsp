@@ -126,16 +126,6 @@ function btn_reset() {
 		$(n).val('');
 	});
 }
-$(document).ready(function(){
-	//初始化全选框
-    $("#checkAll").click(function() {
-         $('input[name="chk"]').attr("checked",this.checked); 
-     });
-     var $chk = $("input[name='chk']");
-     $chk.click(function(){
-         $("#checkAll").attr("checked",$chk.length == $("input[name='chk']:checked").length ? true : false);
-     });
-});
 </script>
 </head>
 <body>
