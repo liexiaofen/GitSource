@@ -13,6 +13,8 @@ public class PA001001ResultCommand implements Serializable {
 	List<ResultCommand> listOrg;
 	// 更新日
 	private String updatetime;
+	// 更新人
+	private String updator;
 	// 员工id
 	private String empid;
 	// 排他标识
@@ -78,6 +80,14 @@ public class PA001001ResultCommand implements Serializable {
 
 	public void setUpdatetime(String updatetime) {
 		this.updatetime = updatetime;
+	}
+
+	public String getUpdator() {
+		return updator;
+	}
+
+	public void setUpdator(String updator) {
+		this.updator = updator;
 	}
 
 	public String getEmpid() {

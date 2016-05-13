@@ -202,10 +202,10 @@ function btn_clear(obj) {
 					<input id="empname" name="empname" class="input_txt" maxlength="20"  title="required" />
 				</td>
 				<td class="td_key" width="8%">
-					<font color="#ff0000">*</font><label class="message">英文名</label>
+					<label class="message">英文名</label>
 				</td>
 				<td class="td_value" width="26%">
-					<input name="empenname" class="input_txt" maxlength="20" title="required" />
+					<input name="empenname" class="input_txt" maxlength="20" />
 				</td>
 				<td class="td_key" width="8%">
 					<label class="message">分机</label>
@@ -221,7 +221,7 @@ function btn_clear(obj) {
 				<td class="td_value" width="26%">
 					<input id="straightline" name="straightline" class="input_txt" maxlength="20"  title="tel" />
 				</td>
-				<td class="td_key" width="8%"><label class="message">SKYPE號</label></td>
+				<td class="td_key" width="8%"><label class="message">SKYPE号</label></td>
 				<td class="td_value" width="26%">
 					<input id="skypenum" name="skypenum" class="input_txt" maxlength="32"  title="ascii" />
 				</td>
@@ -240,10 +240,10 @@ function btn_clear(obj) {
 					<input id="domestictel" name="domestictel" class="input_txt" maxlength="11"  title='mobile' />
 				</td>
 				<td class="td_key" width="8%">
-					<font color="#ff0000">*</font><label class="message">email</label>
+					<label class="message">email</label>
 				</td>
 				<td class="td_value" width="26%">
-					<input id="email" name="email" class="input_txt" maxlength="30"  title="required,email" />
+					<input id="email" name="email" class="input_txt" maxlength="30"  title="email" />
 				</td>
 				<td class="td_key" width="8%">
 					<label class="message">身份证号</label></td>
@@ -260,17 +260,17 @@ function btn_clear(obj) {
 					<input id="roleids" name="roleids" type="hidden" />
 				</td>
 				<td class="td_key" width="8%">
-					<font color="#ff0000">*</font><label class="message">员工号</label>
+					<label class="message">员工号</label>
 				</td>	
 				<td class="td_value" width="26%">
-					<input id="empno" name="empno" class="input_txt" maxlength="10"  title="required" />
+					<input id="empno" name="empno" class="input_txt" maxlength="10"  />
 				</td>			
 			</tr>	
 			<tr>				
 				<td class="td_key" width="8%">
-					<font color="#ff0000">*</font><label class="message">入职时间</label></td>
+					<label class="message">入职时间</label></td>
 				<td class="td_value" width="26%">
-					<input id="entrytime"  name="entrytime" class="input_date Wdate" readonly="readonly" onclick="WdatePicker()" title='required'/>
+					<input id="entrytime"  name="entrytime" class="input_date Wdate" readonly="readonly" onclick="WdatePicker()" />
 				</td>				
 				<td class="td_key" width="8%"><label class="message">状态</label></td>
 				<td class="td_value">

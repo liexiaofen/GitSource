@@ -205,9 +205,13 @@ function btn_deviceOrderSearch() {
 				</td>
 				<td class="td_key" width="8%" nowrap><font color="#ff0000">*</font><label class="message">显示日历</label></td>
 				<td class="td_value" width="26%">
-					<a href="#" onclick="javascript:link_lastWeek(this);return false;" style="text-decoration: none;"><span>&lt;&lt;</span></a>
+					<a href="#" onclick="javascript:link_lastWeek(this);return false;" style="text-decoration: none;">
+						<img src="<%=request.getContextPath()%>/resources/images/rewind.ico" border="0" class="img_lookup" />
+					</a>
 					<input id="displaydate" name="displaydate" class="input_date Wdate" readonly="readonly" value="${searchCommand.displaydate}" onclick="WdatePicker()" title="required"/>
-					<a href="#" onclick="javascript:link_nextWeek(this);return false;" style="text-decoration: none;"><span>&gt;&gt;</span></a>
+					<a href="#" onclick="javascript:link_nextWeek(this);return false;" style="text-decoration: none;">
+						<img src="<%=request.getContextPath()%>/resources/images/forward.ico" border="0" class="img_lookup" />
+					</a>
 				</td>
 			</tr> 
 			<tr>

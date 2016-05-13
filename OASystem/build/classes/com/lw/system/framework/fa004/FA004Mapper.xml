@@ -36,4 +36,12 @@
 		</if>
 		order by t.sortno	
 	</select>
+	<!-- 根据业务字典类型id删除业务字典类型表 --> 
+	<delete id="fa004001PDBusiDictType" parameterType="java.lang.String">
+    	delete from [dbo].[s_busidicttype] where busidicttypeid = #{busidicttypeid, jdbcType=VARCHAR}
+    </delete>
+    <!-- 根据业务字典类型id删除业务字典表 --> 
+	<delete id="fa004001PDBusiDict" parameterType="java.lang.String">
+    	delete from [dbo].[s_busidict] where busidicttypeid = #{busidicttypeid, jdbcType=VARCHAR}
+    </delete>
 </mapper>

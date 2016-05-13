@@ -2,6 +2,7 @@ package com.lw.system.framework.fa004;
 
 import java.io.Serializable;
 
+import com.lw.oa.common.model.BusiDictType;
 import com.lw.oa.mybatis.interceptor.Pager;
 
 /**
@@ -13,6 +14,7 @@ public class FA004001SearchCommand extends Pager<FA004001ResultCommand>
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private BusiDictType[] busidicttype;
 	// 业务字典类型id
 	private String busidicttypeid;
 	// 业务字典类型名称
@@ -20,21 +22,15 @@ public class FA004001SearchCommand extends Pager<FA004001ResultCommand>
 	// 业务字典id
 	private String busidictid;
 	// 业务字典名称
-	private String busidictname;
-	// 状态
-	private String status;
-	// 排序no
-	private String sortno;
-	// 等级
-	private String rank;
-	// 父类id
-	private String parentid;
-	// 序列号
-	private String seqno;
-	// 过滤值1
-	private String filter1;
-	// 过滤值2
-	private String filter2;
+	private String busidictname;	
+
+	public BusiDictType[] getBusidicttype() {
+		return busidicttype;
+	}
+
+	public void setBusidicttype(BusiDictType[] busidicttype) {
+		this.busidicttype = busidicttype;
+	}
 
 	public String getBusidicttypeid() {
 		return busidicttypeid;
@@ -66,62 +62,6 @@ public class FA004001SearchCommand extends Pager<FA004001ResultCommand>
 
 	public void setBusidictname(String busidictname) {
 		this.busidictname = busidictname;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public String getSortno() {
-		return sortno;
-	}
-
-	public void setSortno(String sortno) {
-		this.sortno = sortno;
-	}
-
-	public String getRank() {
-		return rank;
-	}
-
-	public void setRank(String rank) {
-		this.rank = rank;
-	}
-
-	public String getParentid() {
-		return parentid;
-	}
-
-	public void setParentid(String parentid) {
-		this.parentid = parentid;
-	}
-
-	public String getSeqno() {
-		return seqno;
-	}
-
-	public void setSeqno(String seqno) {
-		this.seqno = seqno;
-	}
-
-	public String getFilter1() {
-		return filter1;
-	}
-
-	public void setFilter1(String filter1) {
-		this.filter1 = filter1;
-	}
-
-	public String getFilter2() {
-		return filter2;
-	}
-
-	public void setFilter2(String filter2) {
-		this.filter2 = filter2;
 	}
 
 }

@@ -234,14 +234,14 @@ public class PA001ServiceImpl implements IPA001Service,ConstantUtil {
 				return flag;
 			}
 			//创建员工组织关联逻辑删除条件
-			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("empid", command.getEmpid());
-			map.put("updator", updatebean.getUpdator());
-			map.put("updatetime", updatebean.getUpdatetime());
-			map.put("exclusivefg", updatebean.getUpdateexclusivefg());
-			map.put("orgid", updatebean.getOrgid());	
-			mybatisDAOImpl.update("pa.pa001.pa001002CancelEmporg", map);	
-			mybatisDAOImpl.update("pa.pa001.pa001002CancelEmprole", map);	
+//			HashMap<String, Object> map = new HashMap<String, Object>();
+//			map.put("empid", command.getEmpid());
+//			map.put("updator", updatebean.getUpdator());
+//			map.put("updatetime", updatebean.getUpdatetime());
+//			map.put("exclusivefg", updatebean.getUpdateexclusivefg());
+//			map.put("orgid", updatebean.getOrgid());	
+//			mybatisDAOImpl.update("pa.pa001.pa001002CancelEmporg", map);	
+//			mybatisDAOImpl.update("pa.pa001.pa001002CancelEmprole", map);	
 			mybatisDAOImpl.commit();
 		} catch (Exception e) {
 			mybatisDAOImpl.rollback();

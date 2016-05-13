@@ -3,12 +3,15 @@ package com.lw.system.framework.fa004;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
 import com.lw.oa.common.command.RetInfo;
 import com.lw.oa.common.service.ICommonService;
 import com.lw.oa.common.util.ConstantUtil;
@@ -28,13 +31,14 @@ public class FA004Controller implements ConstantUtil{
 	//private static final String  PAGE_APPLY_DETAIL_A1 = "fa/fa004/fa004002A1Detail";	
 	//休假申请修改画面	
 	//private static final String  PAGE_APPLY_UPDATE_A1 = "fa/fa004/fa004003A1Update";
-
+	//登录画面	
+	private static final String  PAGE_INSERT = "fa/fa004/fa004003Insert";	
 	@Autowired
 	private IFA004Service fa004Service;
 	@Autowired
 	private ICommonService commonService;
 	/**
-	 * 申请管理一览画面init
+	 * 业务字典信息一览画面init
 	 * @param request
 	 * @return
 	 */
@@ -45,7 +49,7 @@ public class FA004Controller implements ConstantUtil{
 		return fa004001search(request, searchCommand, null);
 	}
 	/**
-	 * 申请管理一览画面search
+	 * 业务字典信息一览画面search
 	 * @param request
 	 * @return
 	 */
@@ -65,7 +69,7 @@ public class FA004Controller implements ConstantUtil{
 		return mav;
 	}
 	/**
-	 * 申请管理一览画面翻页
+	 * 业务字典信息一览画面翻页
 	 * @param request
 	 * @return
 	 */
@@ -81,4 +85,54 @@ public class FA004Controller implements ConstantUtil{
 		ModelAndView mav = new ModelAndView( PAGE_SEARCH, resultMap);	
 		return mav;
 	}	
+	/**
+	 * 业务字典信息一览画面删除
+	 * 
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = { "fa004001delete.do" }, method = RequestMethod.POST)
+	public ModelAndView fa004001delete(HttpServletRequest request,
+			FA004001SearchCommand searchCommand) {
+		int cnt = fa004Service.fa004001delete(searchCommand, request);
+		RetInfo retInfo = MessageUtil.getMessageExclusive(cnt);
+		return fa004001search(request, searchCommand, retInfo);
+	}
+	/**
+	 * 业务字典信息登录画面
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = { "fa004001insert.do" },method = RequestMethod.POST)
+	public ModelAndView fa004001insert(HttpServletRequest request, FA004001SearchCommand searchcommand)
+	{					
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		resultMap.put("searchcommand", searchcommand);
+		FA004Command command = new FA004Command();
+		command.setSearchcommand(searchcommand);
+		resultMap.put("command", command);
+		ModelAndView mav = new ModelAndView( PAGE_INSERT, resultMap);				
+		return mav;
+	}
+	/**
+	 * 业务字典信息登录保存
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = { "fa004003save.do" },method = RequestMethod.POST)
+	public ModelAndView fa004003save(HttpServletRequest request, FA004Command command)
+	{				
+		fa004Service.fa004003insert(command, request);
+		return fa004001search(request, command.getSearchcommand(), null);
+	}	
+	/**
+	 * 业务字典信息登录画面返回
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = { "fa004003back.do" },method = RequestMethod.POST)
+	public ModelAndView fa004003back(HttpServletRequest request, FA004Command command)
+	{			
+		return fa004001search(request, command.getSearchcommand(), null);
+	}
 }

@@ -71,6 +71,32 @@ function btn_reset() {
 		$(n).val('');
 	});
 }
+/*
+*名       称: btn_delete()
+*输入参数: 无
+*输出参数: 无
+*机       能: 删除
+*创 建  者: yuliang          
+*创建时间: 2016-05-12
+*更 新  者: 
+*更新时间: 
+*/
+function btn_delete(){
+	var obj = $( "input[name='chk']:checked" );
+	if ( obj.length < 1 ) {
+		alert(Message.getString("MSG_COMM_0031"));
+		return;
+	}
+	if ( !window.confirm( Message.getString("MSG_IC_PD005_0001"))) 
+		return;
+	$("#div_result").find("input[name='chk']:checked").each(function( i, n){			
+		var busidicttypeid = $(n).parent().find('input[name="busidicttypeid"]').val();
+		$("#deleteForm").append("<input name=\"busidicttype["+i+"].busidicttypeid\" value=\""+busidicttypeid+"\" type=\"hidden\" />");
+	});
+	c_ShowProgressBar(); 
+	$("#deleteForm").attr( "action", "fa004001delete.do");	
+	$("#deleteForm").submit();
+}
 </script>
 </head>
 <body>
@@ -148,7 +174,6 @@ function btn_reset() {
 		    			<td align="center" nowrap><%=num %></td>
 						<td align="left" nowrap>
 							<a href="#" onclick="javascript:link_view(this);return false;">${iterator.busidicttypeid}</a>
-							<input name="busidicttypename" type="hidden"  value="${iterator.busidicttypename}" />
 						</td>
 						<td align="left" nowrap>${iterator.busidicttypename}</td>	
 						<td align="left" nowrap>
@@ -165,8 +190,8 @@ function btn_reset() {
 		<table>
 			<tr>
 				<td>
-					<input name="edit" id="edit" type="button" class="btn" onClick="btn_edit()"  value="登&nbsp;录" /> 
-					<input name="edit" id="edit" type="button" class="btn" onClick="btn_edit()"  value="删&nbsp;除" />
+					<input name="insert" id="insert" type="button" class="btn" onClick="btn_insert()"  value="登&nbsp;录" /> 
+					<input name="delete" id="delete" type="button" class="btn" onClick="btn_delete()"  value="删&nbsp;除" />
 				</td>
 			</tr>
 		</table>
@@ -206,5 +231,11 @@ function btn_reset() {
 	<input name=busidicttypeid type="hidden"  />
 </form>
 <%-- 详情表单结束  --%>
+<form action="fa004001delete.do" id="deleteForm" name="deleteForm" method="post">
+	<%/*共通隐藏字段 start*/%>
+	<input name="busidicttypeid" type="hidden"  value="${searchCommand.busidicttypeid}" />
+	<input name="busidicttypename" type="hidden"  value="${searchCommand.busidicttypename}" />
+	<%/*共通隐藏字段 end*/%>		
+</form>
 </body>
 </html>

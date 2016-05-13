@@ -815,4 +815,46 @@
            ,#{sortno, jdbcType=VARCHAR})
     ]]>
     </insert>
+    <insert id="insertBusidicttype" parameterType="busidicttype">
+	<![CDATA[
+        INSERT INTO [dbo].[s_busidicttype]
+           ([busidicttypeid]
+           ,[busidicttypename]
+           ,[rank]
+           ,[parentid]
+           ,[seqno])
+     VALUES
+           (#{busidicttypeid, jdbcType=VARCHAR}
+           ,#{busidicttypename,jdbcType=VARCHAR}
+           ,#{rank, jdbcType=VARCHAR}
+           ,#{parentid,jdbcType=VARCHAR}
+           ,#{seqno, jdbcType=VARCHAR})
+    ]]>
+    </insert>
+    <insert id="insertBusidict" parameterType="busidict">
+	<![CDATA[
+        INSERT INTO [dbo].[s_busidict]
+           ([busidicttypeid]
+           ,[busidictid]
+           ,[busidictname]
+           ,[status]
+           ,[sortno]
+           ,[rank]
+           ,[parentid]
+           ,[seqno]
+           ,[filter1]
+           ,[filter2])
+     VALUES
+           (#{busidicttypeid, jdbcType=VARCHAR}
+           ,#{busidictid,jdbcType=VARCHAR}
+           ,#{busidictname,jdbcType=VARCHAR}
+           ,#{status,jdbcType=VARCHAR}
+           ,#{sortno,jdbcType=INTEGER}
+           ,#{rank, jdbcType=VARCHAR}
+           ,#{parentid,jdbcType=VARCHAR}
+           ,#{seqno, jdbcType=VARCHAR}
+           ,#{filter1, jdbcType=VARCHAR}
+           ,#{filter2, jdbcType=VARCHAR})
+    ]]>
+    </insert>
 </mapper>

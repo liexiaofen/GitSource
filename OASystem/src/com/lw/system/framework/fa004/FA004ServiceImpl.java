@@ -1,9 +1,15 @@
 package com.lw.system.framework.fa004;
 
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Service;
+
 import com.lw.oa.common.dao.IMybatisDAO;
 import com.lw.oa.common.dao.MybatisDAOImpl;
+import com.lw.oa.common.model.BusiDict;
+import com.lw.oa.common.model.BusiDictType;
 import com.lw.oa.common.util.ConstantUtil;
 
 /**
@@ -29,4 +35,71 @@ public class FA004ServiceImpl implements IFA004Service,ConstantUtil {
 		mybatisDAOImpl.close();
 		return list;
 	}
+
+	@Override
+	public int fa004001delete(FA004001SearchCommand searchCommand,
+			HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		int flag = 1;
+		BusiDictType[] busidicttype = searchCommand.getBusidicttype();
+		try {
+			mybatisDAOImpl.openSession();
+			for(BusiDictType entity:busidicttype){			
+				flag = mybatisDAOImpl.delete( "fa.fa004.fa004001PDBusiDictType", entity.getBusidicttypeid());	
+				flag = mybatisDAOImpl.delete( "fa.fa004.fa004001PDBusiDict", entity.getBusidicttypeid());	
+				if(flag < 1){
+					mybatisDAOImpl.rollback();
+					return flag;
+				}	
+			}
+			mybatisDAOImpl.commit();
+		} catch (Exception e) {
+			mybatisDAOImpl.rollback();
+			flag = 0;
+			e.printStackTrace();
+		} finally {
+			mybatisDAOImpl.close();
+		}
+		return flag;
+	}
+
+	@Override
+	public int fa004003insert(FA004Command command, HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		int flag = 1;
+		try {
+			mybatisDAOImpl.openSession();
+			// 创建业务字典类型对象
+			BusiDictType bicttype = new BusiDictType();
+			bicttype.setBusidicttypeid(command.getBusidicttypeid());
+			bicttype.setBusidicttypename(command.getBusidicttypename());
+			bicttype.setRank("1");
+			bicttype.setSeqno("."+command.getBusidicttypeid()+".");
+			mybatisDAOImpl.insert("common.insertBusidicttype", bicttype);			
+			for(BusiDict entity:command.getBusidict()){			
+				BusiDict busidict = new BusiDict();
+				busidict.setBusidicttypeid(command.getBusidicttypeid());
+				busidict.setBusidictid(entity.getBusidictid());
+				busidict.setBusidictname(entity.getBusidictname());
+				busidict.setSortno(new Integer(entity.getSortno()));
+				busidict.setStatus("1");
+				busidict.setRank("1");
+				busidict.setSeqno("."+entity.getBusidictid()+".");
+				mybatisDAOImpl.insert("common.insertBusidict", busidict);		
+				if(flag < 1){
+					mybatisDAOImpl.rollback();
+					return flag;
+				}	
+			}			
+			mybatisDAOImpl.commit();
+		} catch (Exception e) {
+			mybatisDAOImpl.rollback();
+			flag = 0;
+			e.printStackTrace();
+		} finally {
+			mybatisDAOImpl.close();
+		}
+		return 0;
+	}
+	
 }

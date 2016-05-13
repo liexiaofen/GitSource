@@ -211,9 +211,13 @@ function btn_deviceOrderSearch() {
 			<tr>				
 				<td class="td_key" width="8%" nowrap><font color="#ff0000">*</font><label class="message">显示日历</label></td>
 				<td class="td_value" width="26%">
-					<a href="#" onclick="javascript:link_lastWeek(this);return false;" style="text-decoration: none;"><span>&lt;&lt;</span></a>
+					<a href="#" onclick="javascript:link_lastWeek(this);return false;" style="text-decoration: none;">
+						<img src="<%=request.getContextPath()%>/resources/images/rewind.ico" border="0" class="img_lookup" />
+					</a>
 					<input id="displaydate" name="displaydate" class="input_date Wdate" readonly="readonly" value="${searchCommand.displaydate}" onclick="WdatePicker()" title="required"/>
-					<a href="#" onclick="javascript:link_nextWeek(this);return false;" style="text-decoration: none;"><span>&gt;&gt;</span></a>
+					<a href="#" onclick="javascript:link_nextWeek(this);return false;" style="text-decoration: none;">
+						<img src="<%=request.getContextPath()%>/resources/images/forward.ico" border="0" class="img_lookup" />
+					</a>
 				</td>
 			</tr>	 
 			<tr>
@@ -263,9 +267,9 @@ function btn_deviceOrderSearch() {
 						<td align="left" nowrap>
 							<c:forEach items="${iterator.one}" var="entity">
 								<span>☆<c:if test="${entity.conflictflag == 1}"><font color="#ff0000">◆</font></c:if>${entity.dailystarthm}-${entity.dailyendhm}<br />
-								【${entity.eventtypedict}】<a href="#" onclick="javascript:link_showMd('${entity.dailyid}');return false;">${entity.title}</a>&nbsp;
+								【${entity.eventtypedict}】<a href="#" onclick="javascript:link_showMd('${entity.dailyid}');return false;">${entity.title}</a>
 								<c:if test="${iterator.empid == sessionScope.user.empid}">
-									<img src="<%=request.getContextPath()%>/resources/images/update.png" class="img_small" onclick="img_edit(this)"></img>
+									<img src="<%=request.getContextPath()%>/resources/images/update.ico" class="img_lookup" onclick="img_edit(this)"></img>
 									<input name="dailyid" type="hidden" value="${entity.dailyid}"/>
 								</c:if><br /></span>  								
 							</c:forEach>
@@ -278,9 +282,9 @@ function btn_deviceOrderSearch() {
 						<td align="left" nowrap>
 							<c:forEach items="${iterator.two}" var="entity">
 								<span>☆<c:if test="${entity.conflictflag == 1}"><font color="#ff0000">◆</font></c:if>${entity.dailystarthm}-${entity.dailyendhm}<br />
-								【${entity.eventtypedict}】<a href="#" onclick="javascript:link_showMd('${entity.dailyid}');return false;">${entity.title}</a>&nbsp;
+								【${entity.eventtypedict}】<a href="#" onclick="javascript:link_showMd('${entity.dailyid}');return false;">${entity.title}</a>
 								<c:if test="${iterator.empid == sessionScope.user.empid}">
-									<img src="<%=request.getContextPath()%>/resources/images/update.png" class="img_small" onclick="img_edit(this)"></img>
+									<img src="<%=request.getContextPath()%>/resources/images/update.ico" class="img_lookup" onclick="img_edit(this)"></img>
 									<input name="dailyid" type="hidden" value="${entity.dailyid}"/>
 								</c:if><br /></span>  								
 							</c:forEach>
@@ -293,9 +297,9 @@ function btn_deviceOrderSearch() {
 						<td align="left" nowrap>
 							<c:forEach items="${iterator.three}" var="entity">
 								<span>☆<c:if test="${entity.conflictflag == 1}"><font color="#ff0000">◆</font></c:if>${entity.dailystarthm}-${entity.dailyendhm}<br />
-								【${entity.eventtypedict}】<a href="#" onclick="javascript:link_showMd('${entity.dailyid}');return false;">${entity.title}</a>&nbsp;
+								【${entity.eventtypedict}】<a href="#" onclick="javascript:link_showMd('${entity.dailyid}');return false;">${entity.title}</a>
 								<c:if test="${iterator.empid == sessionScope.user.empid}">
-									<img src="<%=request.getContextPath()%>/resources/images/update.png" class="img_small" onclick="img_edit(this)"></img>
+									<img src="<%=request.getContextPath()%>/resources/images/update.ico" class="img_lookup" onclick="img_edit(this)"></img>
 									<input name="dailyid" type="hidden" value="${entity.dailyid}"/>
 								</c:if><br /></span>  								
 							</c:forEach>
@@ -308,9 +312,9 @@ function btn_deviceOrderSearch() {
 						<td align="left" nowrap>
 							<c:forEach items="${iterator.four}" var="entity">
 								<span>☆<c:if test="${entity.conflictflag == 1}"><font color="#ff0000">◆</font></c:if>${entity.dailystarthm}-${entity.dailyendhm}<br />
-								【${entity.eventtypedict}】<a href="#" onclick="javascript:link_showMd('${entity.dailyid}');return false;">${entity.title}</a>&nbsp;
+								【${entity.eventtypedict}】<a href="#" onclick="javascript:link_showMd('${entity.dailyid}');return false;">${entity.title}</a>
 								<c:if test="${iterator.empid == sessionScope.user.empid}">
-									<img src="<%=request.getContextPath()%>/resources/images/update.png" class="img_small" onclick="img_edit(this)"></img>
+									<img src="<%=request.getContextPath()%>/resources/images/update.ico" class="img_lookup" onclick="img_edit(this)"></img>
 									<input name="dailyid" type="hidden" value="${entity.dailyid}"/>
 								</c:if><br /></span>  								
 							</c:forEach>
@@ -323,9 +327,9 @@ function btn_deviceOrderSearch() {
 						<td align="left" nowrap>
 							<c:forEach items="${iterator.five}" var="entity">
 								<span>☆<c:if test="${entity.conflictflag == 1}"><font color="#ff0000">◆</font></c:if>${entity.dailystarthm}-${entity.dailyendhm}<br />
-								【${entity.eventtypedict}】<a href="#" onclick="javascript:link_showMd('${entity.dailyid}');return false;">${entity.title}</a>&nbsp;
+								【${entity.eventtypedict}】<a href="#" onclick="javascript:link_showMd('${entity.dailyid}');return false;">${entity.title}</a>
 								<c:if test="${iterator.empid == sessionScope.user.empid}">
-									<img src="<%=request.getContextPath()%>/resources/images/update.png" class="img_small" onclick="img_edit(this)"></img>
+									<img src="<%=request.getContextPath()%>/resources/images/update.ico" class="img_lookup" onclick="img_edit(this)"></img>
 									<input name="dailyid" type="hidden" value="${entity.dailyid}"/>
 								</c:if><br /></span>  								
 							</c:forEach>
@@ -338,9 +342,9 @@ function btn_deviceOrderSearch() {
 						<td align="left" nowrap>
 							<c:forEach items="${iterator.six}" var="entity">
 								<span>☆<c:if test="${entity.conflictflag == 1}"><font color="#ff0000">◆</font></c:if>${entity.dailystarthm}-${entity.dailyendhm}<br />
-								【${entity.eventtypedict}】<a href="#" onclick="javascript:link_showMd('${entity.dailyid}');return false;">${entity.title}</a>&nbsp;
+								【${entity.eventtypedict}】<a href="#" onclick="javascript:link_showMd('${entity.dailyid}');return false;">${entity.title}</a>
 								<c:if test="${iterator.empid == sessionScope.user.empid}">
-									<img src="<%=request.getContextPath()%>/resources/images/update.png" class="img_small" onclick="img_edit(this)"></img>
+									<img src="<%=request.getContextPath()%>/resources/images/update.ico" class="img_lookup" onclick="img_edit(this)"></img>
 									<input name="dailyid" type="hidden" value="${entity.dailyid}"/>
 								</c:if><br /></span>  								
 							</c:forEach>
@@ -353,9 +357,9 @@ function btn_deviceOrderSearch() {
 						<td align="left" nowrap>
 							<c:forEach items="${iterator.seven}" var="entity">
 								<span>☆<c:if test="${entity.conflictflag == 1}"><font color="#ff0000">◆</font></c:if>${entity.dailystarthm}-${entity.dailyendhm}<br />
-								【${entity.eventtypedict}】<a href="#" onclick="javascript:link_showMd('${entity.dailyid}');return false;">${entity.title}</a>&nbsp;
+								【${entity.eventtypedict}】<a href="#" onclick="javascript:link_showMd('${entity.dailyid}');return false;">${entity.title}</a>
 								<c:if test="${iterator.empid == sessionScope.user.empid}">
-									<img src="<%=request.getContextPath()%>/resources/images/update.png" class="img_small" onclick="img_edit(this)"></img>
+									<img src="<%=request.getContextPath()%>/resources/images/update.ico" class="img_lookup" onclick="img_edit(this)"></img>
 									<input name="dailyid" type="hidden" value="${entity.dailyid}"/>
 								</c:if><br /></span>  								
 							</c:forEach>

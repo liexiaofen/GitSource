@@ -9,7 +9,7 @@
 	<select id="pa001001searchListByPage" resultType="pa001001resultCommand" parameterType="pa001001searchCommand">
 	<![CDATA[
 		SELECT 
-			convert(char(19), t.updatetime, 120) as updatetime,t.empid,t.exclusivefg,
+			convert(char(19), t.updatetime, 120) as updatetime, updator.empname as updator, t.empid,t.exclusivefg,
 			t.empname,t.empenname,t.empno,case when t.posname != '' then t.posname else dict2.busidictname end as posname,
 			t.email,t.domestictel,t.internttel,t.extension,t.straightline,t.skypenum,
 			t.cardno,convert(char(10), t.entrytime, 23) as entrytime, t.sex, dict3.busidictname as sexdict, t.status, dict4.busidictname as statusdict, t.username,
@@ -17,6 +17,8 @@
 		FROM [dbo].[t_empinfo] t 
 		inner join (select empid, cast( min(depid) as int) as depid, cast( min(posid) as int) as posid from t_emporg where deletefg = '0' group by empid) emporg 
 			on t.empid = emporg.empid 
+		left join [dbo].[t_empinfo] updator
+			on t.updator = updator.empid  
 		left join [dbo].[s_busidict] dict2 
 			on emporg.posid = dict2.busidictid and dict2.busidicttypeid = 'OA_COMMON_Position'  
 		left join [dbo].[s_busidict] dict3 
@@ -97,7 +99,7 @@
            ,updatetime = #{updatetime, jdbcType=TIME}
            ,exclusivefg = #{updateexclusivefg, jdbcType=VARCHAR}
            ,orgid = #{orgid, jdbcType=VARCHAR}
-           ,deletefg = '1'
+           ,status = '1'
     	where empid = #{empid, jdbcType=VARCHAR} and exclusivefg = #{exclusivefg, jdbcType=VARCHAR} and deletefg = '0'           
     ]]>     
     </update>

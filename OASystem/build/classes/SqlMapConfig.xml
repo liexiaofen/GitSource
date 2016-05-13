@@ -29,7 +29,9 @@
 		<typeAlias alias="dailyplan" type="com.lw.oa.common.model.DailyPlan" />
 		<typeAlias alias="applyform" type="com.lw.oa.common.model.ApplyForm" />
 		<typeAlias alias="hisapplyform" type="com.lw.oa.common.model.HisApplyForm" />	
-		<typeAlias alias="ticketdetail" type="com.lw.oa.common.model.TicketDetail" />	
+		<typeAlias alias="ticketdetail" type="com.lw.oa.common.model.TicketDetail" />
+		<typeAlias alias="busidicttype" type="com.lw.oa.common.model.BusiDictType" />
+		<typeAlias alias="busidict" type="com.lw.oa.common.model.BusiDict" />	
 		
 		<typeAlias alias="pa001001searchCommand" type="com.lw.oa.pa.master.pa001.PA001001SearchCommand" />
 		<typeAlias alias="pa001001resultCommand" type="com.lw.oa.pa.master.pa001.PA001001ResultCommand" />
