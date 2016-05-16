@@ -6,40 +6,30 @@
 <base href="<%=basePath%>">
 <script type="text/javascript">
 /*
-*名       称: btn_update()
+*名       称: btn_save()
 *输入参数: 无
 *输出参数: 无
-*机       能: 修改
+*机       能: 保存
 *创 建  者: yuliang          
-*创建时间: 2015-10-21
+*创建时间: 2016-05-12
 *更 新  者: 
 *更新时间: 
 */
-function btn_update() {
+function btn_save() {	
 	if ( !$.fn.autovalidateForm("updateForm") ){
 		return;
 	}	
-	if ( !window.confirm( Message.getString("MSG_IC_COMM_0011"))) 
+	if ( !window.confirm( Message.getString("MSG_IC_COMM_0002"))) 
 		return;
+	
+	$("#body_result").find("tr").each(function( i, n){			
+		$(n).find('input[name="busidictid"]').attr("name","busidict["+i+"].busidictid");
+		$(n).find('input[name="busidictname"]').attr("name","busidict["+i+"].busidictname");
+		$(n).find('input[name="sortno"]').attr("name","busidict["+i+"].sortno");
+	});
+	//alert($("#body_result").html());
 	c_ShowProgressBar(); 
-	$("#updateForm").attr( "action", "pa002002update.do");	
-	$("#updateForm").submit();	
-}
-/*
-*名       称: btn_delete()
-*输入参数: 无
-*输出参数: 无
-*机       能: 删除
-*创 建  者: yuliang          
-*创建时间: 2015-10-21
-*更 新  者: 
-*更新时间: 
-*/
-function btn_delete() {
-	if ( !window.confirm( Message.getString("MSG_IC_COMM_0003"))) 
-		return;
-	c_ShowProgressBar(); 
-	$("#updateForm").attr( "action", "pa002002delete.do");	
+	$("#updateForm").attr( "action", "fa004002save.do");	
 	$("#updateForm").submit();	
 }
 /*
@@ -48,69 +38,138 @@ function btn_delete() {
 *输出参数: 无
 *机       能: 返回
 *创 建  者: yuliang          
-*创建时间: 2015-09-16
+*创建时间: 2016-05-12
 *更 新  者: 
 *更新时间: 
 */
 function btn_back() {	
 	c_ShowProgressBar(); 
-	$("#updateForm").attr( "action", "pa002002back.do");	
+	$("#updateForm").attr( "action", "fa004003back.do");	
 	$("#updateForm").submit();
+}
+
+function img_delete(obj) {
+	$(obj).parent().parent().remove();
+}
+
+function img_insert() {
+	var htmlText = "<tr class=\"pg_result_content\">" +		    			
+						"<td align=\"left\" nowrap><input name=\"busidictid\" class=\"input_txt\" maxlength=\"20\" /></td>" +
+						"<td align=\"left\" nowrap><input name=\"busidictname\" class=\"input_bigger\" maxlength=\"50\" /></td>" +	
+						"<td align=\"left\" nowrap><input name=\"sortno\" class=\"input_small\" maxlength=\"2\" /></td>" +	
+						"<td align=\"center\" nowrap>" + 
+							"<img src=\"<%= request.getContextPath()%>/resources/images/img_add.png\" class=\"img_lookup\" onClick=\"img_insert1(this)\"></img>" +
+							"<img src=\"<%= request.getContextPath()%>/resources/images/img_delete.ico\" class=\"img_lookup\" onClick=\"img_delete(this)\"></img>" +
+						"</td>" +	
+					"</tr>";
+	$("#body_result").append(htmlText);
+}
+function img_insert1(obj) {
+	var htmlText = "<tr class=\"pg_result_content\">" +		    			
+						"<td align=\"left\" nowrap><input name=\"busidictid\" class=\"input_txt\" maxlength=\"20\" /></td>" +
+						"<td align=\"left\" nowrap><input name=\"busidictname\" class=\"input_bigger\" maxlength=\"50\" /></td>" +	
+						"<td align=\"left\" nowrap><input name=\"sortno\" class=\"input_small\" maxlength=\"2\" /></td>" +	
+						"<td align=\"center\" nowrap>" + 
+							"<img src=\"<%= request.getContextPath()%>/resources/images/img_add.png\" class=\"img_lookup\" onClick=\"img_insert1(this)\"></img>" +
+							"<img src=\"<%= request.getContextPath()%>/resources/images/img_delete.ico\" class=\"img_lookup\" onClick=\"img_delete(this)\"></img>" +
+						"</td>" +	
+					"</tr>";
+	$(obj).parent().parent().after(htmlText);
 }
 </script>
 </head>
 <body>
-<form id="updateForm" action="" method="post">  
-	<input name="dailydeviceid" type="hidden"  value="${command.dailydeviceid}"/>
-	<input name="exclusivefg" type="hidden"  value="${command.exclusivefg}"/>	
-	<input name="pa002001searchcommand.dailydevicename" type="hidden"  value="${command.pa002001searchcommand.dailydevicename}" />
-	<input name="pa002001searchcommand.orgcdid" type="hidden"  value="${command.pa002001searchcommand.orgcdid}" />
-	<div class="div_navi"><span><img src="<%= request.getContextPath()%>/resources/images/home.png">&nbsp;您当前的位置：主表管理&nbsp;&gt;&nbsp;设备信息&nbsp;&gt;&nbsp;设备信息编辑</span></div>
-	<div class="div_search_title">
+<form id="updateForm" action="" method="post" >  
+	<input name="searchCommand.busidicttypeid" type="hidden"  value="${command.searchCommand.busidicttypeid}" />
+	<input name="searchCommand.busidicttypename" type="hidden"  value="${command.searchCommand.busidicttypename}" />
+	<div class="div_navi"><span><img src="<%= request.getContextPath()%>/resources/images/home.png">&nbsp;您当前的位置：系统管理&nbsp;&gt;&nbsp;业务字典信息&nbsp;&gt;&nbsp;业务字典信息编辑</span></div>
+	<div class="div_search_title" style="width: 50%">
 		<table class="tb_title">
 			<tbody>
 				<tr class="tr_caption">
 					<td class="td_caption_mark">
 						<img src="<%= request.getContextPath()%>/resources/images/m_nav_dian.gif"></img>
 					<td class="td_caption">
-						基本信息
+						类型信息
 					</td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
-	<div class="div_search_content">
+	<div class="div_search_content" style="width: 50%">
 	  <table class="tb_search">
 	    <tbody>
 			<tr>
 				<td class="td_key" width="8%">
-					<font color="#ff0000">*</font><label class="message">机构</label>
+					<label class="message">类型代码</label>
 				</td>
 				<td class="td_value" width="26%">
-					<dict:select2 id="orgcdid" name="orgcdid" value="${command.orgcdid}" sqlid="select orgcdid as busidictid,orgshortname as busidictname  from s_organize where deletefg = '0' order by sortno" cssClass="input_select" nullLabel="请选择" title="required"></dict:select2>
+					<input id="busidicttypeid" name="busidicttypeid" value="${command.busidicttypeid}" class="input_txt dis_input" readonly="readonly"/>
 				</td>
-				<td class="td_key" width="8%">
-					<font color="#ff0000">*</font><label class="message">设备名称</label>
-				</td>
-				<td class="td_value">
-					<input id="dailydevicename" name="dailydevicename" class="input_txt" value="${command.dailydevicename}" maxlength="20" title="required" />
-				</td>						
-			</tr>			
-			<tr>
-				<td class="td_key" width="8%"><label class="message">备注</label></td>
-				<td class="td_value" colspan="3">
-					<textarea id="comment" name="comment"  class="input_memo_long" title="maxlength" maxlength="100" >${command.comment}</textarea>	
-				</td>			
 			</tr>
 			<tr>
-				<td colspan="4" align="right">					
-					<input name="search" id="search" type="button" class="btn" value="修&nbsp;改" onClick="btn_update();"/>
-					<input name="search" id="search" type="button" class="btn" value="删&nbsp;除" onClick="btn_delete();"/>
-					<input name="button" id="reset" type="button" class="btn" value="返&nbsp;回" onClick="btn_back();" />
+				<td class="td_key" width="8%">
+					<label class="message">类型名称</label>
 				</td>
-	      	</tr>		
+				<td class="td_value">
+					<input id="busidicttypename" name="busidicttypename" value="${command.busidicttypename}" class="input_txt dis_input" readonly="readonly"/>
+				</td>	
+			</tr>
 	    </tbody>
 	  </table>
+	</div>	
+	<div class="div_search_title" style="width: 50%">
+		<table class="tb_title">
+			<tbody>
+				<tr class="tr_caption">
+					<td class="td_caption_mark">
+						<img src="<%= request.getContextPath()%>/resources/images/m_nav_dian.gif"></img>
+					<td class="td_caption">
+						类型项信息
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="div_search_content" style="width: 50%">
+	  <table id="tresult" class="pg_result">				
+			<tr class="pg_result_head">
+				<td width="35%">&nbsp;类型项代码&nbsp;</td>
+				<td width="35%">&nbsp;类型项名称&nbsp;</td>
+				<td width="20%">&nbsp;排序&nbsp;</td>
+				<td width="10%">&nbsp;操作&nbsp;</td>	
+			</tr>
+			<tbody id="body_result">
+				<c:forEach items="${command.list}" var="iterator">		    	
+					<tr class="pg_result_content">		    			
+						<td align="left" nowrap><input name="busidictid" value="${iterator.busidictid}" class="input_txt" maxlength="20"  title="required" /></td>
+						<td align="left" nowrap><input name="busidictname" value="${iterator.busidictname}" class="input_bigger" maxlength="50"  title="required" /></td>	
+						<td align="left" nowrap><input name="sortno" value="${iterator.sortno}" class="input_small" maxlength="2"  title="required" /></td>
+						<td align="center" nowrap>
+							<img src="<%= request.getContextPath()%>/resources/images/img_add.png" class="img_lookup" onClick="img_insert1(this)"></img>
+							<img src="<%= request.getContextPath()%>/resources/images/img_delete.ico" class="img_lookup" onClick="img_delete(this)"></img>					
+						</td>	
+					</tr>	
+				</c:forEach>										
+			</tbody>
+			<tfoot>
+				<tr class="pg_result_content">	
+					<td align="center" colspan="4">
+						<img src="<%= request.getContextPath()%>/resources/images/img_add.png" class="img_lookup" onClick="img_insert()"/>
+					</td>
+				</tr>
+			</tfoot>
+  		</table>
+	</div>
+	<div class="div_result_button">
+		<table>
+			<tr>
+				<td colspan="4" align="right">					
+					<input name="search" id="search" type="button" class="btn" value="保&nbsp;存" onClick="btn_save();"/>
+					<input name="button" id="reset" type="button" class="btn" value="返&nbsp;回" onClick="btn_back();" />
+				</td>
+	      	</tr>
+		</table>
 	</div>	
 </form>
 </body>

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.lw.oa.common.command.RetInfo;
+import com.lw.oa.common.dao.DictDAOImpl;
+import com.lw.oa.common.dao.IDictDAO;
 import com.lw.oa.common.service.ICommonService;
 import com.lw.oa.common.util.ConstantUtil;
 import com.lw.oa.common.util.MessageUtil;
@@ -27,12 +29,10 @@ public class FA004Controller implements ConstantUtil{
 	//private static final String  PAGE_INIT = "fa/fa004/fa004001List";
 	//查询画面	
 	private static final String  PAGE_SEARCH = "fa/fa004/fa004001List";
-	//休假申请详细画面	
-	//private static final String  PAGE_APPLY_DETAIL_A1 = "fa/fa004/fa004002A1Detail";	
-	//休假申请修改画面	
-	//private static final String  PAGE_APPLY_UPDATE_A1 = "fa/fa004/fa004003A1Update";
 	//登录画面	
 	private static final String  PAGE_INSERT = "fa/fa004/fa004003Insert";	
+	//编辑画面	
+	private static final String  PAGE_UPDATE = "fa/fa004/fa004002Update";	
 	@Autowired
 	private IFA004Service fa004Service;
 	@Autowired
@@ -99,21 +99,57 @@ public class FA004Controller implements ConstantUtil{
 		return fa004001search(request, searchCommand, retInfo);
 	}
 	/**
+	 * 业务字典信息编辑画面
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = { "fa004001edit.do" },method = RequestMethod.POST)
+	public ModelAndView fa004001edit(HttpServletRequest request, FA004001SearchCommand searchCommand)
+	{					
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		resultMap.put("searchCommand", searchCommand);
+		FA004Command command = fa004Service.fa004001view(searchCommand);
+		command.setSearchCommand(searchCommand);
+		resultMap.put("command", command);
+		ModelAndView mav = new ModelAndView( PAGE_UPDATE, resultMap);				
+		return mav;
+	}
+	/**
 	 * 业务字典信息登录画面
 	 * @param request
 	 * @return
 	 */
 	@RequestMapping(value = { "fa004001insert.do" },method = RequestMethod.POST)
-	public ModelAndView fa004001insert(HttpServletRequest request, FA004001SearchCommand searchcommand)
+	public ModelAndView fa004001insert(HttpServletRequest request, FA004001SearchCommand searchCommand)
 	{					
 		Map<String,Object> resultMap = new HashMap<String,Object>();
-		resultMap.put("searchcommand", searchcommand);
+		resultMap.put("searchCommand", searchCommand);
 		FA004Command command = new FA004Command();
-		command.setSearchcommand(searchcommand);
+		command.setSearchCommand(searchCommand);
 		resultMap.put("command", command);
 		ModelAndView mav = new ModelAndView( PAGE_INSERT, resultMap);				
 		return mav;
 	}
+	@RequestMapping(value = { "fa004001refreshCache.do" },method = RequestMethod.POST)
+	public ModelAndView pa004001refreshCache(HttpServletRequest request, FA004001SearchCommand searchCommand, RetInfo retInfo)
+	{			
+		//缓存处理
+		IDictDAO dictDAOImpl = new DictDAOImpl();
+		dictDAOImpl.close();
+		dictDAOImpl.openSession();
+		return fa004001search(request, searchCommand, null);
+	}
+	/**
+	 * 业务字典信息编辑保存
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = { "fa004002save.do" },method = RequestMethod.POST)
+	public ModelAndView fa004002save(HttpServletRequest request, FA004Command command)
+	{				
+		fa004Service.fa004002update(command, request);
+		return fa004001search(request, command.getSearchCommand(), null);
+	}	
 	/**
 	 * 业务字典信息登录保存
 	 * @param request
@@ -123,7 +159,7 @@ public class FA004Controller implements ConstantUtil{
 	public ModelAndView fa004003save(HttpServletRequest request, FA004Command command)
 	{				
 		fa004Service.fa004003insert(command, request);
-		return fa004001search(request, command.getSearchcommand(), null);
+		return fa004001search(request, command.getSearchCommand(), null);
 	}	
 	/**
 	 * 业务字典信息登录画面返回
@@ -133,6 +169,6 @@ public class FA004Controller implements ConstantUtil{
 	@RequestMapping(value = { "fa004003back.do" },method = RequestMethod.POST)
 	public ModelAndView fa004003back(HttpServletRequest request, FA004Command command)
 	{			
-		return fa004001search(request, command.getSearchcommand(), null);
+		return fa004001search(request, command.getSearchCommand(), null);
 	}
 }

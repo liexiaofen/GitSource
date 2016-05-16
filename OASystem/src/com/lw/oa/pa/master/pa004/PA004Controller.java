@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.lw.oa.common.dao.DictDAOImpl;
-import com.lw.oa.common.dao.IDictDAO;
 import com.lw.oa.common.command.RetInfo;
 import com.lw.oa.common.util.MessageUtil;
 import com.lw.oa.mybatis.interceptor.Pager;
@@ -64,27 +62,7 @@ public class PA004Controller {
 		resultMap.put("retInfo", retInfo);
 		ModelAndView mav = new ModelAndView( PAGE_SEARCH, resultMap);	
 		return mav;
-	}
-	@RequestMapping(value = { "pa004001refreshCache.do" },method = RequestMethod.POST)
-	public ModelAndView pa004001refreshCache(HttpServletRequest request, PA004001SearchCommand searchCommand, RetInfo retInfo)
-	{			
-		//缓存处理
-		IDictDAO dictDAOImpl = new DictDAOImpl();
-		dictDAOImpl.close();
-		dictDAOImpl.openSession();
-		
-		@SuppressWarnings("unchecked")
-		List<PA004001ResultCommand> list = (List<PA004001ResultCommand>) pa004Service.pa004001search(searchCommand);
-		RetInfo searchRetInfo = MessageUtil.getMessageNoResult(list.size());
-		Map<String,Object> resultMap = new HashMap<String,Object>();
-		resultMap.put("searchCommand", searchCommand);
-		resultMap.put("page", (Pager<?>)searchCommand);
-		resultMap.put("list", list);
-		resultMap.put("searchRetInfo", searchRetInfo);
-		resultMap.put("retInfo", retInfo);
-		ModelAndView mav = new ModelAndView( PAGE_SEARCH, resultMap);	
-		return mav;
-	}
+	}	
 	/**
 	 * 设备信息一览画面翻页
 	 * @param request

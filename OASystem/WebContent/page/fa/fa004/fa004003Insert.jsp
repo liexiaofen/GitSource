@@ -29,7 +29,7 @@ function btn_save() {
 	});
 	//alert($("#body_result").html());
 	c_ShowProgressBar(); 
-	$("#addForm").attr( "action", "fa004003save.do");	
+	$("#addForm").attr( "action", "fa004002save.do");	
 	$("#addForm").submit();	
 }
 /*
@@ -55,20 +55,33 @@ function img_delete(obj) {
 function img_insert() {
 	var htmlText = "<tr class=\"pg_result_content\">" +		    			
 						"<td align=\"left\" nowrap><input name=\"busidictid\" class=\"input_txt\" maxlength=\"20\" /></td>" +
-						"<td align=\"left\" nowrap><input name=\"busidictname\" class=\"input_txt\" maxlength=\"20\" /></td>" +	
+						"<td align=\"left\" nowrap><input name=\"busidictname\" class=\"input_bigger\" maxlength=\"50\" /></td>" +	
 						"<td align=\"left\" nowrap><input name=\"sortno\" class=\"input_small\" maxlength=\"2\" /></td>" +	
-						"<td align=\"center\" nowrap>" +
+						"<td align=\"center\" nowrap>" + 
+							"<img src=\"<%= request.getContextPath()%>/resources/images/img_add.png\" class=\"img_lookup\" onClick=\"img_insert1(this)\"></img>" +
 							"<img src=\"<%= request.getContextPath()%>/resources/images/img_delete.ico\" class=\"img_lookup\" onClick=\"img_delete(this)\"></img>" +
 						"</td>" +	
 					"</tr>";
 	$("#body_result").append(htmlText);
 }
+function img_insert1(obj) {
+	var htmlText = "<tr class=\"pg_result_content\">" +		    			
+						"<td align=\"left\" nowrap><input name=\"busidictid\" class=\"input_txt\" maxlength=\"20\" /></td>" +
+						"<td align=\"left\" nowrap><input name=\"busidictname\" class=\"input_bigger\" maxlength=\"50\" /></td>" +	
+						"<td align=\"left\" nowrap><input name=\"sortno\" class=\"input_small\" maxlength=\"2\" /></td>" +	
+						"<td align=\"center\" nowrap>" + 
+							"<img src=\"<%= request.getContextPath()%>/resources/images/img_add.png\" class=\"img_lookup\" onClick=\"img_insert1(this)\"></img>" +
+							"<img src=\"<%= request.getContextPath()%>/resources/images/img_delete.ico\" class=\"img_lookup\" onClick=\"img_delete(this)\"></img>" +
+						"</td>" +	
+					"</tr>";
+	$(obj).parent().parent().after(htmlText);
+}
 </script>
 </head>
 <body>
 <form id="addForm" action="" method="post" >  
-	<input name="searchcommand.busidicttypeid" type="hidden"  value="${command.searchcommand.busidicttypeid}" />
-	<input name="searchcommand.busidicttypename" type="hidden"  value="${command.searchcommand.busidicttypename}" />
+	<input name="searchCommand.busidicttypeid" type="hidden"  value="${command.searchCommand.busidicttypeid}" />
+	<input name="searchCommand.busidicttypename" type="hidden"  value="${command.searchCommand.busidicttypename}" />
 	<div class="div_navi"><span><img src="<%= request.getContextPath()%>/resources/images/home.png">&nbsp;您当前的位置：系统管理&nbsp;&gt;&nbsp;业务字典信息&nbsp;&gt;&nbsp;业务字典信息登录</span></div>
 	<div class="div_search_title" style="width: 50%">
 		<table class="tb_title">
@@ -129,7 +142,7 @@ function img_insert() {
 			<tbody id="body_result">		    	
 				<tr class="pg_result_content">		    			
 					<td align="left" nowrap><input name="busidictid" class="input_txt" maxlength="20"  title="required" /></td>
-					<td align="left" nowrap><input name="busidictname" class="input_txt" maxlength="20"  title="required" /></td>	
+					<td align="left" nowrap><input name="busidictname" class="input_bigger" maxlength="50"  title="required" /></td>	
 					<td align="left" nowrap><input name="sortno" class="input_small" maxlength="2"  title="required" /></td>
 					<td align="center" nowrap>						
 					</td>	

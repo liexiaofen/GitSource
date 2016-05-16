@@ -29,7 +29,7 @@ public class Organize extends CommonBean {
 	// 有效期
 	private Date effectivedate;
 	// 排序no
-	private String sortno;
+	private int sortno;
 	// 备注1
 	private String remark1;
 	// 备注2
@@ -107,11 +107,12 @@ public class Organize extends CommonBean {
 		this.effectivedate = effectivedate;
 	}
 
-	public String getSortno() {
+	
+	public int getSortno() {
 		return sortno;
 	}
 
-	public void setSortno(String sortno) {
+	public void setSortno(int sortno) {
 		this.sortno = sortno;
 	}
 

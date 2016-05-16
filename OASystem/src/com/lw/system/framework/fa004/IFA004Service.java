@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface IFA004Service {
 	public List<?> fa004001search(FA004001SearchCommand searchCommand);
-	public int fa004001delete(FA004001SearchCommand searchCommand, HttpServletRequest request);
-	public int fa004003insert(FA004Command command, HttpServletRequest request);
+	public int fa004001delete( FA004001SearchCommand searchCommand, HttpServletRequest request);
+	public FA004Command fa004001view( FA004001SearchCommand searchCommand);
+	public int fa004002update( FA004Command command, HttpServletRequest request);
+	public int fa004003insert( FA004Command command, HttpServletRequest request);
 }

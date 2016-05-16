@@ -27,7 +27,7 @@
 	<![CDATA[
 		SELECT 
 			t.exclusivefg,t.orgcdid,t.orgname,t.orgshortname,t.regionid,
-			t.address,t.tel,t.fax,t.zipcode,convert(char(10), t.effectivedate, 23) as effectivedate 
+			t.address,t.tel,t.fax,t.zipcode,convert(char(10), t.effectivedate, 23) as effectivedate, t.sortno 
 		FROM [dbo].[s_organize] t 
 		where t.deletefg = '0' 
 	]]> 
@@ -50,6 +50,7 @@
            ,fax = #{fax, jdbcType=VARCHAR}
            ,zipcode = #{zipcode, jdbcType=VARCHAR}
            ,effectivedate = #{effectivedate, jdbcType=DATE}
+           ,sortno = #{sortno, jdbcType=INTEGER}
     	where orgcdid = #{orgcdid, jdbcType=VARCHAR} and deletefg = '0'           
     ]]>
     	<if test="exclusivefg!=null and exclusivefg!=''">

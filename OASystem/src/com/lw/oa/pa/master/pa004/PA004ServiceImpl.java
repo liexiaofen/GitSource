@@ -142,6 +142,7 @@ public class PA004ServiceImpl implements IPA004Service {
 		entity.setZipcode(command.getZipcode());
 		entity.setEffectivedate(DateUtil.parseDate(command.getEffectivedate(),
 				"yyyy-MM-dd"));
+		entity.setSortno(new Integer(command.getSortno()));
 		return entity;
 	}
 }

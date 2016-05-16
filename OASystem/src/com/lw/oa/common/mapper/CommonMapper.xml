@@ -141,7 +141,7 @@
             t.start, t.reach, t.discountflag, t.ticketflag
         from t_ticketdetail t
 		where t.applyid = #{applyid} and t.deletefg = '0'    
-		order by t.sortno
+		order by t.s_organize
 	]]> 
 	</select>
 	<insert id="insertAnnualvctn" parameterType="annualvctn">
@@ -413,7 +413,8 @@
            ,[tel]
            ,[fax]
            ,[zipcode]
-           ,[effectivedate])
+           ,[effectivedate]
+           ,[sortno])
      VALUES
            (#{creator, jdbcType=VARCHAR}
            ,#{createtime,jdbcType=TIME}
@@ -430,7 +431,8 @@
            ,#{tel, jdbcType=VARCHAR}
            ,#{fax, jdbcType=VARCHAR}
            ,#{zipcode, jdbcType=VARCHAR}
-           ,#{effectivedate, jdbcType=DATE})
+           ,#{effectivedate, jdbcType=DATE}
+           ,#{sortno, jdbcType=INTEGER})
     ]]>
     </insert>
 	<insert id="insertEvent" parameterType="event">

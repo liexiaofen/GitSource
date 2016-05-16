@@ -23,7 +23,10 @@ public class FA004001SearchCommand extends Pager<FA004001ResultCommand>
 	private String busidictid;
 	// 业务字典名称
 	private String busidictname;	
-
+	// 编辑画面业务字典类型id
+	private String id;
+	// 编辑画面业务字典类型名称
+	private String name;
 	public BusiDictType[] getBusidicttype() {
 		return busidicttype;
 	}
@@ -62,6 +65,22 @@ public class FA004001SearchCommand extends Pager<FA004001ResultCommand>
 
 	public void setBusidictname(String busidictname) {
 		this.busidictname = busidictname;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

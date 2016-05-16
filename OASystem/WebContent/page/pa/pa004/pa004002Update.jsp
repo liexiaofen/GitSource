@@ -132,6 +132,12 @@ function btn_back() {
 				<td class="td_value">
 					<input id="effectivedate"  name="effectivedate" value="${command.effectivedate}" class="input_date Wdate" readonly="readonly" onclick="WdatePicker()" />
 				</td>	
+				<td class="td_key" width="8%">
+					<font color="#ff0000">*</font><label class="message">排序</label>
+				</td>
+				<td class="td_value">
+					<input id="sortno" name="sortno" value="${command.sortno}" class="input_small input_num2" maxlength="2" title="required"/>
+				</td>
 			</tr>
 			<tr>
 				<td colspan="6" align="right">					

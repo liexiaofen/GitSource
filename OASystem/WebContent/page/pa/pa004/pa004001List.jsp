@@ -21,11 +21,6 @@ function btn_search() {
 	$("#queryForm").attr( "action", "pa004001search.do");	
 	$("#queryForm").submit();
 }
-function btn_refreshCache(){
-	c_ShowProgressBar(); 
-	$("#queryForm").attr( "action", "pa004001refreshCache.do");	
-	$("#queryForm").submit();
-}
 /*
 *名       称: btn_insert()
 *输入参数: 无
@@ -111,8 +106,7 @@ function btn_reset() {
 				<td colspan="4" align="right">					
 					<input name="search" id="search" type="button" class="btn" value="查&nbsp;询" onClick="btn_search();"/>
 					<input name="button" id="reset" type="button" class="btn" value="清&nbsp;空" onClick="btn_reset();">
-					<input name="button" id="login" type="button" class="btn" value="登&nbsp;录" onClick="btn_insert();"> 
-					<input name="button" id="login" type="button" class="btn" value="刷新缓存" onClick="btn_refreshCache();"> 
+					<input name="button" id="login" type="button" class="btn" value="登&nbsp;录" onClick="btn_insert();"> 					 
 				</td>
 	      	</tr>
 	    </tbody>

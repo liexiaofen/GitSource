@@ -84,9 +84,9 @@ function btn_back() {
 				</td>
 			</tr>
 			<tr>
-				<td class="td_key" width="8%"><font color="#ff0000">*</font><label class="message">Tel</label></td>
+				<td class="td_key" width="8%"><label class="message">Tel</label></td>
 				<td class="td_value" width="26%">
-					<input id="tel" name="tel" class="input_txt" maxlength="20"  title="required,tel" />
+					<input id="tel" name="tel" class="input_txt" maxlength="20"  title="tel" />
 				</td>
 				<td class="td_key" width="8%">
 					<label class="message">Fax</label>
@@ -113,6 +113,12 @@ function btn_back() {
 				<td class="td_value">
 					<input id="effectivedate"  name="effectivedate" class="input_date Wdate" readonly="readonly" onclick="WdatePicker()" />
 				</td>	
+				<td class="td_key" width="8%">
+					<font color="#ff0000">*</font><label class="message">排序</label>
+				</td>
+				<td class="td_value">
+					<input id="sortno" name="sortno" class="input_small input_num2" maxlength="2" title="required"/>
+				</td>
 			</tr>
 			<tr>
 				<td colspan="6" align="right">					

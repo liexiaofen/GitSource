@@ -36,6 +36,21 @@
 		</if>
 		order by t.sortno	
 	</select>
+	<!-- 根据业务字典类型id查询业务字典 -->    
+	<select id="fa004001queryDictById" resultType="busidict" parameterType="java.util.Map">
+	<![CDATA[
+		SELECT 
+			busidicttypeid,
+			busidictid,
+			busidictname,
+			sortno					
+		FROM [OA].[dbo].[s_busidict] t where 1=1
+	]]> 
+		<if test="id!=null and id!=''">
+			and t.busidicttypeid = #{id}
+		</if>
+		order by t.sortno	
+	</select>
 	<!-- 根据业务字典类型id删除业务字典类型表 --> 
 	<delete id="fa004001PDBusiDictType" parameterType="java.lang.String">
     	delete from [dbo].[s_busidicttype] where busidicttypeid = #{busidicttypeid, jdbcType=VARCHAR}

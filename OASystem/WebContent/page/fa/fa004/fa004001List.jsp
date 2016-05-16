@@ -12,7 +12,7 @@
 *输出参数: 无
 *机       能: 查询
 *创 建  者: yuliang          
-*创建时间: 2015-10-21
+*创建时间: 2016-05-16
 *更 新  者: 
 *更新时间: 
 */
@@ -27,7 +27,7 @@ function btn_search() {
 *输出参数: 无
 *机       能: 登录
 *创 建  者: yuliang          
-*创建时间: 2015-10-21
+*创建时间: 2016-05-16
 *更 新  者: 
 *更新时间: 
 */
@@ -37,21 +37,23 @@ function btn_insert() {
 	$('#queryForm').submit();
 }
 /*
-*名       称: link_view( id)
+*名       称: btn_edit( obj)
 *输入参数: obj
 *输出参数: 无
-*机       能: Link到明细
+*机       能: 编辑按钮按下，跳转到编辑画面
 *创 建  者: yuliang          
-*创建时间: 2015-10-21
+*创建时间: 2016-05-16
 *更 新  者: 
 *更新时间: 
 */
-function link_view( obj){
-	var dailydeviceid = $(obj).parent().find('input[name="dailydeviceid"]').val();
-	$("#viewForm").find('input[name="dailydeviceid"]').val(dailydeviceid);
+function btn_edit( obj){
+	var busidicttypeid = $(obj).parent().parent().find('input[name="busidicttypeid"]').val();
+	var busidicttypename = $(obj).parent().parent().find('input[name="busidicttypename"]').val();
+	$("#editForm").find('input[name="id"]').val(busidicttypeid);
+	$("#editForm").find('input[name="name"]').val(busidicttypename);
 	c_ShowProgressBar(); 
-	$('#viewForm').attr( "action", "fa004001view.do");	
-	$('form[name="viewForm"]').submit();
+	$('#editForm').attr( "action", "fa004001edit.do");	
+	$('form[name="editForm"]').submit();
 }
 /*
 *名       称: btn_reset()
@@ -59,7 +61,7 @@ function link_view( obj){
 *输出参数: 无
 *机       能: 清空
 *创 建  者: yuliang          
-*创建时间: 2015-10-21
+*创建时间: 2016-05-16
 *更 新  者: 
 *更新时间: 
 */
@@ -97,6 +99,21 @@ function btn_delete(){
 	$("#deleteForm").attr( "action", "fa004001delete.do");	
 	$("#deleteForm").submit();
 }
+/*
+*名       称: btn_refreshCache()
+*输入参数: 无
+*输出参数: 无
+*机       能: 刷新缓存
+*创 建  者: yuliang          
+*创建时间: 2016-05-16
+*更 新  者: 
+*更新时间: 
+*/
+function btn_refreshCache(){
+	c_ShowProgressBar(); 
+	$("#queryForm").attr( "action", "fa004001refreshCache.do");	
+	$("#queryForm").submit();
+}
 </script>
 </head>
 <body>
@@ -132,7 +149,7 @@ function btn_delete(){
 				<td colspan="4" align="right">					
 					<input name="search" id="search" type="button" class="btn" value="查&nbsp;询" onClick="btn_search();"/>
 					<input name="button" id="reset" type="button" class="btn" value="清&nbsp;空" onClick="btn_reset();">
-					<input name="button" id="login" type="button" class="btn" value="登&nbsp;录" onClick="btn_insert();"> 
+					<input name="button" id="login" type="button" class="btn" value="刷新缓存" onClick="btn_refreshCache();">
 				</td>
 	      	</tr>
 	    </tbody>
@@ -170,6 +187,7 @@ function btn_delete(){
 		    			<td align="center" nowrap>
 	    					<input type="checkbox" name="chk" />
 	    					<input name="busidicttypeid" value="${ iterator.busidicttypeid}" type="hidden" />
+	    					<input name="busidicttypename" value="${ iterator.busidicttypename}" type="hidden" />
 		    			</td>
 		    			<td align="center" nowrap><%=num %></td>
 						<td align="left" nowrap>
@@ -177,7 +195,7 @@ function btn_delete(){
 						</td>
 						<td align="left" nowrap>${iterator.busidicttypename}</td>	
 						<td align="left" nowrap>
-							<input name="edit" id="edit" type="button" class="btn" onClick="btn_edit()"  value="编&nbsp;辑" />
+							<input name="edit" id="edit" type="button" class="btn" onClick="btn_edit(this)"  value="编&nbsp;辑" />
 							<input name="edit" id="edit" type="button" class="btn" onClick="btn_edit()"  value="更&nbsp;新" />							
 						</td>	 					
 						<td align="left" nowrap></td>
@@ -223,12 +241,13 @@ function btn_delete(){
 	<!--End Page Infor-->
 </form>
 <%-- 详情表单开始  --%>
-<form action="fa004001view.do" id="viewForm" name="viewForm" method="post">
+<form action="fa004001edit.do" id="editForm" name="editForm" method="post">
 	<%/*共通隐藏字段 start*/%>
 	<input name="busidicttypeid" type="hidden"  value="${searchCommand.busidicttypeid}" />
 	<input name="busidicttypename" type="hidden"  value="${searchCommand.busidicttypename}" />
 	<%/*共通隐藏字段 end*/%>	
-	<input name=busidicttypeid type="hidden"  />
+	<input name="id" type="hidden"  />
+	<input name="name" type="hidden"  />
 </form>
 <%-- 详情表单结束  --%>
 <form action="fa004001delete.do" id="deleteForm" name="deleteForm" method="post">
