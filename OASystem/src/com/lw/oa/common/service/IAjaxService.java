@@ -15,6 +15,8 @@ public interface IAjaxService {
 	public List<?> getDepsByOrgcdid(String orgcdid);
 	public List<?> getEmpsByOrgcdDepid(String orgcdid, String depid);
 	public int checkUniqueUsername(String username, String empid);
+	public int checkUniqueTypeId(String typeid, String busidicttypeid);
+	public int updateBusiDictType(String typeid, String typename, String busidicttypeid);
 	public int checkLegalyear(String legalyear);
 	public int checkAnnualVctn(String year);	
 	public RetInfo checkDeviceOrder(String eventdevicesid, String eventstart, String eventend, String eventstarthm, String eventendhm, String dailycycle, String eventid);

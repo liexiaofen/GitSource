@@ -242,6 +242,51 @@ public class AjaxServiceImpl implements IAjaxService,ConstantUtil {
 		}
 		return count;
 	}
+	
+	@Override
+	public int checkUniqueTypeId(String typeid, String busidicttypeid) {
+		// TODO Auto-generated method stub
+		mybatisDAOImpl.openSession();
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("typeid", typeid);
+		map.put("busidicttypeid", busidicttypeid);
+		int count = (int) mybatisDAOImpl.expandByObj(
+				"common.ajax.checkUniqueTypeId", map);
+		mybatisDAOImpl.close();
+		if (count > 0) {
+			count = 1;
+		}
+		return count;
+	}
+	
+	@Override
+	public int updateBusiDictType(String typeid, String typename,
+			String busidicttypeid) {
+		// TODO Auto-generated method stub
+		int count = 0;
+		try{
+			mybatisDAOImpl.openSession();
+			HashMap<String, String> map = new HashMap<String, String>();
+			map.put("typeid", typeid);
+			map.put("typename", typename);		
+			map.put("busidicttypeid", busidicttypeid);
+			count = (int) mybatisDAOImpl.update(
+					"common.ajax.updateBusiDictType", map);
+			mybatisDAOImpl.update(
+					"common.ajax.updateBusiDict", map);
+			if (count > 0) {
+				count = 1;
+			}
+			mybatisDAOImpl.commit();			
+		} catch (Exception e) {
+			mybatisDAOImpl.rollback();
+			count = 0;
+			e.printStackTrace();
+		} finally {
+			mybatisDAOImpl.close();
+		}
+		return count;
+	}
 	@Override
 	public int checkLegalyear(String legalyear) {
 		// TODO Auto-generated method stub

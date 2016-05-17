@@ -40,7 +40,9 @@ public class PA001Controller {
 	@RequestMapping(value = { "pa001001init.do" },method = RequestMethod.GET)
 	public ModelAndView pa001001init(HttpServletRequest request)
 	{	
-		return pa001001search(request, new PA001001SearchCommand(), null);
+		PA001001SearchCommand searchCommand = new PA001001SearchCommand();
+		searchCommand.setStatus("0");
+		return pa001001search(request, searchCommand, null);
 	}
 	/**
 	 * 员工信息search画面

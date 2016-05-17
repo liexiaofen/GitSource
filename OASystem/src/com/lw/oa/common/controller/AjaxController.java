@@ -1,5 +1,7 @@
 package com.lw.oa.common.controller;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -175,6 +178,62 @@ public class AjaxController implements ConstantUtil{
 			resultMap.put("msgid", "ERROR_PA001_0001");
 		}else{
 			resultMap.put("flag", false);
+		}
+		try {
+			response.getWriter().write(JSON.toJSONString(resultMap));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * 检查类型代码唯一性
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = { "checkUniqueTypeId.do" },method = RequestMethod.GET)
+	public void checkUniqueTypeId(HttpServletRequest request,HttpServletResponse response){
+		String typeid = request.getParameter("typeid");	
+		String busidicttypeid = request.getParameter("busidicttypeid");				
+		int count = ajaxService.checkUniqueTypeId(typeid, busidicttypeid);
+		Map<String,Object> resultMap = new HashMap<String,Object>();		
+		if(count > 0){
+			resultMap.put("flag", true);
+			resultMap.put("msgid", "ERROR_COMM_0041");
+		}else{
+			resultMap.put("flag", false);
+		}
+		try {
+			response.getWriter().write(JSON.toJSONString(resultMap));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * 更新类型代码
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = { "updateBusiDictType.do" },method = RequestMethod.GET)
+	public void updateBusiDictType(HttpServletRequest request,HttpServletResponse response){
+		String typeid = request.getParameter("typeid");	
+		String typename = StringUtils.EMPTY;
+		try {
+			typename = URLDecoder.decode(request.getParameter("typename"),"UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}	
+		String busidicttypeid = request.getParameter("busidicttypeid");				
+		int count = ajaxService.updateBusiDictType(typeid, typename, busidicttypeid);
+		Map<String,Object> resultMap = new HashMap<String,Object>();		
+		if(count > 0){
+			resultMap.put("flag", true);
+			resultMap.put("msgid", "MSG_COMM_0045");
+		}else{
+			resultMap.put("flag", false);
+			resultMap.put("msgid", "MSG_COMM_0046");
 		}
 		try {
 			response.getWriter().write(JSON.toJSONString(resultMap));

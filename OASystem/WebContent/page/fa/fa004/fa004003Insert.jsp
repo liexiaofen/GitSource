@@ -19,6 +19,32 @@ function btn_save() {
 	if ( !$.fn.autovalidateForm("addForm") ){
 		return;
 	}	
+	var flg = true;
+	//检查类型代码唯一性
+	$.ajax({
+		async: false,
+		data:"",
+		type:"GET",
+		dataType: 'json',
+		url:'<%= request.getContextPath()%>/common/ajax/checkUniqueTypeId.do?flg='+escape(new Date())+'&typeid='+escape($("#addForm").find('input[name="busidicttypeid"]').val()),
+		success:function(data){
+			if(data.flag == true){
+				var msgid = data.msgid;
+				alert(Message.getString(msgid)); 
+				flg = false;
+			}else{
+				flg = true;
+			}			
+		},
+		error:function(data){
+			alert(Message.getString("ERROR_COMM_0037")); 
+			flg = false;
+			return;
+		}		
+	});
+	if(!flg){
+		return;
+	}
 	if ( !window.confirm( Message.getString("MSG_IC_COMM_0002"))) 
 		return;
 	
@@ -29,7 +55,7 @@ function btn_save() {
 	});
 	//alert($("#body_result").html());
 	c_ShowProgressBar(); 
-	$("#addForm").attr( "action", "fa004002save.do");	
+	$("#addForm").attr( "action", "fa004003save.do");	
 	$("#addForm").submit();	
 }
 /*
@@ -141,9 +167,9 @@ function img_insert1(obj) {
 			</tr>
 			<tbody id="body_result">		    	
 				<tr class="pg_result_content">		    			
-					<td align="left" nowrap><input name="busidictid" class="input_txt" maxlength="20"  title="required" /></td>
-					<td align="left" nowrap><input name="busidictname" class="input_bigger" maxlength="50"  title="required" /></td>	
-					<td align="left" nowrap><input name="sortno" class="input_small" maxlength="2"  title="required" /></td>
+					<td align="left" nowrap><input name="busidictid" class="input_txt" maxlength="20"  title="required" role="类型项代码" /></td>
+					<td align="left" nowrap><input name="busidictname" class="input_bigger" maxlength="50"  title="required" role="类型项名称" /></td>	
+					<td align="left" nowrap><input name="sortno" class="input_small" maxlength="2"  title="required" role="排序"/></td>
 					<td align="center" nowrap>						
 					</td>	
 				</tr>											

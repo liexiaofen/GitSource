@@ -33,6 +33,8 @@ public class FA004Controller implements ConstantUtil{
 	private static final String  PAGE_INSERT = "fa/fa004/fa004003Insert";	
 	//编辑画面	
 	private static final String  PAGE_UPDATE = "fa/fa004/fa004002Update";	
+	//明细画面	
+	private static final String  PAGE_DETAIL = "fa/fa004/fa004004Detail";	
 	@Autowired
 	private IFA004Service fa004Service;
 	@Autowired
@@ -112,6 +114,22 @@ public class FA004Controller implements ConstantUtil{
 		command.setSearchCommand(searchCommand);
 		resultMap.put("command", command);
 		ModelAndView mav = new ModelAndView( PAGE_UPDATE, resultMap);				
+		return mav;
+	}
+	/**
+	 * 业务字典信息编辑画面
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = { "fa004001view.do" },method = RequestMethod.POST)
+	public ModelAndView fa004001view(HttpServletRequest request, FA004001SearchCommand searchCommand)
+	{					
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		resultMap.put("searchCommand", searchCommand);
+		FA004Command command = fa004Service.fa004001view(searchCommand);
+		command.setSearchCommand(searchCommand);
+		resultMap.put("command", command);
+		ModelAndView mav = new ModelAndView( PAGE_DETAIL, resultMap);				
 		return mav;
 	}
 	/**

@@ -181,7 +181,12 @@ function getDisplayName(obj) {
 	    name_s = Message.getString($(obj).attr("displayname"));	    
 	} catch(e) {
 	    name_s = $(obj).attr("displayname");
-	}	
+	}
+	try {
+	    name_s = Message.getString($(obj).attr("role"));	    
+	} catch(e) {
+	    name_s = $(obj).attr("role");
+	}
 	if (name_s == "" || name_s == null || name_s == undefined) {
 		name_s = $(obj).parent().prev().find(".message").text();
 	}

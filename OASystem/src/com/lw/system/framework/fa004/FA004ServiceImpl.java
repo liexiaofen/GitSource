@@ -89,21 +89,23 @@ public class FA004ServiceImpl implements IFA004Service,ConstantUtil {
 			mybatisDAOImpl.openSession();
 			// 根据业务字典类型id删除业务字典表
 			flag = mybatisDAOImpl.delete( "fa.fa004.fa004001PDBusiDict", command.getBusidicttypeid());	
-			for(BusiDict entity:command.getBusidict()){			
-				BusiDict busidict = new BusiDict();
-				busidict.setBusidicttypeid(command.getBusidicttypeid());
-				busidict.setBusidictid(entity.getBusidictid());
-				busidict.setBusidictname(entity.getBusidictname());
-				busidict.setSortno(new Integer(entity.getSortno()));
-				busidict.setStatus("1");
-				busidict.setRank("1");
-				busidict.setSeqno("."+entity.getBusidictid()+".");
-				mybatisDAOImpl.insert("common.insertBusidict", busidict);		
-				if(flag < 1){
-					mybatisDAOImpl.rollback();
-					return flag;
+			if(command.getBusidict() != null){
+				for(BusiDict entity:command.getBusidict()){			
+					BusiDict busidict = new BusiDict();
+					busidict.setBusidicttypeid(command.getBusidicttypeid());
+					busidict.setBusidictid(entity.getBusidictid());
+					busidict.setBusidictname(entity.getBusidictname());
+					busidict.setSortno(new Integer(entity.getSortno()));
+					busidict.setStatus("1");
+					busidict.setRank("1");
+					busidict.setSeqno("."+entity.getBusidictid()+".");
+					mybatisDAOImpl.insert("common.insertBusidict", busidict);		
+					if(flag < 1){
+						mybatisDAOImpl.rollback();
+						return flag;
+					}	
 				}	
-			}			
+			}
 			mybatisDAOImpl.commit();
 		} catch (Exception e) {
 			mybatisDAOImpl.rollback();

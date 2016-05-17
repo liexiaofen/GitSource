@@ -56,6 +56,25 @@ function btn_edit( obj){
 	$('form[name="editForm"]').submit();
 }
 /*
+*名       称: link_view( obj)
+*输入参数: obj
+*输出参数: 无
+*机       能: 编辑按钮按下，跳转到明细画面
+*创 建  者: yuliang          
+*创建时间: 2016-05-16
+*更 新  者: 
+*更新时间: 
+*/
+function link_view( obj){
+	var busidicttypeid = $(obj).parent().parent().find('input[name="busidicttypeid"]').val();
+	var busidicttypename = $(obj).parent().parent().find('input[name="busidicttypename"]').val();
+	$("#viewForm").find('input[name="id"]').val(busidicttypeid);
+	$("#viewForm").find('input[name="name"]').val(busidicttypename);
+	c_ShowProgressBar(); 
+	$('#viewForm').attr( "action", "fa004001view.do");	
+	$('form[name="viewForm"]').submit();
+}
+/*
 *名       称: btn_reset()
 *输入参数: 无
 *输出参数: 无
@@ -114,10 +133,107 @@ function btn_refreshCache(){
 	$("#queryForm").attr( "action", "fa004001refreshCache.do");	
 	$("#queryForm").submit();
 }
+
+/*
+*名       称: btn_update()
+*输入参数: obj
+*输出参数: 无
+*机       能: 更新
+*创 建  者: yuliang          
+*创建时间: 2016-05-17
+*更 新  者: 
+*更新时间: 
+*/
+function btn_update(obj){	
+	if($(obj).val() == '更新'){		
+		var id = $(obj).parent().prev().prev();
+		var name = $(obj).parent().prev();
+		id.html("<input class=\"input_bigger\" value=\""+$(id).find("a").eq(0).text()+"\" maxlength=\"20\" />");
+		name.html("<input class=\"input_bigger\" value=\""+$(name).text()+"\" maxlength=\"50\" />");
+		$(obj).val('保存');
+	}else{				
+		var id = $(obj).parent().prev().prev();
+		var name = $(obj).parent().prev();
+		var idval = $(id).find("input").val();
+		var nameval = $(name).find("input").val()
+		if(idval == ''){
+			alert( Message.getString( "MSG_COMM_0001", "类型代码"));
+			$(id).find("input").focus();
+			return;
+		}
+		if(nameval == ''){
+			alert( Message.getString( "MSG_COMM_0001", "类型名称"));
+			$(name).find("input").focus();
+			return;
+		}
+		var flg = true;
+		//检查类型代码唯一性
+		$.ajax({
+			async: false,
+			data:"",
+			type:"GET",
+			dataType: 'json',
+			url:'<%= request.getContextPath()%>/common/ajax/checkUniqueTypeId.do?flg='+escape(new Date())+'&typeid='+escape(idval)+'&busidicttypeid='+escape($(obj).parent().parent().find('input[name="busidicttypeid"]').val()),
+			success:function(data){
+				if(data.flag == true){
+					var msgid = data.msgid;
+					alert(Message.getString(msgid)); 
+					flg = false;
+				}else{
+					flg = true;
+				}			
+			},
+			error:function(data){
+				alert(Message.getString("ERROR_COMM_0037")); 
+				flg = false;
+				return;
+			}		
+		});
+		if(!flg){
+			return;
+		}
+		//更新类型代码
+		$.ajax({
+			async: false,
+			data:"",
+			type:"GET",
+			dataType: 'json',
+		 	contentType:"application/x-www-form-urlencoded:charset=UTF-8",
+			url:'<%= request.getContextPath()%>/common/ajax/updateBusiDictType.do?flg='+escape(new Date())+'&typeid='+escape(idval)+'&typename='+encodeURI(encodeURI(nameval))+'&busidicttypeid='+escape($(obj).parent().parent().find('input[name="busidicttypeid"]').val()),
+			success:function(data){
+				var msgid = data.msgid;
+				alert(Message.getString(msgid)); 
+				if(data.flag == true){					
+					flg = true;
+				}else{
+					flg = false;
+				}			
+			},
+			error:function(data){
+				alert(Message.getString("ERROR_COMM_0037")); 
+				flg = false;
+				return;
+			}		
+		});
+		if(flg){
+			id.html("<a href=\"#\" onclick=\"javascript:link_view(this);return false;\">"+idval+"</a>");
+			name.text(nameval);
+			//隐藏域处理
+			$(obj).parent().parent().find('input[name="busidicttypeid"]').val(idval);
+			$(obj).parent().parent().find('input[name="busidicttypename"]').val(nameval);
+		}else{
+			id.html("<a href=\"#\" onclick=\"javascript:link_view(this);return false;\">"+$(obj).parent().parent().find('input[name="busidicttypeid"]').val()+"</a>");
+			name.text($(obj).parent().parent().find('input[name="busidicttypename"]').val());
+		}
+		$(obj).val('更新');
+	}
+	
+	
+}
 </script>
 </head>
 <body>
-<form id="queryForm" action="" method="post" > 
+<form id="queryForm" action="" method="post"> 
 	<div class="div_navi"><span><img src="<%= request.getContextPath()%>/resources/images/home.png">&nbsp;您当前的位置：系统管理&nbsp;&gt;&nbsp;业务字典信息&nbsp;&gt;&nbsp;业务字典信息一览</span></div>
 	<div class="div_search_title">
 		<table class="tb_title">
@@ -175,9 +291,9 @@ function btn_refreshCache(){
 		    <tr class="pg_result_head">
 		    	<td width="3%"><input type="checkbox" name="checkAll" id="checkAll" value='abc'/></td>
 		    	<td width="3%">&nbsp;序号&nbsp;</td>					
-				<td width="15%">&nbsp;类型代码&nbsp;</td>
-				<td width="15%">&nbsp;类型名称&nbsp;</td>	
-				<td width="15%">&nbsp;操作&nbsp;</td>	
+				<td width="20%">&nbsp;类型代码&nbsp;</td>
+				<td width="20%">&nbsp;类型名称&nbsp;</td>	
+				<td width="10%">&nbsp;操作&nbsp;</td>	
 				<td>&nbsp;&nbsp;</td>
 			</tr>
 		    <tbody id="body_result">
@@ -195,8 +311,8 @@ function btn_refreshCache(){
 						</td>
 						<td align="left" nowrap>${iterator.busidicttypename}</td>	
 						<td align="left" nowrap>
-							<input name="edit" id="edit" type="button" class="btn" onClick="btn_edit(this)"  value="编&nbsp;辑" />
-							<input name="edit" id="edit" type="button" class="btn" onClick="btn_edit()"  value="更&nbsp;新" />							
+							<input name="edit" id="edit" type="button" class="btn" onClick="btn_edit(this)"  value="编辑" />
+							<input name="edit" id="edit" type="button" class="btn" onClick="btn_update(this)" value="更新" />							
 						</td>	 					
 						<td align="left" nowrap></td>
 		    		</tr>
@@ -240,7 +356,6 @@ function btn_refreshCache(){
 	</c:if>
 	<!--End Page Infor-->
 </form>
-<%-- 详情表单开始  --%>
 <form action="fa004001edit.do" id="editForm" name="editForm" method="post">
 	<%/*共通隐藏字段 start*/%>
 	<input name="busidicttypeid" type="hidden"  value="${searchCommand.busidicttypeid}" />
@@ -249,7 +364,14 @@ function btn_refreshCache(){
 	<input name="id" type="hidden"  />
 	<input name="name" type="hidden"  />
 </form>
-<%-- 详情表单结束  --%>
+<form action="fa004001view.do" id="viewForm" name="viewForm" method="post">
+	<%/*共通隐藏字段 start*/%>
+	<input name="busidicttypeid" type="hidden"  value="${searchCommand.busidicttypeid}" />
+	<input name="busidicttypename" type="hidden"  value="${searchCommand.busidicttypename}" />
+	<%/*共通隐藏字段 end*/%>	
+	<input name="id" type="hidden"  />
+	<input name="name" type="hidden"  />
+</form>
 <form action="fa004001delete.do" id="deleteForm" name="deleteForm" method="post">
 	<%/*共通隐藏字段 start*/%>
 	<input name="busidicttypeid" type="hidden"  value="${searchCommand.busidicttypeid}" />
