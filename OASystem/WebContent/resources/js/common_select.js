@@ -73,8 +73,8 @@ function change_refreshDepEmp( obj, depselectid, empselectid, selectindex){
 	});
 }
 /*
-*名       称: addOptions( str, selectid, selectindex)
-*输入参数: jsondata, selectid, selectindex
+*名       称: addOptions( str, selectid, selectindex, isnull)
+*输入参数: jsondata, selectid, selectindex, isnull
 *输出参数: 无
 *机       能: 添加option选项
 *创 建  者: yuliang          
@@ -82,10 +82,13 @@ function change_refreshDepEmp( obj, depselectid, empselectid, selectindex){
 *更 新  者: 
 *更新时间: 
 */
-function addOptions( str, selectid, selectindex) {
+function addOptions( str, selectid, selectindex, isnull) {
 	// JSON字符串转JSON对象
     var jsonArray = eval(str); 
 	$("#"+selectid).empty();
+	if(isnull != '' && isnull != null && isnull != undefined){
+		$("#"+selectid).append("<option value=\"\">"+isnull+"</option>"); 
+	}
     for(var i=0; i<jsonArray.length; i++) {
         if (jsonArray[i].busidictid == selectindex) {
         	$("#"+selectid).append("<option value="+jsonArray[i].busidictid+" selected='selected'>"+jsonArray[i].busidictname+"</option>");   

@@ -163,6 +163,31 @@ public class AjaxController implements ConstantUtil{
 		}
 	}
 	/**
+	 * 根据区域id获取所有的机构
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = { "getOrgidsByRegionid.do" },method = RequestMethod.GET)
+	public void getOrgidsByRegionid(HttpServletRequest request,HttpServletResponse response){
+		String regionid = request.getParameter("regionid");			
+		@SuppressWarnings("unchecked")
+		List<DictEntity> list = (List<DictEntity>) ajaxService.getOrgidsByRegionid(regionid);
+		//将list转化成jsonarray
+		JSONArray jsonarray = new JSONArray();	
+		for(DictEntity entity:list){
+			JSONObject jsonobj = new JSONObject();
+			jsonobj.put("busidictid", entity.getBusidictid());
+			jsonobj.put("busidictname", entity.getBusidictname());
+			jsonarray.add(jsonobj);
+		}
+		try {
+			response.getWriter().write(JSON.toJSONString(jsonarray));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	/**
 	 * 检查用户名唯一性
 	 * @param request
 	 * @return

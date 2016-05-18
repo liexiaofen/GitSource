@@ -12,6 +12,8 @@ public class PA001001SearchCommand extends Pager<PA001001ResultCommand> {
 	private static final long serialVersionUID = 1L;
 	// 员工id
 	private String empid;
+	// 区域id
+	private String regionid;
 	// 机构id
 	private String orgcdid;
 	// 角色id
@@ -67,6 +69,14 @@ public class PA001001SearchCommand extends Pager<PA001001ResultCommand> {
 
 	public void setEmpid(String empid) {
 		this.empid = empid;
+	}
+
+	public String getRegionid() {
+		return regionid;
+	}
+
+	public void setRegionid(String regionid) {
+		this.regionid = regionid;
 	}
 
 	public String getOrgcdid() {

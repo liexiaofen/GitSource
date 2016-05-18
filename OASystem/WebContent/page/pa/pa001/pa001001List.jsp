@@ -104,7 +104,53 @@ $(document).ready(function() {
     $('#divtop').click(function (event){
     	$(this).fadeOut(1000);
     });*/
+	//获取regionid
+	var regionid = $('#regionid').val();
+    //通过区域id获取对应的机构列表
+	$.ajax({
+		async: false,
+		data:"",
+		type:"GET",
+		dataType: 'json',
+		url:'<%= request.getContextPath()%>/common/ajax/getOrgidsByRegionid.do?flg='+escape(new Date())+'&regionid='+escape(regionid),
+		success:function(data){			
+			addOptions( data, 'orgcdid', '<c:out value="${searchCommand.orgcdid}"></c:out>', '全部');
+		},
+		error:function(data){
+			alert(Message.getString("ERROR_COMM_0037")); 
+			flg = false;
+			return;
+		}		
+	});
 });
+/*
+*名       称: change_refreshOrgid( obj, orgcdid)
+*输入参数: obj, orgcdid
+*输出参数: 无
+*机       能: 根据regionid查询机构
+*创 建  者: yuliang          
+*创建时间: 2016-05-18
+*更 新  者: 
+*更新时间: 
+*/
+function change_refreshOrgid( obj, orgcdid){
+	//获取regionid
+	var regionid = $(obj).val();
+	$.ajax({
+		async: false,
+		data:"",
+		type:"GET",
+		dataType: 'json',
+		url:contextPath+'/common/ajax/getOrgidsByRegionid.do?flg='+escape(new Date())+'&regionid='+escape(regionid),
+		success:function(data){			
+			addOptions( data, orgcdid, '', '全部');
+		},
+		error:function(data){
+			alert(Message.getString("ERROR_COMM_0037")); 
+			return;
+		}		
+	});
+}
 </script>
 </head>
 <body>
@@ -139,9 +185,16 @@ $(document).ready(function() {
 		        </td>
 			</tr>
 			<tr>
+				<td class="td_key" width="8%">
+					<label class="message">区域</label>
+				</td>
+				<td class="td_value">
+					<dict:select id="regionid" name="regionid" value="${searchCommand.regionid}" busiDictTypeId="OA_COMMON_Region" cssClass="input_select" nullLabel="全部" onChange="change_refreshOrgid( this, 'orgcdid')"></dict:select>
+				</td>
 				<td class="td_key" width="8%" nowrap><label class="message">机构</label></td>
 				<td class="td_value" width="26%">
-					<dict:select2 id="orgcdid" name="orgcdid" value="${searchCommand.orgcdid}" sqlid="select orgcdid as busidictid,orgshortname as busidictname  from s_organize where deletefg = '0' order by sortno" cssClass="input_select" nullLabel="全部"></dict:select2>
+					<select id='orgcdid' name='orgcdid' class='input_select' >
+					</select>
 				</td>
 				<td class="td_key" width="8%" nowrap><label class="message">部门</label></td>					
 				<td class="td_value">
@@ -223,7 +276,8 @@ $(document).ready(function() {
 	<input name="empname" type="hidden"  value="${searchCommand.empname}" />
 	<input name="entrytimestart" type="hidden"  value="${searchCommand.entrytimestart}" />
 	<input name="entrytimeend" type="hidden"  value="${searchCommand.entrytimeend}" />
-	<input name="status" type="hidden"  value="${searchCommand.status}" />
+	<input name="status" type="hidden"  value="${searchCommand.status}" />	
+	<input name="regionid" type="hidden"  value="${searchCommand.regionid}" />
 	<input name="orgcdid" type="hidden"  value="${searchCommand.orgcdid}" />
 	<input name="depid" type="hidden"  value="${searchCommand.depid}" />
 	<input name="pageSize" type="hidden" value="${page.pageSize}"/>
@@ -254,6 +308,7 @@ $(document).ready(function() {
 	<input name="entrytimestart" type="hidden"  value="${searchCommand.entrytimestart}" />
 	<input name="entrytimeend" type="hidden"  value="${searchCommand.entrytimeend}" />
 	<input name="status" type="hidden"  value="${searchCommand.status}" />
+	<input name="regionid" type="hidden"  value="${searchCommand.regionid}" />
 	<input name="orgcdid" type="hidden"  value="${searchCommand.orgcdid}" />
 	<input name="depid" type="hidden"  value="${searchCommand.depid}" />
 	<%/*共通隐藏字段 end*/%>	

@@ -52,6 +52,16 @@
 			order by v.depid		 
 	]]>		
 	</select>	
+	<!-- 根据regionid查询机构信息 -->    
+	<select id="getOrgidsByRegionid" resultType="dictEntity" parameterType="java.util.Map">
+	<![CDATA[
+		select orgcdid as busidictid,orgshortname as busidictname  from s_organize where deletefg = '0' 
+	]]>		
+		<if test="regionid!=null and regionid!=''">
+			and regionid = #{regionid}
+		</if> 
+		order by sortno
+	</select>	
     <select id="checkUniqueUsername" parameterType="java.util.Map" resultType="int">
 	<![CDATA[
 		SELECT 

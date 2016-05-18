@@ -15,7 +15,9 @@
 			t.cardno,convert(char(10), t.entrytime, 23) as entrytime, t.sex, dict3.busidictname as sexdict, t.status, dict4.busidictname as statusdict, t.username,
 			ROW_NUMBER() OVER(order by emporg.posid, emporg.depid, t.entrytime) as rownum 
 		FROM [dbo].[t_empinfo] t 
-		inner join (select empid, cast( min(depid) as int) as depid, cast( min(posid) as int) as posid from t_emporg where deletefg = '0' group by empid) emporg 
+		inner join (
+			select empid, cast( min(depid) as int) as depid, cast( min(posid) as int) as posid from t_emporg where deletefg = '0' group by empid
+		) emporg 
 			on t.empid = emporg.empid 
 		left join [dbo].[t_empinfo] updator
 			on t.updator = updator.empid  
@@ -38,6 +40,14 @@
 		</if>
 		<if test="status!=null and status!=''">
 			and t.status = #{status}
+		</if>
+		<if test="regionid!=null and regionid!=''">
+			and t.empid in (
+							select emporg.empid from t_emporg emporg 
+								inner join s_organize organize 
+									on emporg.orgcdid = organize.orgcdid and emporg.deletefg = organize.deletefg
+							where emporg.deletefg = '0' and organize.regionid = #{regionid}
+						   )
 		</if>
 		<if test="orgcdid!=null and orgcdid!=''">
 			and t.empid in (select empid from t_emporg where orgcdid = #{orgcdid})

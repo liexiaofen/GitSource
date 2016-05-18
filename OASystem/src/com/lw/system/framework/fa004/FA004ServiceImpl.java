@@ -64,7 +64,7 @@ public class FA004ServiceImpl implements IFA004Service,ConstantUtil {
 			mybatisDAOImpl.openSession();
 			for(BusiDictType entity:busidicttype){			
 				flag = mybatisDAOImpl.delete( "fa.fa004.fa004001PDBusiDictType", entity.getBusidicttypeid());	
-				flag = mybatisDAOImpl.delete( "fa.fa004.fa004001PDBusiDict", entity.getBusidicttypeid());	
+				mybatisDAOImpl.delete( "fa.fa004.fa004001PDBusiDict", entity.getBusidicttypeid());	
 				if(flag < 1){
 					mybatisDAOImpl.rollback();
 					return flag;

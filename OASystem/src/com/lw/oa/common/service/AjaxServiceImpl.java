@@ -214,6 +214,19 @@ public class AjaxServiceImpl implements IAjaxService,ConstantUtil {
 		mybatisDAOImpl.close();
 		return list;
 	}	
+	
+	@Override
+	public List<?> getOrgidsByRegionid(String regionid) {
+		// TODO Auto-generated method stub
+		mybatisDAOImpl.openSession();
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("regionid", regionid);
+		@SuppressWarnings("unchecked")
+		List<ResultCommand> list = (List<ResultCommand>) mybatisDAOImpl.queryByObj(
+				"common.ajax.getOrgidsByRegionid", map);
+		mybatisDAOImpl.close();
+		return list;
+	}
 	@Override
 	public List<?> getEmpsByOrgcdDepid(String orgcdid, String depid) {
 		// TODO Auto-generated method stub

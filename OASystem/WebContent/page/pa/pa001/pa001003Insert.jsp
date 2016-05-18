@@ -175,6 +175,7 @@ function btn_clear(obj) {
 	<input name="pa001001searchcommand.entrytimestart" type="hidden"  value="${command.pa001001searchcommand.entrytimestart}" />
 	<input name="pa001001searchcommand.entrytimeend" type="hidden"  value="${command.pa001001searchcommand.entrytimeend}" />
 	<input name="pa001001searchcommand.status" type="hidden"  value="${command.pa001001searchcommand.status}" />
+	<input name="pa001001searchcommand.regionid" type="hidden"  value="${command.pa001001searchcommand.regionid}" />
 	<input name="pa001001searchcommand.orgcdid" type="hidden"  value="${command.pa001001searchcommand.orgcdid}" />
 	<input name="pa001001searchcommand.depid" type="hidden"  value="${command.pa001001searchcommand.depid}" />
 	<div class="div_navi"><span><img src="<%= request.getContextPath()%>/resources/images/home.png">&nbsp;您当前的位置：主表管理&nbsp;&gt;&nbsp;员工信息&nbsp;&gt;&nbsp;员工信息登录</span></div>
@@ -339,14 +340,18 @@ function btn_clear(obj) {
 					<input id="password" name="password" type="password" class="input_txt" maxlength="20"  title="required,ascii" />
 				</td>
 			</tr>
+	    </tbody>
+	  </table>
+	</div>
+	<div class="div_result_button">
+		<table class="tb_result">
 			<tr>
-				<td colspan="4" align="right">					
+				<td align="right">					
 					<input name="search" id="search" type="button" class="btn" value="保&nbsp;存" onClick="btn_save();"/>
 					<input name="button" id="reset" type="button" class="btn" value="返&nbsp;回" onClick="btn_back();" />
 				</td>
 	      	</tr>
-	    </tbody>
-	  </table>
+		</table>
 	</div>
 </form>
 </body>
