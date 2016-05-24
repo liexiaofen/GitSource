@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+    "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+    
+<mapper namespace="fa.fa001">
+	<!-- 查询菜单信息一览 -->    
+	<select id="fa001001searchListByPage" resultType="fa001001resultCommand" parameterType="fa001001searchCommand">
+	<![CDATA[
+		SELECT 
+ 			t.resourceid, t.resourcename, t.resourcecode, t.isleaf, t.resourcelevel, t.resourceaction, t.parentid, t.resourcetype, t.sortno,
+			ROW_NUMBER() OVER(order by t.resourcelevel, t.sortno ) as rownum 
+		FROM [dbo].[s_resource] t where 1=1 
+	]]> 
+		<if test="resourcecode!=null and resourcecode!=''">
+			and t.resourcecode like '%'+#{resourcecode}+'%'
+		</if>
+		<if test="resourcelevel!=null and resourcelevel!=''">
+			and t.resourcelevel = #{resourcelevel}
+		</if>
+		<if test="resourcename!=null and resourcename!=''">
+			and t.resourcename like '%'+#{resourcename}+'%'
+		</if>	
+	</select>
+	<!-- 根据菜单信息id查询菜单信息 -->    
+	<select id="fa001001expandById" resultType="fa001command" parameterType="fa001001searchCommand">
+	<![CDATA[
+		SELECT 
+ 			t.resourceid, t.resourcename, t.resourcecode, t.isleaf, t.resourcelevel, t.resourceaction, t.parentid, t1.resourcename as parentname, t.resourcetype, t.sortno				
+		FROM [OA].[dbo].[s_resource] t 
+		left join [OA].[dbo].[s_resource] t1 
+			on t.parentid = t1.resourceid 
+		where 1=1 and t.resourceid = #{resourceid}
+	]]> 
+	</select>
+	<update id="fa001002update" parameterType="resource">
+	<![CDATA[
+        update s_resource set
+           resourcename = #{resourcename, jdbcType=VARCHAR}
+           ,resourcecode = #{resourcecode, jdbcType=VARCHAR}           
+           ,isleaf = #{isleaf, jdbcType=VARCHAR}
+           ,resourcelevel = #{resourcelevel, jdbcType=VARCHAR}
+           ,resourceaction = #{resourceaction, jdbcType=VARCHAR}           
+           ,parentid = #{parentid, jdbcType=VARCHAR}
+           ,resourcetype = #{resourcetype, jdbcType=VARCHAR}
+           ,sortno = #{sortno, jdbcType=VARCHAR}
+    	where resourceid = #{resourceid, jdbcType=VARCHAR}       
+    ]]>     
+    </update>
+    <!-- 根据资源id删除资源 --> 
+	<delete id="fa001001PDResource" parameterType="java.lang.String">
+    	delete from [dbo].[s_resource] where resourceid = #{resourceid, jdbcType=VARCHAR}
+    </delete>
+    <!-- 根据资源id删除子资源 --> 
+	<delete id="fa001001PDSubResource" parameterType="java.lang.String">
+    	delete from [dbo].[s_resource] where parentid = #{resourceid, jdbcType=VARCHAR}
+    </delete>
+</mapper>

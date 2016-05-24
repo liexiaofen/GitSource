@@ -50,7 +50,7 @@
 			</li> --%>
 			<li><h4 class="M4"><span></span>系统管理</h4>
 				<div class="list-item none">
-					<a href='design.jsp' target="mainFrame">菜单信息</a>
+					<a href='<%=request.getContextPath()%>/fa001001init.do' target="mainFrame">菜单信息</a>
 					<a href='design.jsp' target="mainFrame">角色信息</a>
 					<a href='design.jsp' target="mainFrame">权限绑定</a>
 					<a href='<%=request.getContextPath()%>/fa004001init.do' target="mainFrame">业务字典信息</a>          	

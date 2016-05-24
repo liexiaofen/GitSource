@@ -859,4 +859,28 @@
            ,#{filter2, jdbcType=VARCHAR})
     ]]>
     </insert>
+    <insert id="insertResource" parameterType="resource">
+	<![CDATA[
+        INSERT INTO [dbo].[s_resource]
+           ([resourceid]
+           ,[resourcename]
+           ,[resourcecode]
+           ,[isleaf]
+           ,[resourcelevel]
+           ,[resourceaction]
+           ,[parentid]
+           ,[resourcetype]
+           ,[sortno])
+     VALUES
+           (#{resourceid, jdbcType=VARCHAR}
+           ,#{resourcename,jdbcType=VARCHAR}
+           ,#{resourcecode,jdbcType=VARCHAR}
+           ,#{isleaf,jdbcType=VARCHAR}
+           ,#{resourcelevel,jdbcType=VARCHAR}
+           ,#{resourceaction, jdbcType=VARCHAR}
+           ,#{parentid,jdbcType=VARCHAR}
+           ,#{resourcetype, jdbcType=VARCHAR}
+           ,#{sortno, jdbcType=VARCHAR})
+    ]]>
+    </insert>
 </mapper>

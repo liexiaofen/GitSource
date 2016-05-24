@@ -51,6 +51,7 @@ public class FA004ServiceImpl implements IFA004Service,ConstantUtil {
 		List<BusiDict> list = (List<BusiDict>) mybatisDAOImpl
 				.queryByObj("fa.fa004.fa004001queryDictById", map);
 		command.setList(list);
+		mybatisDAOImpl.close();
 		return command;
 	}
 
@@ -124,12 +125,12 @@ public class FA004ServiceImpl implements IFA004Service,ConstantUtil {
 		try {
 			mybatisDAOImpl.openSession();
 			// 创建业务字典类型对象
-			BusiDictType bicttype = new BusiDictType();
-			bicttype.setBusidicttypeid(command.getBusidicttypeid());
-			bicttype.setBusidicttypename(command.getBusidicttypename());
-			bicttype.setRank("1");
-			bicttype.setSeqno("."+command.getBusidicttypeid()+".");
-			mybatisDAOImpl.insert("common.insertBusidicttype", bicttype);			
+			BusiDictType busidicttype = new BusiDictType();
+			busidicttype.setBusidicttypeid(command.getBusidicttypeid());
+			busidicttype.setBusidicttypename(command.getBusidicttypename());
+			busidicttype.setRank("1");
+			busidicttype.setSeqno("."+command.getBusidicttypeid()+".");
+			mybatisDAOImpl.insert("common.insertBusidicttype", busidicttype);			
 			for(BusiDict entity:command.getBusidict()){			
 				BusiDict busidict = new BusiDict();
 				busidict.setBusidicttypeid(command.getBusidicttypeid());

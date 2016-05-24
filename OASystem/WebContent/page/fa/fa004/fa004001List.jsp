@@ -59,7 +59,7 @@ function btn_edit( obj){
 *名       称: link_view( obj)
 *输入参数: obj
 *输出参数: 无
-*机       能: 编辑按钮按下，跳转到明细画面
+*机       能: link按下，跳转到明细画面
 *创 建  者: yuliang          
 *创建时间: 2016-05-16
 *更 新  者: 

@@ -115,6 +115,22 @@ public class FA004Controller implements ConstantUtil{
 		resultMap.put("command", command);
 		ModelAndView mav = new ModelAndView( PAGE_UPDATE, resultMap);				
 		return mav;
+	}	
+	/**
+	 * 业务字典信息登录画面
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = { "fa004001insert.do" },method = RequestMethod.POST)
+	public ModelAndView fa004001insert(HttpServletRequest request, FA004001SearchCommand searchCommand)
+	{				
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		resultMap.put("searchCommand", searchCommand);
+		FA004Command command = new FA004Command();
+		command.setSearchCommand(searchCommand);
+		resultMap.put("command", command);
+		ModelAndView mav = new ModelAndView( PAGE_INSERT, resultMap);				
+		return mav;
 	}
 	/**
 	 * 业务字典信息编辑画面
@@ -130,22 +146,6 @@ public class FA004Controller implements ConstantUtil{
 		command.setSearchCommand(searchCommand);
 		resultMap.put("command", command);
 		ModelAndView mav = new ModelAndView( PAGE_DETAIL, resultMap);				
-		return mav;
-	}
-	/**
-	 * 业务字典信息登录画面
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping(value = { "fa004001insert.do" },method = RequestMethod.POST)
-	public ModelAndView fa004001insert(HttpServletRequest request, FA004001SearchCommand searchCommand)
-	{					
-		Map<String,Object> resultMap = new HashMap<String,Object>();
-		resultMap.put("searchCommand", searchCommand);
-		FA004Command command = new FA004Command();
-		command.setSearchCommand(searchCommand);
-		resultMap.put("command", command);
-		ModelAndView mav = new ModelAndView( PAGE_INSERT, resultMap);				
 		return mav;
 	}
 	@RequestMapping(value = { "fa004001refreshCache.do" },method = RequestMethod.POST)

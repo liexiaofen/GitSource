@@ -41,7 +41,7 @@ function btn_insert() {
 	$('#queryForm').submit();
 }
 /*
-*名       称: link_view( id)
+*名       称: link_view( obj)
 *输入参数: obj
 *输出参数: 无
 *机       能: Link到明细
