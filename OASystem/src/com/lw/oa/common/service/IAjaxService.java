@@ -14,6 +14,7 @@ public interface IAjaxService {
 	public int checkUniqueCardno(String cardno);
 	public List<?> getDepsByOrgcdid(String orgcdid);
 	public List<?> getOrgidsByRegionid(String regionid);
+	public List<?> getResources();
 	public List<?> getEmpsByOrgcdDepid(String orgcdid, String depid);
 	public int checkUniqueUsername(String username, String empid);
 	public int checkUniqueTypeId(String typeid, String busidicttypeid);

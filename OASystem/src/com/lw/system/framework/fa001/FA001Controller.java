@@ -98,14 +98,17 @@ public class FA001Controller implements ConstantUtil{
  		return fa001001search(request, searchCommand, retInfo);
 	}
 	/**
-	 * 菜单信息编辑画面
+	 * 菜单数跳转
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = { "fa001001edit.do" },method = RequestMethod.POST)
-	public ModelAndView fa001001edit(HttpServletRequest request, FA001001SearchCommand searchCommand)
+	@RequestMapping(value = { "fa001001edit.do" },method = RequestMethod.GET)
+	public ModelAndView fa001001edit(HttpServletRequest request)
 	{					
 		Map<String,Object> resultMap = new HashMap<String,Object>();
+		String id = request.getParameter("id");
+		FA001001SearchCommand searchCommand = new FA001001SearchCommand();
+		searchCommand.setResourceid(id);
 		resultMap.put("searchCommand", searchCommand);
 		FA001Command command = fa001Service.fa001001view(searchCommand);
 		command.setSearchCommand(searchCommand);

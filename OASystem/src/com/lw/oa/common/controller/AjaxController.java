@@ -23,6 +23,7 @@ import com.lw.oa.common.command.ApplyFormCommand;
 import com.lw.oa.common.command.DictEntity;
 import com.lw.oa.common.command.RetInfo;
 import com.lw.oa.common.command.SessionEntity;
+import com.lw.oa.common.model.Resource;
 import com.lw.oa.common.service.IAjaxService;
 import com.lw.oa.common.service.ICommonService;
 import com.lw.oa.common.util.ConstantUtil;
@@ -187,6 +188,40 @@ public class AjaxController implements ConstantUtil{
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * 获取所有的资源信息
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = { "getResources.do" },method = RequestMethod.GET)
+	public void getResources(HttpServletRequest request,HttpServletResponse response){
+		@SuppressWarnings("unchecked")
+		List<Resource> list = (List<Resource>) ajaxService.getResources();
+		//将list转化成jsonarray
+		JSONArray jsonarray = new JSONArray();	
+		//根目录设定 id:0, name:"菜单管理", open:true
+		JSONObject root = new JSONObject();
+		root.put("id", "0");
+		root.put("name", "菜单管理");
+		root.put("open", true);
+		jsonarray.add(root);
+		for(Resource entity:list){
+			JSONObject jsonobj = new JSONObject();
+			jsonobj.put("id", entity.getResourceid());
+			jsonobj.put("name", entity.getResourcename());
+			if(entity.getParentid() != null && !StringUtils.EMPTY.equals(entity.getParentid()) )
+				jsonobj.put("pid", entity.getParentid());
+			else 
+				jsonobj.put("pid", "0");
+			jsonarray.add(jsonobj);
+		}
+		try {
+			response.getWriter().write(JSON.toJSONString(jsonarray));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}	
 	/**
 	 * 检查用户名唯一性
 	 * @param request

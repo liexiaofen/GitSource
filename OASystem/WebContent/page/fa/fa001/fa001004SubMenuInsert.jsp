@@ -22,6 +22,8 @@ function btn_save() {
 	if ( !window.confirm( Message.getString("MSG_IC_COMM_0002"))) 
 		return;
 	c_ShowProgressBar(); 
+	//ztree的重新加载
+	window.parent.document.getElementById('left').src = '<%=request.getContextPath()%>/page/fa/fa001/ztree.jsp';
 	$("#addForm").attr( "action", "fa001004save.do");	
 	$("#addForm").submit();	
 }

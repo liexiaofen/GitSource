@@ -62,6 +62,15 @@
 		</if> 
 		order by sortno
 	</select>	
+	<!-- 获取资源信息 -->    
+	<select id="getResources" resultType="resource" parameterType="java.util.Map">
+	<![CDATA[
+		select t.resourceid, t.resourcename, t.resourcecode, t.isleaf, t.resourcelevel, t.resourceaction, t.parentid, t.resourcetype, t.sortno
+		from s_resource t where t.resourcetype in ('0','1') order by t.resourcelevel, t.sortno
+		
+	]]>	
+		
+	</select>	
     <select id="checkUniqueUsername" parameterType="java.util.Map" resultType="int">
 	<![CDATA[
 		SELECT 

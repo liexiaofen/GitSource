@@ -93,10 +93,18 @@ function btn_delete(){
 		var resourceid = $(n).parent().find('input[name="resourceid"]').val();
 		$("#deleteForm").append("<input name=\"resource["+i+"].resourceid\" value=\""+resourceid+"\" type=\"hidden\" />");
 	});
-	c_ShowProgressBar(); 
+	c_ShowProgressBar();	
+	ztree_load();
 	$("#deleteForm").attr( "action", "fa001001delete.do");	
 	$("#deleteForm").submit();
 }
+function ztree_load(){
+	//ztree的重新加载
+	window.parent.document.getElementById('left').src = '<%=request.getContextPath()%>/page/fa/fa001/ztree.jsp';
+}
+$(document).ready(function(){		
+	
+});
 </script>
 </head>
 <body>

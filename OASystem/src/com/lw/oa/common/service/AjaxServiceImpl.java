@@ -22,6 +22,7 @@ import com.lw.oa.common.model.ApplyForm;
 import com.lw.oa.common.model.CommonBean;
 import com.lw.oa.common.model.EventConnect;
 import com.lw.oa.common.model.EventDevice;
+import com.lw.oa.common.model.Resource;
 import com.lw.oa.common.model.TicketDetail;
 import com.lw.oa.common.command.RetInfo;
 import com.lw.oa.common.util.CalendarUtil;
@@ -224,6 +225,18 @@ public class AjaxServiceImpl implements IAjaxService,ConstantUtil {
 		@SuppressWarnings("unchecked")
 		List<ResultCommand> list = (List<ResultCommand>) mybatisDAOImpl.queryByObj(
 				"common.ajax.getOrgidsByRegionid", map);
+		mybatisDAOImpl.close();
+		return list;
+	}
+	
+	@Override
+	public List<?> getResources() {
+		// TODO Auto-generated method stub
+		mybatisDAOImpl.openSession();
+		HashMap<String, String> map = new HashMap<String, String>();
+		@SuppressWarnings("unchecked")
+		List<Resource> list = (List<Resource>) mybatisDAOImpl.queryByObj(
+				"common.ajax.getResources", map);
 		mybatisDAOImpl.close();
 		return list;
 	}
