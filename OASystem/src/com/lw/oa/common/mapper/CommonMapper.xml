@@ -883,4 +883,28 @@
            ,#{sortno, jdbcType=VARCHAR})
     ]]>
     </insert>
+    <insert id="insertRole" parameterType="role">
+	<![CDATA[
+        INSERT INTO [dbo].[s_role]
+           ([roleid]
+           ,[rolename]
+           ,[rolecode]
+           ,[roletype])
+     VALUES
+           (#{roleid, jdbcType=VARCHAR}
+           ,#{rolename,jdbcType=VARCHAR}
+           ,#{rolecode,jdbcType=VARCHAR}
+           ,#{roletype,jdbcType=VARCHAR})
+    ]]>
+    </insert>
+    <insert id="insertRoleResource" parameterType="roleresource">
+	<![CDATA[
+        INSERT INTO [dbo].[s_roleresource]
+           ([roleid]
+           ,[resourceid])
+     VALUES
+           (#{roleid, jdbcType=VARCHAR}
+           ,#{resourceid,jdbcType=VARCHAR})
+    ]]>
+    </insert>
 </mapper>

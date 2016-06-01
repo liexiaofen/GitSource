@@ -8,6 +8,9 @@
 		<typeAlias alias="fa001001searchCommand" type="com.lw.system.framework.fa001.FA001001SearchCommand" />
 		<typeAlias alias="fa001001resultCommand" type="com.lw.system.framework.fa001.FA001001ResultCommand" />
 		<typeAlias alias="fa001command" type="com.lw.system.framework.fa001.FA001Command" />
+		<typeAlias alias="fa002001searchCommand" type="com.lw.system.framework.fa002.FA002001SearchCommand" />
+		<typeAlias alias="fa002001resultCommand" type="com.lw.system.framework.fa002.FA002001ResultCommand" />
+		<typeAlias alias="fa002command" type="com.lw.system.framework.fa002.FA002Command" />
 		<typeAlias alias="fa004001searchCommand" type="com.lw.system.framework.fa004.FA004001SearchCommand" />
 		<typeAlias alias="fa004001resultCommand" type="com.lw.system.framework.fa004.FA004001ResultCommand" />
 		<typeAlias alias="deviceOrderSearchCommand" type="com.lw.oa.common.command.DeviceOrderSearchCommand" />
@@ -36,6 +39,8 @@
 		<typeAlias alias="busidicttype" type="com.lw.oa.common.model.BusiDictType" />
 		<typeAlias alias="busidict" type="com.lw.oa.common.model.BusiDict" />	
 		<typeAlias alias="resource" type="com.lw.oa.common.model.Resource" />	
+		<typeAlias alias="role" type="com.lw.oa.common.model.Role" />	
+		<typeAlias alias="roleresource" type="com.lw.oa.common.model.RoleResource" />	
 		
 		<typeAlias alias="pa001001searchCommand" type="com.lw.oa.pa.master.pa001.PA001001SearchCommand" />
 		<typeAlias alias="pa001001resultCommand" type="com.lw.oa.pa.master.pa001.PA001001ResultCommand" />
@@ -85,6 +90,7 @@
 	</environments>
 	<mappers>
 		<mapper resource="com/lw/system/framework/fa001/FA001Mapper.xml" />
+		<mapper resource="com/lw/system/framework/fa002/FA002Mapper.xml" />
 		<mapper resource="com/lw/system/framework/fa004/FA004Mapper.xml" />		
 		<mapper resource="com/lw/oa/common/mapper/CommonMapper.xml" />
 		<mapper resource="com/lw/oa/common/mapper/AjaxMapper.xml" />

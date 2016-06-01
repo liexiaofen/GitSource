@@ -98,7 +98,7 @@ public class FA001Controller implements ConstantUtil{
  		return fa001001search(request, searchCommand, retInfo);
 	}
 	/**
-	 * 菜单数跳转
+	 * 菜单树单击跳转frame
 	 * @param request
 	 * @return
 	 */

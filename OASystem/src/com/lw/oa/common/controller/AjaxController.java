@@ -203,6 +203,7 @@ public class AjaxController implements ConstantUtil{
 		JSONObject root = new JSONObject();
 		root.put("id", "0");
 		root.put("name", "菜单管理");
+		//root.put("checked", true);
 		root.put("open", true);
 		jsonarray.add(root);
 		for(Resource entity:list){
@@ -213,6 +214,48 @@ public class AjaxController implements ConstantUtil{
 				jsonobj.put("pid", entity.getParentid());
 			else 
 				jsonobj.put("pid", "0");
+			jsonarray.add(jsonobj);
+		}
+		try {
+			response.getWriter().write(JSON.toJSONString(jsonarray));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}	
+	/**
+	 * 根据角色id获取所有的资源信息
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = { "getResourcesByRoleid.do" },method = RequestMethod.GET)
+	public void getResourcesByRoleid(HttpServletRequest request,HttpServletResponse response){
+		String roleid = request.getParameter("roleid");					
+		@SuppressWarnings("unchecked")
+		List<Resource> list = (List<Resource>) ajaxService.getResourcesByRoleid( roleid);
+		//将list转化成jsonarray
+		JSONArray jsonarray = new JSONArray();	
+		//根目录设定 id:0, name:"菜单管理", open:true
+		JSONObject root = new JSONObject();
+		root.put("id", "0");
+		root.put("name", "菜单管理");
+		root.put("checked", false);
+		root.put("open", true);
+		jsonarray.add(root);
+		for(Resource entity:list){
+			JSONObject jsonobj = new JSONObject();
+			jsonobj.put("id", entity.getResourceid());
+			jsonobj.put("name", entity.getResourcename());
+			jsonobj.put("open", true);
+			if(entity.getParentid() != null && !StringUtils.EMPTY.equals(entity.getParentid()) )
+				jsonobj.put("pid", entity.getParentid());
+			else 
+				jsonobj.put("pid", "0");
+			//设置节点是否选中
+			if(FLAG_1.equals(entity.getRemark1()) )
+				jsonobj.put("checked", true);
+			else 
+				jsonobj.put("checked", false);			
 			jsonarray.add(jsonobj);
 		}
 		try {
@@ -287,6 +330,39 @@ public class AjaxController implements ConstantUtil{
 		}	
 		String busidicttypeid = request.getParameter("busidicttypeid");				
 		int count = ajaxService.updateBusiDictType(typeid, typename, busidicttypeid);
+		Map<String,Object> resultMap = new HashMap<String,Object>();		
+		if(count > 0){
+			resultMap.put("flag", true);
+			resultMap.put("msgid", "MSG_COMM_0045");
+		}else{
+			resultMap.put("flag", false);
+			resultMap.put("msgid", "MSG_COMM_0046");
+		}
+		try {
+			response.getWriter().write(JSON.toJSONString(resultMap));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * 更新角色信息
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = { "updateRole.do" },method = RequestMethod.GET)
+	public void updateRole(HttpServletRequest request,HttpServletResponse response){
+		String rolecode = StringUtils.EMPTY;
+		String rolename = StringUtils.EMPTY;
+		try {
+			rolecode = URLDecoder.decode(request.getParameter("rolecode"),"UTF-8");
+			rolename = URLDecoder.decode(request.getParameter("rolename"),"UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}	
+		String roleid = request.getParameter("roleid");				
+		int count = ajaxService.updateRole(rolecode, rolename, roleid);
 		Map<String,Object> resultMap = new HashMap<String,Object>();		
 		if(count > 0){
 			resultMap.put("flag", true);

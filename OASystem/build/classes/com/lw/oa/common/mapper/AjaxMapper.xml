@@ -69,7 +69,19 @@
 		from s_resource t where t.resourcetype in ('0','1') order by t.resourcelevel, t.sortno
 		
 	]]>	
+	</select>
+	<!-- 根据roleid获取资源信息 -->    
+	<select id="getResourcesByRoleid" resultType="resource" parameterType="java.util.Map">
+	<![CDATA[
+		select 	
+			t.resourceid, t.resourcename, t.resourcecode, t.isleaf, t.resourcelevel, t.resourceaction, t.parentid, t.resourcetype, t.sortno,
+			case when roleresource.resourceid is null then '0' else '1' end as remark1
+		from s_resource t 
+		left join (select roleid, resourceid from s_roleresource where roleid = #{roleid}) roleresource
+		on t.resourceid = roleresource.resourceid
+		order by t.resourcelevel, t.sortno
 		
+	]]>		
 	</select>	
     <select id="checkUniqueUsername" parameterType="java.util.Map" resultType="int">
 	<![CDATA[
@@ -101,6 +113,12 @@
    	<![CDATA[
 		update [dbo].[s_busidict] set busidicttypeid = #{typeid}
 		where busidicttypeid = #{busidicttypeid}
+	]]> 
+    </update>
+    <update id="updateRole" parameterType="java.util.Map">
+   	<![CDATA[
+		update [dbo].[s_role] set rolename = #{rolename}, rolecode = #{rolecode} 
+		where roleid = #{roleid}
 	]]> 
     </update>
     <select id="checkLegalyear" parameterType="java.util.Map" resultType="int">

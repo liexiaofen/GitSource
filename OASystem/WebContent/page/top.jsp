@@ -3,7 +3,7 @@
 <%
 	String basePath = URIUtil.getURI(request);
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <base href="<%=basePath%>">
@@ -11,7 +11,7 @@
 <title>OA</title>
 <link  rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/css/top.css"/>
 <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/Clock.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery-1.4.4.min.js"></script>
 <script type="text/javascript">
 /*
 *名       称: img_login()

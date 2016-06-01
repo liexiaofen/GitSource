@@ -240,6 +240,20 @@ public class AjaxServiceImpl implements IAjaxService,ConstantUtil {
 		mybatisDAOImpl.close();
 		return list;
 	}
+	
+	@Override
+	public List<?> getResourcesByRoleid(String roleid) {
+		// TODO Auto-generated method stub
+		mybatisDAOImpl.openSession();
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("roleid", roleid);
+		@SuppressWarnings("unchecked")
+		List<Resource> list = (List<Resource>) mybatisDAOImpl.queryByObj(
+				"common.ajax.getResourcesByRoleid", map);
+		mybatisDAOImpl.close();
+		return list;
+	}
+	
 	@Override
 	public List<?> getEmpsByOrgcdDepid(String orgcdid, String depid) {
 		// TODO Auto-generated method stub
@@ -300,6 +314,33 @@ public class AjaxServiceImpl implements IAjaxService,ConstantUtil {
 					"common.ajax.updateBusiDictType", map);
 			mybatisDAOImpl.update(
 					"common.ajax.updateBusiDict", map);
+			if (count > 0) {
+				count = 1;
+			}
+			mybatisDAOImpl.commit();			
+		} catch (Exception e) {
+			mybatisDAOImpl.rollback();
+			count = 0;
+			e.printStackTrace();
+		} finally {
+			mybatisDAOImpl.close();
+		}
+		return count;
+	}
+	
+	
+	@Override
+	public int updateRole(String rolecode, String rolename, String roleid) {
+		// TODO Auto-generated method stub
+		int count = 0;
+		try{
+			mybatisDAOImpl.openSession();
+			HashMap<String, String> map = new HashMap<String, String>();
+			map.put("rolecode", rolecode);
+			map.put("rolename", rolename);		
+			map.put("roleid", roleid);
+			count = (int) mybatisDAOImpl.update(
+					"common.ajax.updateRole", map);
 			if (count > 0) {
 				count = 1;
 			}

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+    "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+    
+<mapper namespace="fa.fa002">
+	<!-- 查询菜单信息一览 -->    
+	<select id="fa002001searchListByPage" resultType="fa002001resultCommand" parameterType="fa002001searchCommand">
+	<![CDATA[
+		SELECT 
+ 			t.roleid, t.rolename, t.rolecode, t.roletype,
+			ROW_NUMBER() OVER(order by t.roletype, t.rolename ) as rownum 
+		FROM [dbo].[s_role] t where 1=1 
+	]]> 
+		<if test="rolename!=null and rolename!=''">
+			and t.rolename like '%'+#{rolename}+'%'
+		</if>	
+		<if test="rolecode!=null and rolecode!=''">
+			and t.rolecode like '%'+#{rolecode}+'%'
+		</if>
+		<if test="roletype!=null and roletype!=''">
+			and t.roletype = #{roletype}
+		</if>
+	</select>
+	<!-- 根据菜单信息id查询菜单信息 -->    
+	<select id="fa002001expandById" resultType="fa002command" parameterType="fa002001searchCommand">
+	<![CDATA[
+		SELECT 
+ 			t.roleid, t.rolename, t.rolecode, t.isleaf, t.rolelevel, t.roleaction, t.parentid, t1.rolename as parentname, t.roletype, t.sortno				
+		FROM [OA].[dbo].[s_role] t 
+		left join [OA].[dbo].[s_role] t1 
+			on t.parentid = t1.roleid 
+		where 1=1 and t.roleid = #{roleid}
+	]]> 
+	</select>
+	<update id="fa002002update" parameterType="role">
+	<![CDATA[
+        update s_role set
+           rolename = #{rolename, jdbcType=VARCHAR}
+           ,rolecode = #{rolecode, jdbcType=VARCHAR}           
+           ,isleaf = #{isleaf, jdbcType=VARCHAR}
+           ,rolelevel = #{rolelevel, jdbcType=VARCHAR}
+           ,roleaction = #{roleaction, jdbcType=VARCHAR}           
+           ,parentid = #{parentid, jdbcType=VARCHAR}
+           ,roletype = #{roletype, jdbcType=VARCHAR}
+           ,sortno = #{sortno, jdbcType=VARCHAR}
+    	where roleid = #{roleid, jdbcType=VARCHAR}       
+    ]]>     
+    </update>
+    <!-- 根据角色id删除角色 --> 
+	<delete id="fa002001PDRole" parameterType="java.lang.String">
+    	delete from [dbo].[s_role] where roleid = #{roleid, jdbcType=VARCHAR}
+    </delete>
+    <!-- 根据角色id删除角色资源 --> 
+	<delete id="fa002001PDRoleResource" parameterType="java.lang.String">
+    	delete from [dbo].[s_roleresource] where roleid = #{roleid, jdbcType=VARCHAR}
+    </delete>
+    <!-- 根据角色id删除员工对应的角色 --> 
+	<delete id="fa002001PDEmpRole" parameterType="java.lang.String">
+    	delete from [dbo].[t_emprole] where roleid = #{roleid, jdbcType=VARCHAR}
+    </delete>
+</mapper>

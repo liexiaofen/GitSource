@@ -108,7 +108,7 @@ function btn_delete(){
 		alert(Message.getString("MSG_COMM_0031"));
 		return;
 	}
-	if ( !window.confirm( Message.getString("MSG_IC_PD005_0001"))) 
+	if ( !window.confirm( Message.getString("MSG_IC_COMM_0004"))) 
 		return;
 	$("#div_result").find("input[name='chk']:checked").each(function( i, n){			
 		var busidicttypeid = $(n).parent().find('input[name="busidicttypeid"]').val();
@@ -307,12 +307,12 @@ function btn_update(obj){
 		    			</td>
 		    			<td align="center" nowrap><%=num %></td>
 						<td align="left" nowrap>
-							<a href="#" onclick="javascript:link_view(this);return false;">${iterator.busidicttypeid}</a>
+							<a href="javascript:return false;" onclick="javascript:link_view(this);">${iterator.busidicttypeid}</a>
 						</td>
 						<td align="left" nowrap>${iterator.busidicttypename}</td>	
 						<td align="left" nowrap>
 							<input name="edit" id="edit" type="button" class="btn" onClick="btn_edit(this)"  value="编辑" />
-							<input name="edit" id="edit" type="button" class="btn" onClick="btn_update(this)" value="更新" />							
+							<input name="update" id="update" type="button" class="btn" onClick="btn_update(this)" value="更新" />							
 						</td>	 					
 						<td align="left" nowrap></td>
 		    		</tr>

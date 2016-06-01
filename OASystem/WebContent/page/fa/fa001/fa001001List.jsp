@@ -87,24 +87,31 @@ function btn_delete(){
 		alert(Message.getString("MSG_COMM_0031"));
 		return;
 	}
-	if ( !window.confirm( Message.getString("MSG_IC_PD005_0001"))) 
+	if ( !window.confirm( Message.getString("MSG_IC_COMM_0004"))) 
 		return;
 	$("#div_result").find("input[name='chk']:checked").each(function( i, n){			
 		var resourceid = $(n).parent().find('input[name="resourceid"]').val();
 		$("#deleteForm").append("<input name=\"resource["+i+"].resourceid\" value=\""+resourceid+"\" type=\"hidden\" />");
 	});
 	c_ShowProgressBar();	
-	ztree_load();
+	ztree_reload();
 	$("#deleteForm").attr( "action", "fa001001delete.do");	
 	$("#deleteForm").submit();
 }
-function ztree_load(){
+/*
+*名       称: ztree_reload()
+*输入参数: 无
+*输出参数: 无
+*机       能: 树节点重新加载
+*创 建  者: yuliang          
+*创建时间: 2016-06-01
+*更 新  者: 
+*更新时间: 
+*/
+function ztree_reload(){
 	//ztree的重新加载
 	window.parent.document.getElementById('left').src = '<%=request.getContextPath()%>/page/fa/fa001/ztree.jsp';
 }
-$(document).ready(function(){		
-	
-});
 </script>
 </head>
 <body>

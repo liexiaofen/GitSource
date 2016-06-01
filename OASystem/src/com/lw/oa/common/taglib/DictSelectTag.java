@@ -135,8 +135,13 @@ public class DictSelectTag extends TagSupport {
 				.queryByObj("fa.fa004.fa004001searchDictById", searchCommand);
 		JspWriter out = pageContext.getOut();
 		StringBuffer sb = new StringBuffer();
-		sb.append("<select id=\"" + this.getId() + "\" name= \"" + this.getName()
-				+ "\" ");
+		sb.append("<select  ");
+		if (!StringUtils.isEmpty(this.getId())) {
+			sb.append("id=\"" + this.getId() + "\" ");
+		}
+		if (!StringUtils.isEmpty(this.getName())) {
+			sb.append("name=\"" + this.getName() + "\" ");
+		}
 		if (!StringUtils.isEmpty(this.getCssClass())) {
 			sb.append("class=\"" + this.getCssClass() + "\" ");
 		}
