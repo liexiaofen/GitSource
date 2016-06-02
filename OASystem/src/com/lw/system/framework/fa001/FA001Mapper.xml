@@ -26,7 +26,7 @@
 	<select id="fa001001expandById" resultType="fa001command" parameterType="fa001001searchCommand">
 	<![CDATA[
 		SELECT 
- 			t.resourceid, t.resourcename, t.resourcecode, t.isleaf, t.resourcelevel, t.resourceaction, t.parentid, t1.resourcename as parentname, t.resourcetype, t.sortno				
+ 			t.resourceid, t.resourcename, t.resourcecode, t.isleaf, t.resourcelevel, t.resourceaction, t.parentid, t1.resourcename as parentname, t.resourcetype, t.sortno, t.remark1				
 		FROM [OA].[dbo].[s_resource] t 
 		left join [OA].[dbo].[s_resource] t1 
 			on t.parentid = t1.resourceid 
@@ -44,6 +44,7 @@
            ,parentid = #{parentid, jdbcType=VARCHAR}
            ,resourcetype = #{resourcetype, jdbcType=VARCHAR}
            ,sortno = #{sortno, jdbcType=VARCHAR}
+           ,remark1 = #{remark1, jdbcType=VARCHAR}
     	where resourceid = #{resourceid, jdbcType=VARCHAR}       
     ]]>     
     </update>

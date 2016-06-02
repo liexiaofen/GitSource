@@ -32,7 +32,7 @@
 		SELECT 
 			t.roleid, t.rolename, ROW_NUMBER() OVER(order by t.rolename) as rownum 
 		FROM [dbo].[s_role] t
-		where t.deletefg = '0'
+		where 1=1
 	]]> 
 		<if test="rolename!=null and rolename!=''">
 			and t.rolename like '%'+#{rolename}+'%'
@@ -137,7 +137,7 @@
 			t.empid, t.roleid, t1.rolename
 		from [dbo].[t_emprole] t 
 		inner join [dbo].[s_role] t1 
-			on t.roleid = t1.roleid and t.deletefg = t1.deletefg 
+			on t.roleid = t1.roleid 
  		where t.deletefg = '0' and t.empid = #{empid}
 	]]>		
 	</select>

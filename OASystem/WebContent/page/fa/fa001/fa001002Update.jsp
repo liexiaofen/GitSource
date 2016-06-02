@@ -134,7 +134,7 @@ function btn_subadd() {
 						<input id="resourceaction" name="resourceaction" value="${command.resourceaction}" class="input_txt dis_input" readonly="readonly"/>
 					</c:if>
 					<c:if test="${command.resourcelevel != 1}">
-						<input id="resourceaction" name="resourceaction" value="${command.resourceaction}" class="input_txt" maxlength="20"  />
+						<input id="resourceaction" name="resourceaction" value="${command.resourceaction}" class="input_txt" maxlength="25"  />
 					</c:if>
 				</td>	
 			</tr>
@@ -168,7 +168,15 @@ function btn_subadd() {
 					<input class="input_txt dis_input" value="<dict:write busiDictTypeId="OA_COMMON_Level" value="${command.resourcelevel}"></dict:write>" readonly="readonly"/>
 					<input id="resourcelevel" name="resourcelevel" type="hidden" value="${command.resourcelevel}" />
 				</td>	
-			</tr>					
+			</tr>	
+			<tr>
+				<td class="td_key" width="8%">
+					<label class="message">备注</label>
+				</td>
+				<td class="td_value">
+					<input name="remark1" class="input_txt" value="${command.remark1}" maxlength="10"/>
+				</td>	
+			</tr>				
 	    </tbody>
 	  </table>
 	</div>

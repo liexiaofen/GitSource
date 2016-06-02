@@ -353,7 +353,7 @@
 		<DIV id=revtitle></DIV>
 		<DIV id=revdesc></DIV></DIV>
 		<DIV style="DISPLAY: none" id=reservebox title="Reserve meeting room">
-		<FORM id=reserveformID method=post>
+		<FORM id="reserveformID" method="post">
 		<DIV class=sysdesc>&nbsp;</DIV>
 		<DIV class=rowElem><LABEL>meeting room:</LABEL> <!--<input type="text" name="meeting" id="meeting" class="validate[required]">--><SELECT 
 		id=meeting class=validate[required] name=meeting></SELECT> </DIV>

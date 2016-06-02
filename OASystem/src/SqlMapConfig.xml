@@ -20,6 +20,7 @@
 		<typeAlias alias="applyFormCommand" type="com.lw.oa.common.command.ApplyFormCommand" />
 		<typeAlias alias="applySearchCommand" type="com.lw.oa.common.command.ApplySearchCommand" />
 		<typeAlias alias="applyResultCommand" type="com.lw.oa.common.command.ApplyResultCommand" />
+		<typeAlias alias="resourceCommand" type="com.lw.oa.common.command.ResourceCommand" />
 				 
 		<typeAlias alias="annualvctn" type="com.lw.oa.common.model.AnnualVctn" />	
 		<typeAlias alias="empinfo" type="com.lw.oa.common.model.Empinfo" />	

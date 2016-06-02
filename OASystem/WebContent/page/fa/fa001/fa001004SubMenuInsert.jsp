@@ -106,7 +106,7 @@ function btn_back() {
 					<label class="message">菜单入口</label>
 				</td>
 				<td class="td_value">
-					<input id="resourceaction" name="resourceaction" class="input_txt" maxlength="20"  />
+					<input id="resourceaction" name="resourceaction" class="input_txt" maxlength="25"  />
 				</td>	
 			</tr>
 			<tr>

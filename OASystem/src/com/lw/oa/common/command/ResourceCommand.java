@@ -1,12 +1,13 @@
-package com.lw.system.framework.fa001;
+package com.lw.oa.common.command;
 
 import java.io.Serializable;
-public class FA001Command implements Serializable {
+import java.util.List;
+public class ResourceCommand implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private FA001001SearchCommand searchCommand;
+	List<ResourceCommand> list = null;
 	// 资源id
 	private String resourceid;
 	// 资源名称
@@ -29,13 +30,13 @@ public class FA001Command implements Serializable {
 	private String parentname;
 	// 备注1
 	private String remark1;
-		
-	public FA001001SearchCommand getSearchCommand() {
-		return searchCommand;
+
+	public List<ResourceCommand> getList() {
+		return list;
 	}
 
-	public void setSearchCommand(FA001001SearchCommand searchCommand) {
-		this.searchCommand = searchCommand;
+	public void setList(List<ResourceCommand> list) {
+		this.list = list;
 	}
 
 	public String getResourceid() {

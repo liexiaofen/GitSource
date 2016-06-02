@@ -132,6 +132,7 @@ public class FA001ServiceImpl implements IFA001Service,ConstantUtil {
 		entity.setParentid(command.getParentid());	
 		entity.setResourcetype(command.getResourcetype());	
 		entity.setSortno(command.getSortno());	
+		entity.setRemark1(command.getRemark1());	
 		return entity;
 	}
 	

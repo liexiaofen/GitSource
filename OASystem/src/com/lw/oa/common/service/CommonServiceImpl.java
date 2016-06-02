@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.lw.oa.common.command.ApplyFormCommand;
 import com.lw.oa.common.command.ApplySearchCommand;
+import com.lw.oa.common.command.ResourceCommand;
 import com.lw.oa.common.command.ResultCommand;
 import com.lw.oa.common.command.ResumeEntity;
 import com.lw.oa.common.dao.IMybatisDAO;
@@ -44,6 +45,27 @@ public class CommonServiceImpl implements ICommonService,ConstantUtil {
 				"common.expandEmpByUserPwd", map);		
 		return command;
 	}	
+	
+	@Override
+	public List<?> queryResourceByEmpid(String empid) {
+		// TODO Auto-generated method stub
+		// 设置查询条件				
+		mybatisDAOImpl.openSession();
+		HashMap<String,String> map = new HashMap<String, String>();
+		map.put("empid", empid);
+		map.put("resourcelevel", "1");
+		@SuppressWarnings("unchecked")
+		List<ResourceCommand> list = (List<ResourceCommand>) mybatisDAOImpl.queryByObj("common.queryResourceByEmpid", map);
+		for(ResourceCommand entity:list){
+			map.put("resourcelevel", "2");
+			map.put("parentid", entity.getResourceid());
+			@SuppressWarnings("unchecked")
+			List<ResourceCommand> sublist = (List<ResourceCommand>) mybatisDAOImpl.queryByObj("common.querySubResourceByEmpid", map);
+			entity.setList(sublist);
+		}
+		mybatisDAOImpl.close();
+		return list;
+	}
 	@Override
 	public ApplyFormCommand expandApplyForm(ApplySearchCommand searchCommand) {
 		// TODO Auto-generated method stub

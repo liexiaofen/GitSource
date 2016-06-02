@@ -13,7 +13,7 @@
 <FRAMESET id="index" border="0" frameSpacing="0" rows="75,*,20" frameBorder="no">
 	<FRAME id="topFrame" name="topFrame" src="<%=request.getContextPath()%>/common/login/top.do" noResize scrolling="no">
 	<FRAMESET border="0" frameSpacing="0" frameBorder="no" cols="220,*">
-		<FRAME id="leftFrame" name="leftFrame" src="<%=request.getContextPath()%>/page/menu.jsp" noResize scrolling="no">
+		<FRAME id="leftFrame" name="leftFrame" src="<%=request.getContextPath()%>/common/login/menu.do" noResize scrolling="no">
 		<FRAME id="mainFrame" name="mainFrame" src="<%=request.getContextPath()%>/pb001001init.do" scrolling="yes">
 	</FRAMESET>
 	<FRAME id="downFrame" name="downFrame" src="<%=request.getContextPath()%>/page/down.jsp" noResize scrolling="no">

@@ -3,6 +3,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.lw.oa.common.command.ApplyFormCommand;
+import com.lw.oa.common.command.ResourceCommand;
 import com.lw.oa.common.command.ResultCommand;
 import com.lw.oa.common.command.SessionEntity;
 import com.lw.oa.common.command.RetInfo;
@@ -35,6 +37,8 @@ public class LoginController implements ConstantUtil{
 	private static final String  PAGE_MAIN = "main";	
 	//top画面	
 	private static final String  PAGE_TOP = "top";	
+	//menu画面	
+	private static final String  PAGE_MENU = "menu";	
 	//用户名
 	private static final String  LOGIN_USERNAME = "username";	
 	//机构
@@ -151,6 +155,29 @@ public class LoginController implements ConstantUtil{
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("command", command);
 		ModelAndView mav = new ModelAndView(PAGE_TOP, resultMap);
+		return mav;
+	}
+	/**
+	 * menu画面
+	 * 
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = { "menu.do" }, method = RequestMethod.GET)
+	public ModelAndView menu(HttpServletRequest request,
+			HttpServletResponse response) {
+		String empid = STRING_EMPTY;
+		//从session中获取当前用户id
+		HttpSession session = request.getSession();
+		if(session.getAttribute("user") != null){
+			SessionEntity sessionEntity = (SessionEntity)session.getAttribute("user");
+			empid = sessionEntity.getEmpid();
+		}
+		@SuppressWarnings("unchecked")
+		List<ResourceCommand> list = (List<ResourceCommand>) commonService.queryResourceByEmpid(empid);
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("list", list);
+		ModelAndView mav = new ModelAndView(PAGE_MENU, resultMap);
 		return mav;
 	}
 	private void saveCookie( String username, String orgcdid, String save, HttpServletResponse response){
