@@ -34,7 +34,7 @@ public class ZoomServiceImpl implements IZoomService,ConstantUtil {
 		mybatisDAOImpl.openSession();
 		@SuppressWarnings("unchecked")
 		List<ResultCommand> list = (List<ResultCommand>) mybatisDAOImpl
-				.queryByObj("common.zoom.searchEmpList", map);		
+				.queryByObj("common.zoom.searchEmpList", map);			
 		if(list != null){
 			if(list.size() != 0){
 				for(ResultCommand entity:list){
@@ -45,7 +45,8 @@ public class ZoomServiceImpl implements IZoomService,ConstantUtil {
 					entity.setList(listOrg);
 				}
 			}			
-		}			
+		}	
+		mybatisDAOImpl.close();
 		return list;
 	}
 	@Override
@@ -57,6 +58,7 @@ public class ZoomServiceImpl implements IZoomService,ConstantUtil {
 		@SuppressWarnings("unchecked")
 		List<ResultCommand> list = (List<ResultCommand>) mybatisDAOImpl
 				.queryByObj("common.zoom.searchRoleList", map);	
+		mybatisDAOImpl.close();
 		return list;
 	}
 	@Override
@@ -70,6 +72,7 @@ public class ZoomServiceImpl implements IZoomService,ConstantUtil {
 		@SuppressWarnings("unchecked")
 		List<ResultCommand> list = (List<ResultCommand>) mybatisDAOImpl
 				.queryByObj("common.zoom.searchDeviceOrderListByPage", searchCommand);
+		mybatisDAOImpl.close();
 		return list;
 	}	
 	@Override
@@ -83,6 +86,7 @@ public class ZoomServiceImpl implements IZoomService,ConstantUtil {
 		@SuppressWarnings("unchecked")
 		List<ResultCommand> list = (List<ResultCommand>) mybatisDAOImpl
 				.queryByObj("common.zoom.searchDeviceList", map);
+		mybatisDAOImpl.close();
 		return list;
 	}
 	@Override
@@ -95,6 +99,7 @@ public class ZoomServiceImpl implements IZoomService,ConstantUtil {
 		@SuppressWarnings("unchecked")
 		List<ResultCommand> list = (List<ResultCommand>) mybatisDAOImpl
 				.queryByObj("common.zoom.searchOrgList", map);
+		mybatisDAOImpl.close();
 		return list;
 	}	
 	@Override
@@ -107,6 +112,7 @@ public class ZoomServiceImpl implements IZoomService,ConstantUtil {
 		@SuppressWarnings("unchecked")
 		List<ApplyResultCommand> list = (List<ApplyResultCommand>) mybatisDAOImpl
 				.queryByObj("common.zoom.searchApplyA1List", map);
+		mybatisDAOImpl.close();
 		return list;
 	}
 	@Override
@@ -119,6 +125,7 @@ public class ZoomServiceImpl implements IZoomService,ConstantUtil {
 		@SuppressWarnings("unchecked")
 		List<ApplyResultCommand> list = (List<ApplyResultCommand>) mybatisDAOImpl
 				.queryByObj("common.zoom.searchApplyA4List", map);
+		mybatisDAOImpl.close();
 		return list;
 	}
 }

@@ -145,7 +145,7 @@
 	]]> 
 	</select>
 	<!-- 通过empid查询资源 -->    
-	<select id="queryResourceByEmpid" resultType="resourceCommand" parameterType="java.util.Map" flushCache="true">
+	<select id="queryResourceByEmpid" resultType="resourceCommand" parameterType="java.util.Map">
 	<![CDATA[
 		select 
 			t.resourceid, t.resourcename, t.resourcecode, t.isleaf, t.resourcelevel, t.resourceaction, t.parentid, t1.resourcename as parentname, t.resourcetype, t.sortno, t.remark1
@@ -154,15 +154,21 @@
 			on v.resourceid = t.resourceid 
 		left join [dbo].[s_resource] t1 
 			on t.parentid = t1.resourceid 
-		where v.empid = #{empid} and t.resourcelevel = #{resourcelevel}  
+		where 1 = 1 
 	]]>	
+		<if test="empid!=null and empid!=''">
+			and v.empid = #{empid} 
+		</if>
+		<if test="resourcelevel!=null and resourcelevel!=''">
+			and t.resourcelevel = #{resourcelevel} 
+		</if>
 		<if test="parentid!=null and parentid!=''">
 			and t.parentid = #{parentid} 
 		</if>
 		order by t.resourcelevel, t.sortno	 
 	</select>
 	<!-- 通过empid查询资源 -->    
-	<select id="querySubResourceByEmpid" resultType="resourceCommand" parameterType="java.util.Map" flushCache="true">
+	<select id="querySubResourceByEmpid" resultType="resourceCommand" parameterType="java.util.Map">
 	<![CDATA[
 		select 
 			t.resourceid, t.resourcename, t.resourcecode, t.isleaf, t.resourcelevel, t.resourceaction, t.parentid, t1.resourcename as parentname, t.resourcetype, t.sortno, t.remark1
@@ -171,8 +177,14 @@
 			on v.resourceid = t.resourceid 
 		left join [dbo].[s_resource] t1 
 			on t.parentid = t1.resourceid 
-		where v.empid = #{empid} and t.resourcelevel = #{resourcelevel}  
+		where 1=1 
 	]]>	
+		<if test="empid!=null and empid!=''">
+			and v.empid = #{empid} 
+		</if>
+		<if test="resourcelevel!=null and resourcelevel!=''">
+			and t.resourcelevel = #{resourcelevel} 
+		</if>
 		<if test="parentid!=null and parentid!=''">
 			and t.parentid = #{parentid} 
 		</if>

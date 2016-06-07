@@ -1,5 +1,7 @@
 package com.lw.oa.common.dao;
 import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
 /**
  **@author yuliang
  */
@@ -15,4 +17,5 @@ public interface IMybatisDAO {
 	public void commit();
 	public void rollback();
 	public void close();
+	public SqlSession getSqlSession();
 }

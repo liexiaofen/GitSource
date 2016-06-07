@@ -13,16 +13,20 @@
 <body>
 	<div id="left_menu">
 		<ul id="nav_dot">
-			<c:forEach items="${list}" var="iterator">
-		      	<li>
-		        	<h4 class="${iterator.remark1}"><span></span>${iterator.resourcename}</h4>
-		        	<div class="list-item none">
-		        		<c:forEach items="${iterator.list}" var="resource">
-				            <a href='<%=request.getContextPath()%>/${resource.resourceaction}' target="mainFrame">${resource.resourcename}</a>
-						</c:forEach>
-		          	</div>
-		        </li>
-	        </c:forEach>
+			<c:if test="${not empty list}">
+				<c:forEach items="${list}" var="iterator">
+			      	<li>
+			        	<h4 class="${iterator.remark1}"><span></span>${iterator.resourcename}</h4>
+			        	<div class="list-item none">
+			        		<c:if test="${not empty iterator.list}">
+				        		<c:forEach items="${iterator.list}" var="resource">
+						            <a href='<%=request.getContextPath()%>/${resource.resourceaction}' target="mainFrame">${resource.resourcename}</a>
+								</c:forEach>
+							</c:if>
+			          	</div>
+			        </li>
+		        </c:forEach>
+		    </c:if>
         </ul>
 	</div>
 	<script type="text/javascript">navList();</script> 

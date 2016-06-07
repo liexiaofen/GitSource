@@ -27,6 +27,7 @@ public class CommonServiceImpl implements ICommonService,ConstantUtil {
 	public CommonServiceImpl() {
 		// TODO Auto-generated constructor stub
 		mybatisDAOImpl = new MybatisDAOImpl();
+		System.out.println("加载mybatisDAOImpl的类对象为："+this.getClass().getSimpleName());
 	}
 	@Override
 	public ResultCommand checkUserAndPwd(String username, String password, String orgcdid){
@@ -43,6 +44,7 @@ public class CommonServiceImpl implements ICommonService,ConstantUtil {
 		map.put("orgcdid", orgcdid);
 		ResultCommand command = (ResultCommand) mybatisDAOImpl.expandByObj(
 				"common.expandEmpByUserPwd", map);		
+		mybatisDAOImpl.close();
 		return command;
 	}	
 	
@@ -51,17 +53,21 @@ public class CommonServiceImpl implements ICommonService,ConstantUtil {
 		// TODO Auto-generated method stub
 		// 设置查询条件				
 		mybatisDAOImpl.openSession();
+		System.out.println("当前的线程为："+Thread.currentThread().getName());
 		HashMap<String,String> map = new HashMap<String, String>();
 		map.put("empid", empid);
 		map.put("resourcelevel", "1");
 		@SuppressWarnings("unchecked")
 		List<ResourceCommand> list = (List<ResourceCommand>) mybatisDAOImpl.queryByObj("common.queryResourceByEmpid", map);
-		for(ResourceCommand entity:list){
-			map.put("resourcelevel", "2");
-			map.put("parentid", entity.getResourceid());
-			@SuppressWarnings("unchecked")
-			List<ResourceCommand> sublist = (List<ResourceCommand>) mybatisDAOImpl.queryByObj("common.querySubResourceByEmpid", map);
-			entity.setList(sublist);
+		System.out.println("1级菜单的长度："+list.size());
+		if(list!=null){
+			for(ResourceCommand entity:list){
+				map.put("resourcelevel", "2");
+				map.put("parentid", entity.getResourceid());
+				@SuppressWarnings("unchecked")
+				List<ResourceCommand> sublist = (List<ResourceCommand>) mybatisDAOImpl.queryByObj("common.querySubResourceByEmpid", map);
+				entity.setList(sublist);
+			}
 		}
 		mybatisDAOImpl.close();
 		return list;
@@ -121,7 +127,8 @@ public class CommonServiceImpl implements ICommonService,ConstantUtil {
 			command.setTicketdetail( array);
 		}
 	}
-	public ApplyFormCommand getMessageCount(String empid){
+	@Override
+	public ApplyFormCommand getMessageCount(String empid){		
 		// 总件数
 		int totalcount = 0;
 		// 未审核件数
@@ -137,6 +144,7 @@ public class CommonServiceImpl implements ICommonService,ConstantUtil {
 		// 人事未归档审核件数
 		int unpersonfilecheckcount = 0;
 		mybatisDAOImpl.openSession();
+		System.out.println("当前的线程为："+Thread.currentThread().getName());
 		HashMap<String,String> map = new HashMap<String, String>();
 		map.put("empid", empid);
 		uncheckcount = (int) mybatisDAOImpl.expandByObj(
@@ -151,6 +159,7 @@ public class CommonServiceImpl implements ICommonService,ConstantUtil {
 				"common.message.selectUnPresiCheckCount", map);*/
 		unpersonfilecheckcount = (int) mybatisDAOImpl.expandByObj(
 				"common.message.selectUnPersonFileCheckCount", map);
+		mybatisDAOImpl.close();
 		totalcount = uncheckcount + unpersonfilecheckcount;
 		ApplyFormCommand command = new ApplyFormCommand();
 		command.setTotalcount(String.valueOf(totalcount));
@@ -160,7 +169,6 @@ public class CommonServiceImpl implements ICommonService,ConstantUtil {
 		command.setUnvicepresicheckcount(String.valueOf(unvicepresicheckcount));
 		command.setUnpresicheckcount(String.valueOf(unpresicheckcount));
 		command.setUnpersonfilecheckcount(String.valueOf(unpersonfilecheckcount));
-		mybatisDAOImpl.close();
 		return command;
 	}
 }

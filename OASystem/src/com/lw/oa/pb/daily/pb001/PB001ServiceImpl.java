@@ -140,6 +140,7 @@ public class PB001ServiceImpl implements IPB001Service,ConstantUtil {
 				entity.setDateofseven( DateUtil.formatDate( title.list.get(j).getLegaldate(), DATE_FORMAT_YMD));
 			}
 		}
+		mybatisDAOImpl.close();
 		return list;
 	}		
 	
@@ -169,6 +170,7 @@ public class PB001ServiceImpl implements IPB001Service,ConstantUtil {
 		}
 		@SuppressWarnings("unchecked")
 		List<ResultCommand> listDevice = (List<ResultCommand>) mybatisDAOImpl.queryByObj("pb.pb001.pb001001searchDevicesByEventid", map);
+		mybatisDAOImpl.close();
 		// 事件设备拼接处理
 		if(listDevice != null){ 
 			if(listDevice.size() != 0){
@@ -195,6 +197,7 @@ public class PB001ServiceImpl implements IPB001Service,ConstantUtil {
 		@SuppressWarnings("unchecked")
 		List<PB001Command> list = (List<PB001Command>) mybatisDAOImpl.queryByObj(
 				"pb.pb001.pb001001queryById", map);
+		mybatisDAOImpl.close();
 		PB001Command command = new PB001Command();
 		if(list != null){ 
 			if(list.size() != 0){

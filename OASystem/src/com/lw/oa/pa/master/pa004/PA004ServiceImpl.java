@@ -34,6 +34,7 @@ public class PA004ServiceImpl implements IPA004Service {
 		@SuppressWarnings("unchecked")
 		List<PA004001ResultCommand> list = (List<PA004001ResultCommand>) mybatisDAOImpl
 				.queryByObj("pa.pa004.pa004001searchListByPage", searchCommand);
+		mybatisDAOImpl.close();
 		return list;
 	}
 
@@ -43,6 +44,7 @@ public class PA004ServiceImpl implements IPA004Service {
 		mybatisDAOImpl.openSession();
 		PA004Command command = (PA004Command) mybatisDAOImpl.expandByObj(
 				"pa.pa004.pa004001expandById", searchCommand);
+		mybatisDAOImpl.close();
 		return command;
 	}
 

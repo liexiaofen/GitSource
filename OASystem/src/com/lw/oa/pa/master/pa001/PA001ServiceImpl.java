@@ -53,6 +53,7 @@ public class PA001ServiceImpl implements IPA001Service,ConstantUtil {
 				}
 			}			
 		}		
+		mybatisDAOImpl.close();
 		return list;
 	}
 
@@ -82,6 +83,7 @@ public class PA001ServiceImpl implements IPA001Service,ConstantUtil {
 		}
 		@SuppressWarnings("unchecked")
 		List<ResultCommand> emprole = (List<ResultCommand>) mybatisDAOImpl.queryByObj("common.zoom.searchRolesByEmpid", map); 
+		mybatisDAOImpl.close();
 		// 角色拼接处理
 		if(emprole != null){
 			if(emprole.size() != 0){

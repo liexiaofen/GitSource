@@ -120,6 +120,7 @@ public class PB002ServiceImpl implements IPB002Service,ConstantUtil {
 				entity.setSeven(seven);
 			}
 		}
+		mybatisDAOImpl.close();
 		return list;
 	}		
 	@Override
@@ -132,6 +133,7 @@ public class PB002ServiceImpl implements IPB002Service,ConstantUtil {
 		@SuppressWarnings("unchecked")
 		List<PB002Command> list = (List<PB002Command>) mybatisDAOImpl.queryByObj(
 				"pb.pb002.pb002001queryById", map);
+		mybatisDAOImpl.close();
 		PB002Command command = new PB002Command();
 		if(list != null){ 
 			if(list.size() != 0){
