@@ -9,12 +9,12 @@
 	<![CDATA[
 		select 
 			V.processtime, V.applyid, V.applyno, V.exclusivefg, V.applyempid, V.applyempname, 
-			V.processempid, V.processempname, V.applytype, V.applytypedict, V.status, V.statusdict, V.statusalias, 
+			V.processempid, V.processempname, V.applytype, V.applytypedict, V.status, V.statusdict, V.statusalias, V.checklevel, 
 			ROW_NUMBER() OVER(order by V.statusalias, V.processtime desc, V.applyno ) as rownum 
 		from (
 			SELECT 
 				convert(char(19), t.processtime, 120) as processtime, t.applyid, t.applyno, t.exclusivefg, t.applyempid, t1.empname as applyempname, 
-				t.processempid, t2.empname as processempname, t.applytype, dict1.busidictname as applytypedict, t.status, dict2.busidictname as statusdict, '0' as statusalias
+				t.processempid, t2.empname as processempname, t.applytype, dict1.busidictname as applytypedict, t.status, dict2.busidictname as statusdict, '0' as statusalias, t.checklevel
 			FROM [dbo].[t_applyform] t 
 			inner join [dbo].[t_empinfo] t1 
 				on t.applyempid = t1.empid and t.deletefg = t1.deletefg
@@ -39,7 +39,7 @@
 			union all
 			SELECT 
 				convert(char(19), t.processtime, 120) as processtime, t.applyid, t.applyno, t.exclusivefg, t.applyempid, t1.empname as applyempname, 
-				t.processempid, t2.empname as processempname, t.applytype, dict1.busidictname as applytypedict, t.status, dict2.busidictname as statusdict, '1' as statusalias
+				t.processempid, t2.empname as processempname, t.applytype, dict1.busidictname as applytypedict, t.status, dict2.busidictname as statusdict, '1' as statusalias, t.checklevel
 			FROM [dbo].[t_applyform] t 
 			inner join [dbo].[t_empinfo] t1 
 				on t.applyempid = t1.empid and t.deletefg = t1.deletefg

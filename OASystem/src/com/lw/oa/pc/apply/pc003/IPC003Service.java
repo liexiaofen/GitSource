@@ -14,4 +14,5 @@ public interface IPC003Service {
 	public int pc003003update(ApplyFormCommand command, HttpServletRequest request);
 	public int pc003003reject(ApplyFormCommand command, HttpServletRequest request);
 	public int pc003003delete(ApplyFormCommand command, HttpServletRequest request);
+	public int pc003001batchcheck(ApplySearchCommand searchCommand, HttpServletRequest request);
 }

@@ -58,7 +58,7 @@ function btn_file(){
 		alert(Message.getString("MSG_COMM_0031"));
 		return;
 	}
-	if ( !window.confirm( Message.getString("MSG_IC_PD005_0001"))) 
+	if ( !window.confirm( Message.getString("MSG_IC_PC004_0001"))) 
 		return;
 	$("#div_result").find("input[name='chk']:checked").each(function( i, n){			
 		var applyid = $(n).parent().find('input[name="applyid"]').val();

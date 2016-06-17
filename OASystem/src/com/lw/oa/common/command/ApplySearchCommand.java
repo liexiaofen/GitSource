@@ -12,7 +12,8 @@ public class ApplySearchCommand extends Pager<ApplyResultCommand> {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	ApplyForm[] applyform; 
+	private ApplyForm[] applyform; 
+	private ApplyFormCommand[] applyformcommand;
 	// 申请单号
 	private String applyno;
 	// 申请类型
@@ -30,6 +31,14 @@ public class ApplySearchCommand extends Pager<ApplyResultCommand> {
 	// 查询结果申请类型
 	private String applytype_result;
 	
+	public ApplyFormCommand[] getApplyformcommand() {
+		return applyformcommand;
+	}
+
+	public void setApplyformcommand(ApplyFormCommand[] applyformcommand) {
+		this.applyformcommand = applyformcommand;
+	}
+
 	public ApplyForm[] getApplyform() {
 		return applyform;
 	}

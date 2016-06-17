@@ -86,6 +86,40 @@ function btn_reset() {
 		$(n).val('');
 	});
 }
+/*
+*名       称: btn_batchCheck()
+*输入参数: 无
+*输出参数: 无
+*机       能: 批量审核
+*创 建  者: yuliang          
+*创建时间: 2016-06-16
+*更 新  者: 
+*更新时间: 
+*/
+function btn_batchCheck(){
+	var obj = $( "input[name='chk']:checked" );
+	if ( obj.length < 1 ) {
+		alert(Message.getString("MSG_COMM_0031"));
+		return;
+	}
+	if ( !window.confirm( Message.getString("MSG_IC_PC003_0001"))) 
+		return;
+	$("#div_result").find("input[name='chk']:checked").each(function( i, n){			
+		var applyid = $(n).parent().parent().find('input[name="applyid"]').val();
+		var applytype = $(n).parent().parent().find('input[name="applytype"]').val();
+		var exclusivefg = $(n).parent().parent().find('input[name="exclusivefg"]').val();
+		var status = $(n).parent().parent().find('input[name="status"]').val();
+		var checklevel = $(n).parent().parent().find('input[name="checklevel"]').val();		
+		$("#batchForm").append("<input name=\"applyformcommand["+i+"].applyid\" value=\""+applyid+"\" type=\"hidden\" />");
+		$("#batchForm").append("<input name=\"applyformcommand["+i+"].applytype\" value=\""+applytype+"\" type=\"hidden\" />");
+		$("#batchForm").append("<input name=\"applyformcommand["+i+"].exclusivefg\" value=\""+exclusivefg+"\" type=\"hidden\" />");
+		$("#batchForm").append("<input name=\"applyformcommand["+i+"].status\" value=\""+status+"\" type=\"hidden\" />");		
+		$("#batchForm").append("<input name=\"applyformcommand["+i+"].checklevel\" value=\""+checklevel+"\" type=\"hidden\" />");		
+	});
+	c_ShowProgressBar(); 
+	$("#batchForm").attr( "action", "pc003001batchcheck.do");	
+	$("#batchForm").submit();
+}
 $(document).ready(function(){
 	$('input[type="radio"]').click(function(){
 		var statusalias = $(this).parent().parent().find('input[name="statusalias"]').val();
@@ -159,6 +193,7 @@ $(document).ready(function(){
 	<div class="div_result" id="div_result">  
 		<table id="tresult" class="pg_result">
 		    <tr class="pg_result_head">
+		    	<td width="3%"><c:if test="${ searchCommand.statusalias ne 1}"><input type="checkbox" name="checkAll" id="checkAll" value='abc'/></c:if></td>
 		    	<td width="3%"></td>
 				<td width="3%">&nbsp;序号&nbsp;</td>
 				<td width="15%" nowrap>&nbsp;申请单号&nbsp;</td>		
@@ -172,6 +207,11 @@ $(document).ready(function(){
 		    	<c:forEach items="${list}" var="iterator">
 		    		<tr class="pg_result_content">
 		    			<% num++;%>
+		    			<td align="center" nowrap>
+		    				<c:if test="${ iterator.statusalias eq 0}">
+		    					<input type="checkbox" name="chk" />
+		    				</c:if>
+		    			</td>
 		    			<td align="center" nowrap><input name="rad" type="radio" /></td>
 		    			<td align="center" nowrap><%=num %></td>
 						<td align="left" nowrap>
@@ -179,7 +219,10 @@ $(document).ready(function(){
 							<input name="applyid" type="hidden"  value="${iterator.applyid}" />
 							<input name="exclusivefg" type="hidden"  value="${iterator.exclusivefg}" />						
 							<input name="applytype_result" type="hidden"  value="${iterator.applytype}" />
+							<input name="applytype" type="hidden"  value="${iterator.applytype}" />
 							<input name="statusalias" type="hidden"  value="${iterator.statusalias}" />
+							<input name="status" type="hidden"  value="${iterator.status}" />
+							<input name="checklevel" type="hidden"  value="${iterator.checklevel}" />
 						</td>
 						<td align="center" nowrap>${iterator.applytypedict}</td>
 						<td align="left" nowrap>${iterator.applyempname}</td>
@@ -195,7 +238,8 @@ $(document).ready(function(){
 		<table>
 			<tr>
 				<td>
-					<input name="check" id="check" type="button" class="btn" onClick="btn_check()"  value="审&nbsp;核" > 
+					<input name="check" id="check" type="button" class="btn" onClick="btn_check()"  value="审&nbsp;核" >&nbsp;
+					<input name="batchcheck" id="batchcheck" type="button" class="btn" onClick="btn_batchCheck()"  value="批量审核" > 
 				</td>
 			</tr>
 		</table>
@@ -241,5 +285,16 @@ $(document).ready(function(){
 	<input name="applytype_result" type="hidden" />
 </form>
 <%-- 详情表单结束  --%>
+<%-- 批量审核开始  --%>
+<form action="pc003001batchcheck.do" id="batchForm" name="batchForm" method="post">
+	<%/*共通隐藏字段 start*/%>
+	<input name="empid" type="hidden"  value="${searchCommand.empid}" />
+	<input name="applyno" type="hidden"  value="${searchCommand.applyno}" /> 
+	<input name="applytype" type="hidden"  value="${searchCommand.applytype}" />
+	<input name="statusalias" type="hidden"  value="${searchCommand.statusalias}" />
+	<%/*共通隐藏字段 end*/%>	
+	
+</form>
+<%-- 批量审核结束  --%>
 </body>
 </html>

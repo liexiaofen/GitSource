@@ -39,6 +39,47 @@ public class PC003ServiceImpl implements IPC003Service,ConstantUtil {
 		mybatisDAOImpl.close();
 		return list;
 	}
+	
+	@Override
+	public int pc003001batchcheck(ApplySearchCommand searchCommand,
+			HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		int flag = 1;
+		try {
+			mybatisDAOImpl.openSession();
+			for(ApplyFormCommand command:searchCommand.getApplyformcommand()){
+				setAgreeStatus(command);
+				// 数据转换
+				ApplyForm entity = convertCommand(command);
+				//获取系统时间
+				Date sysdate = (Date)mybatisDAOImpl.expandByObj( "common.getDBSysDate", null);
+				// 获取共通更新字段
+				CommonBean bean = DataUtil.getUpdateCol(sysdate, request);
+				// 设置共通更新字段
+				DataUtil.setUpdateCol(entity, bean);
+				// 设置处理人、状态
+				entity.setProcessempid(bean.getUpdator());
+				entity.setProcesstime(bean.getUpdatetime());					
+				flag = mybatisDAOImpl.update( "pc.pc003.pc003003Update", entity);		
+				// 根据不同的申请类型，状态做相应的特殊处理
+				specialProcess( command, entity);
+				// 获取履历id
+				String hisid = DataUtil.getKey(sysdate);
+				// 创建履历对象
+				HashMap<String,Object> map  = DataUtil.creatHisMap("[dbo].[his_applyform]", hisid, command.getApplyid(), command.getOperationcd(), "0", "0", command.getRemark(), bean, request);
+				mybatisDAOImpl.insert("common.insertHis", map);		
+			}		
+			mybatisDAOImpl.commit();
+		} catch (Exception e) {
+			mybatisDAOImpl.rollback();
+			flag = 0;
+			e.printStackTrace();
+		} finally {
+			mybatisDAOImpl.close();
+		}
+		return flag;
+	}
+
 	@Override
 	public int pc003003update(ApplyFormCommand command, HttpServletRequest request) {
 		// TODO Auto-generated method stub
@@ -86,7 +127,7 @@ public class PC003ServiceImpl implements IPC003Service,ConstantUtil {
 			setRejectStatus(command);
 			// 数据转换
 			ApplyForm entity = convertCommand(command);
-			//获取系统时间
+			// 获取系统时间
 			Date sysdate = (Date)mybatisDAOImpl.expandByObj( "common.getDBSysDate", null);
 			// 获取共通更新字段
 			CommonBean bean = DataUtil.getUpdateCol(sysdate, request);

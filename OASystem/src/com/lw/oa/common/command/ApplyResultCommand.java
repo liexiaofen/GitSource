@@ -74,7 +74,10 @@ public class ApplyResultCommand implements Serializable {
 	// 申请结束时间
 	private String applyendtime;
 	// 总工时
-	private String totalhours;											
+	private String totalhours;	
+	// 审批流程等级						
+	private String checklevel;					
+
 
 	public String getUpdatetime() {
 		return updatetime;
@@ -347,5 +350,15 @@ public class ApplyResultCommand implements Serializable {
 	public void setTotalhours(String totalhours) {
 		this.totalhours = totalhours;
 	}
+
+	public String getChecklevel() {
+		return checklevel;
+	}
+
+	public void setChecklevel(String checklevel) {
+		this.checklevel = checklevel;
+	}
+	
+	
 
 }

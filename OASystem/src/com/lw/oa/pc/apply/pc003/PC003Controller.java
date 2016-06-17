@@ -139,6 +139,19 @@ public class PC003Controller implements ConstantUtil{
 		return mav;
 	}
 	/**
+	 * 审核一览画面批量审核
+	 * 
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = { "pc003001batchcheck.do" }, method = RequestMethod.POST)
+	public ModelAndView pc003001batchcheck(HttpServletRequest request,
+			ApplySearchCommand searchCommand) {
+		int cnt = pc003Service.pc003001batchcheck(searchCommand, request);
+		RetInfo retInfo = MessageUtil.getMessageExclusive(cnt);
+		return pc003001search(request, searchCommand, retInfo);
+	}
+	/**
 	 * 申请详细画面返回
 	 * @param request
 	 * @return
