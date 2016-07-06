@@ -74,6 +74,7 @@ Message.MSG_IC_COMM_0022="是否在服务器目录下生成文件？";
 Message.MSG_IC_PB001_0001 = "【{0}】在该时间段的日程发生冲突，是否继续？";
 Message.MSG_IC_PA003_0001 = "是否确定生成该年度的日历？";
 Message.MSG_IC_PA005_0001 = "是否确定生成该年度的年假？";
+Message.MSG_IC_PA005_0002 = "该年度的年假已经生成，是否重新生成该年度的年假？";
 Message.MSG_IC_PC003_0001 = "是否将选中的申请单号批量审核？";
 Message.MSG_IC_PC004_0001 = "是否将选中的申请单号归档？";
 Message.ERROR_COMM_0001="没有符合条件的记录，请重新输入检索条件！";
@@ -108,7 +109,7 @@ Message.ERROR_COMM_0040="选择的机构不存在该用户，请重新选择！"
 Message.ERROR_COMM_0041="该业务字典类型代码已经存在，请重新输入！";
 Message.ERROR_PA001_0001="该用户名已经存在，请重新输入！";
 Message.ERROR_PA003_0001="该年度的日历已经生成，请重新输入！";
-Message.ERROR_PA005_0001="该年度的年假已经生成，请重新输入！";
+
 Message.ERROR_PA006_0001="原密码不正确，请重新输入！";
 Message.ERROR_PA006_0002="新密码和确认新密码不一致，请重新输入！";
 Message.ERROR_PA006_0003="原密码和新密码一致，请重新输入！";

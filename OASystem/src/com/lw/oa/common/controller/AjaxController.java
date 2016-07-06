@@ -412,7 +412,7 @@ public class AjaxController implements ConstantUtil{
 		Map<String,Object> resultMap = new HashMap<String,Object>();		
 		if(count > 0){
 			resultMap.put("flag", true);
-			resultMap.put("msgid", "ERROR_PA005_0001");
+			resultMap.put("msgid", "MSG_IC_PA005_0002");
 		}else
 			resultMap.put("flag", false);
 		try {

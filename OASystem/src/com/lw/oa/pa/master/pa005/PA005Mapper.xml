@@ -72,7 +72,17 @@
     	where empid = #{empid, jdbcType=VARCHAR} and year = #{year, jdbcType=VARCHAR} and deletefg = '0'           
     ]]>
     	<if test="exclusivefg!=null and exclusivefg!=''">
-			and exclusivefg = #{exclusivefg , jdbcType=VARCHAR}
+			and exclusivefg = #{exclusivefg, jdbcType=VARCHAR}
 		</if>	   
     </update>    
+    <!-- 删除年假信息 -->    
+	<delete id="pa005003deleteAnnualvctn" parameterType="java.util.Map">
+	<![CDATA[
+		delete from t_annualvctn
+		where deletefg = '0' 
+	]]> 	
+		<if test="year!=null and year!=''">
+			and year = #{year, jdbcType=VARCHAR}
+		</if>		
+	</delete>
 </mapper>

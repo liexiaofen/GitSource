@@ -3,9 +3,13 @@ package com.lw.oa.pa.master.pa005;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Service;
+
 import com.lw.oa.common.command.ResultCommand;
 import com.lw.oa.common.dao.IMybatisDAO;
 import com.lw.oa.common.dao.MybatisDAOImpl;
@@ -54,18 +58,22 @@ public class PA005ServiceImpl implements IPA005Service,ConstantUtil {
 		int flag = 1;		
 		try {
 			mybatisDAOImpl.openSession();
+			//删除年假信息
+			HashMap<String, String> map = new HashMap<String, String>();
+			map.put("year", command.getYear());
+			mybatisDAOImpl.delete("pa.pa005.pa005003deleteAnnualvctn", map);			
 			// 获取员工列表 
 			@SuppressWarnings("unchecked")
 			List<ResultCommand> list = (List<ResultCommand>) mybatisDAOImpl
 					.queryByObj("pa.pa005.pa005003searchEmpList", command.getPa005001searchcommand());
 			// 根据工龄不同获取员工年假列表
 			List<AnnualVctn> lst = getAnnualVctnList(list, command);
-			for (AnnualVctn entity : lst) {
-				// 获取系统时间
-				Date sysdate = (Date) mybatisDAOImpl.expandByObj(
-						"common.getDBSysDate", null);
-				// 获取共通插入字段
-				CommonBean bean = DataUtil.getInsertCol(sysdate, request);
+			// 获取系统时间
+			Date sysdate = (Date) mybatisDAOImpl.expandByObj(
+					"common.getDBSysDate", null);
+			// 获取共通插入字段
+			CommonBean bean = DataUtil.getInsertCol(sysdate, request);
+			for (AnnualVctn entity : lst) {				
 				// 设置共通插入字段
 				DataUtil.setInsertCol(entity, bean);
 				mybatisDAOImpl.insert("common.insertAnnualvctn", entity);

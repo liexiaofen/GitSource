@@ -21,6 +21,7 @@ function btn_save() {
 	}	
 	//检查该年度的年假是否生成
 	var flg = false;
+	var msgid;
 	$.ajax({
 		async: false,
 		data:"",
@@ -29,8 +30,7 @@ function btn_save() {
 		url:'<%= request.getContextPath()%>/common/ajax/checkAnnualVctn.do?flg='+escape(new Date())+'&year='+escape($("#year").val()),
 		success:function(data){
 			if(data.flag == true){
-				var msgid = data.msgid;
-				alert(Message.getString(msgid)); 
+				msgid = data.msgid;				
 				flg = false;
 			}else{
 				flg = true;
@@ -42,13 +42,17 @@ function btn_save() {
 			return;
 		}		
 	});
-	if(flg){
-		if ( !window.confirm( Message.getString("MSG_IC_PA005_0001"))) 
+	if(!flg){
+		if(!window.confirm( Message.getString(msgid))){
 			return;
-		c_ShowProgressBar(); 
-		$("#addForm").attr( "action", "pa005003save.do");	
-		$("#addForm").submit();	
+		}		
+	}else{
+		if ( !window.confirm( Message.getString("MSG_IC_PA005_0001"))) 
+			return;		
 	}
+	c_ShowProgressBar(); 
+	$("#addForm").attr( "action", "pa005003save.do");	
+	$("#addForm").submit();	
 }
 /*
 *名       称: btn_back()

@@ -116,7 +116,7 @@
 		<if test="exclusivefg!=null and exclusivefg!=''">
 			and t.exclusivefg = #{exclusivefg}
 		</if>
-	</select>
+	</select>	
 	<!-- 查询履历 -->    
 	<select id="queryResumeByPid" resultType="resumeEntity" parameterType="java.util.Map">
 	<![CDATA[
